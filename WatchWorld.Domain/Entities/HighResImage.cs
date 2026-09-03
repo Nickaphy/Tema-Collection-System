@@ -11,5 +11,8 @@ namespace WatchWorld.Domain.Entities
         public string ContentType { get; private set; }
         public long FileSizeBytes { get; private set; }
         public DateTime UploadedAt { get; private set; }
+
+
+        private HighResImage() { }
     }
 }

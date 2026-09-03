@@ -18,5 +18,8 @@ namespace WatchWorld.Domain.Entities
         public string Password { get; private set; }
         public bool IsAdmin { get; private set; }
         public List<UserRating> Rating { get; private set; }
+
+
+        private User() { }
     }
 }

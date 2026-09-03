@@ -13,5 +13,8 @@ namespace WatchWorld.Domain.Entities
         public DateOnly BorrowedFrom { get; private set; }
         public DateOnly BorrowedTo { get; private set; }
         public TimeSpan BorrowTime => BorrowedTo.ToDateTime(TimeOnly.MinValue) - BorrowedFrom.ToDateTime(TimeOnly.MinValue);
+
+
+        private Borrow() { }
     }
 }

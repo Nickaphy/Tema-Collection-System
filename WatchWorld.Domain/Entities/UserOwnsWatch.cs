@@ -8,5 +8,8 @@ namespace WatchWorld.Domain.Entities
     {
         public Guid UserId { get; private set; }
         public Guid WatchId { get; private set; }
+
+
+        private UserOwnsWatch() { }
     }
 }

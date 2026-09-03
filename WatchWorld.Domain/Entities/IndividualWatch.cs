@@ -16,5 +16,8 @@ namespace WatchWorld.Domain.Entities
         public string Note { get; private set; }
         public decimal EstimatedValue { get; private set; }
         public List<HighResImage> Picture { get; private set; }
+
+
+        private IndividualWatch() { }
     }
 }

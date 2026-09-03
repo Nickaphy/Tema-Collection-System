@@ -12,5 +12,8 @@ namespace WatchWorld.Domain.Entities
         public int RatingAmount { get; private set; }
         public string Description { get; private set; }
         public Guid RatedByUserId { get; private set; }
+
+
+        private UserRating() { }
     }
 }
