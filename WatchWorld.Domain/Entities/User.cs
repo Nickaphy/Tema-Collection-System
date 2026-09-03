@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WatchWorld.Domain.Service;
 using WatchWorld.Domain.ValueObjects;
 
 namespace WatchWorld.Domain.Entities
