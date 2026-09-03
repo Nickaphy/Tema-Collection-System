@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Globalization;
 using System.Text;
-using WatchWorld.Domain.Enums;
 using WatchWorld.Domain.ValueObjects;
+using WatchWorld.Domain.Enums;
 
 namespace WatchWorld.Domain.Entities
 {
