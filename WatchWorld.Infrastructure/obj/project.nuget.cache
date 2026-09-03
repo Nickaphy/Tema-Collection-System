@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "IH/azmIqAoU=",
+  "success": true,
+  "projectFilePath": "/home/nickaphy/RiderProjects/WatchWorld/WatchWorld.Infrastructure/WatchWorld.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "/home/nickaphy/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.11/microsoft.aspnetcore.app.ref.10.0.11.nupkg.sha512"
+  ],
+  "logs": []
+}
