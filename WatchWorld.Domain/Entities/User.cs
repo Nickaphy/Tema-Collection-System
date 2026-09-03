@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text;
-using System.Linq;
 using WatchWorld.Domain.Service;
 using WatchWorld.Domain.ValueObjects;
 
