@@ -22,5 +22,8 @@ namespace WatchWorld.Domain.Entities
         public string Description { get; private set; }
         public List<HighResImage> Images { get; private set; }
 
+
+        private Watches() { }
+
     }
 }
