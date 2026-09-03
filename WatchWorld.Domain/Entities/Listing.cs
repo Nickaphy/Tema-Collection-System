@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WatchWorld.Domain.ValueObjects;
 
 namespace WatchWorld.Domain.Entities
 {
-    public class Listing
+    public class Listing : Aggregateroot
     {
-        public Guid ListningId { get; private set; }
         public IndividualWatch BorrowableWatch { get; private set; }
         public decimal PricePerDay { get; private set; }
 

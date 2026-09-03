@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WatchWorld.Domain.ValueObjects;
 
 namespace WatchWorld.Domain.Entities
 {
-    public class HighResImage
+    public class HighResImage : Aggregateroot
     {
-        public Guid HighResId { get; private set; }
         public string Name { get; private set; }
         public string ContentType { get; private set; }
         public long FileSizeBytes { get; private set; }
