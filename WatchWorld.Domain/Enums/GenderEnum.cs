@@ -6,8 +6,8 @@ namespace WatchWorld.Domain.Enums
 {
     public enum GenderEnum
     {
-        Men = 1,
-        Women = 2,
-        Unisex = 3
+	Unisex = 0,
+	Men = 1,
+	Women = 2
     }
 }
