@@ -4,10 +4,10 @@ using System.Text;
 
 namespace WatchWorld.Domain.Enums
 {
-    public enum GenderEnum
+    public enum BorrowStatus
     {
-	Unisex = 0,
-	Men = 1,
-	Women = 2
+        Active,
+        Completed,
+        Cancelled
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using WatchWorld.Domain.ValueObjects;
+using WatchWorld.Domain.Service;
 
 namespace WatchWorld.Domain.Entities
 {
