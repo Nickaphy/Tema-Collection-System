@@ -6,10 +6,9 @@ namespace WatchWorld.Domain.Enums
 {
     public enum MovementTypeEnum
     {
-        Quartz = 1,
-        Mechanical = 2,
-        Automatic = 3,
-        Solar = 4,
-        Kinetic = 5
+	Unknown = 0,
+	Automatic = 1,
+	ManualWinding = 2,
+	Quartz = 3
     }
 }

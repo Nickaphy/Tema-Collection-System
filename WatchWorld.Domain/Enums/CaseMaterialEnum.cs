@@ -6,12 +6,23 @@ namespace WatchWorld.Domain.Enums
 {
     public enum CaseMaterialEnum
     {
-        StainlessSteel = 1,
-        Titanium = 2,
-        Ceramic = 3,
-        Gold = 4,
-        Platinum = 5,
-        CarbonFiber = 6,
-        Bronze = 7
+	Unknown = 0,
+	Steel = 1,
+	GoldSteel = 2,
+	RoseGold = 3,
+	YellowGold = 4,
+	WhiteGold = 5,
+	RedGold = 6,
+	Titanium = 7,
+	Ceramic = 8,
+	Platinum = 9,
+	Bronze = 10,
+	Carbon = 11,
+	Silver = 12,
+	Plastic = 13,
+	Aluminum = 14,
+	Tantalum = 15,
+	Palladium = 16,
+	Tungsten = 17
     }
 }
