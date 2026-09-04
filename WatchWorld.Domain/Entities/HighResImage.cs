@@ -38,12 +38,15 @@ namespace WatchWorld.Domain.Entities
             if (imageUrlValidationResult.IsValid == false)
                 throw new UserInvalidInputException(imageUrlValidationResult.ErrorMessage);
 
+            //Width and height validation
             if (width <= 0)
-                throw new UserInvalidInputException("Width must be greater than zero.");
+                throw new UserInvalidInputException("Billedet skal have en bredde");
             else if (width <= 500)
-                throw new UserInvalidInputException("Width must be greater than 500px");
+                throw new UserInvalidInputException("Bredden på et billede skal være over 500px");
             if (height <= 0)
-                throw new UserInvalidInputException("Height must be greater than zero.");
+                throw new UserInvalidInputException("Højden på et billede skal være over 0px.");
+            else if (height <= 500)
+                throw new UserInvalidInputException("Højden på et billede skal være over 500px");
         }
 
     public class ImageUrlValidationResult
