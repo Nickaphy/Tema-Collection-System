@@ -48,15 +48,15 @@ namespace WatchWorld.Domain.Entities
         public static void Validate(Watches specificWatch, WearGradeEnum wearGrade, int age, decimal estimatedValue)
         {
             if (specificWatch is null)
-                throw new UserInvalidInputException("Der skal vælges et specifikt urtype");
+                throw new UserInvalidInputException("Der skal vælges en ur model");
             if (age < 0)
                 throw new UserInvalidInputException("Et ur kan ikke være mindre end 0 år");
             if (estimatedValue < 0)
                 throw new UserInvalidInputException("Et ur kan ikke have en negativ værdi");
             if (!Enum.IsDefined(typeof(WearGradeEnum), wearGrade))
-                throw new UserInvalidInputException("Et ur skal have en gyldig slidniveau");
+                throw new UserInvalidInputException("Et ur skal have et gyldigt slidniveau");
+            if (specificWatch.ReleaseYear.Year < (DateTime.Now.Year - age))
+                throw new UserInvalidInputException("Et ur kan ikke være ældre end modellets udgivelsesår");
         }
-
-
     }
 }
