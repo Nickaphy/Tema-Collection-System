@@ -78,7 +78,7 @@ namespace WatchWorld.Domain.Entities
                 || !Password.Any(Char.IsUpper)
                 || !Password.Any(Char.IsLower)
                 || !Password.Any(Char.IsDigit))
-                throw new UserInvalidInputException($"Du skal oprette et gyldigt adgangskode!");
+                throw new UserInvalidInputException($"Du skal oprette en gyldig adgangskode!");
 
         }
 
