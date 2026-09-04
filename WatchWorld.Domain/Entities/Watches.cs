@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using WatchWorld.Domain.ValueObjects;
 using WatchWorld.Domain.Enums;
+using WatchWorld.Domain.Service;
 
 namespace WatchWorld.Domain.Entities
 {
@@ -26,9 +27,8 @@ namespace WatchWorld.Domain.Entities
 
         private Watches() { }
 
-        public Watches(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
+        private Watches(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
         {
-            Validate();
             Name = name;
             ModelNumber = modelNumber;
             CaseSize = caseSize;
@@ -43,22 +43,22 @@ namespace WatchWorld.Domain.Entities
             Description = description;
             Images = images ?? new List<HighResImage>();
         }
-        public void Validate()
+        public static void Validate(string Name, string ModelNumber, int CaseSize, decimal OriginalPrice, DateOnly ReleaseYear)
         {
             if (string.IsNullOrWhiteSpace(Name))
-                throw new ArgumentException("Name cannot be null or empty.");
+                throw new UserInvalidInputException("Name cannot be null or empty.");
             if (string.IsNullOrWhiteSpace(ModelNumber))
-                throw new ArgumentException("ModelNumber cannot be null or empty.");
+                throw new UserInvalidInputException("ModelNumber cannot be null or empty.");
             if (CaseSize <= 0)
-                throw new ArgumentException("CaseSize must be greater than zero.");
+                throw new UserInvalidInputException("CaseSize must be greater than zero.");
             if (OriginalPrice < 0)
-                throw new ArgumentException("OriginalPrice cannot be negative.");
+                throw new UserInvalidInputException("OriginalPrice cannot be negative.");
             if (ReleaseYear.Year > DateTime.Now.Year)
-                throw new ArgumentException("ReleaseYear must be before the current year.");
+                throw new UserInvalidInputException("ReleaseYear must be before the current year.");
         }
         public void Update(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
         {
-            Validate();
+            Validate(name, modelNumber, caseSize, originalPrice, releaseYear);
             Name = name;
             ModelNumber = modelNumber;
             CaseSize = caseSize;
@@ -75,7 +75,8 @@ namespace WatchWorld.Domain.Entities
         }
         public static Watches Create(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
         {
-            return new Watches(name,
+            
+            var watch = new Watches(name,
                                 modelNumber,
                                 caseSize,
                                 caseShapeEnum,
@@ -88,6 +89,8 @@ namespace WatchWorld.Domain.Entities
                                 braceletTypeEnum,
                                 description,
                                 images);
+            Validate(watch.Name, watch.ModelNumber, watch.CaseSize, watch.OriginalPrice, watch.ReleaseYear);
+            return watch;
         }
     }
 }
