@@ -9,8 +9,13 @@ namespace WatchWorld.Domain.ValueObjects
         {
             if (to <= from)
                 throw new DomainException("Til tiden må ikke være før fra tiden");
-            From = from;
-            To = to;
+            else if (from < DateTime.Now)
+                throw new DomainException("Fra tiden må ikke være i fortiden");
+            else
+            {
+                From = from;
+                To = to;
+            } 
         }
 
         public DateTimeOffset From { get; }
