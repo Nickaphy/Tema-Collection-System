@@ -7,11 +7,10 @@ namespace WatchWorld.Domain.Entities
 {
     public class HighResImage : Aggregateroot
     {
-        public string Name { get; private set; }
-        public string ContentType { get; private set; }
-        public long FileSizeBytes { get; private set; }
-        public DateTime UploadedAt { get; private set; }
-
+	public Guid Id { get; set; }
+	public required string Url { get; set; }
+	public int Width { get; set; }
+	public int Height { get; set; }
 
         private HighResImage() { }
     }

@@ -6,12 +6,12 @@ namespace WatchWorld.Domain.Enums
 {
     public enum CaseShapeEnum
     {
-        Round = 1,
-        Square = 2,
-        Rectangular = 3,
-        Oval = 4,
-        Tonneau = 5,
-        Cushion = 6,
-        Asymmetrical = 7
+	Unknown = 0,
+	Round = 1,
+	Rectangular = 2,
+	Square = 3,
+	Oval = 4,
+	Tonneau = 5,
+	Cushion = 6
     }
 }

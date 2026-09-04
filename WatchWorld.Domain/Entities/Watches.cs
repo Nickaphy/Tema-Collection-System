@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using WatchWorld.Domain.ValueObjects;
@@ -23,7 +23,71 @@ namespace WatchWorld.Domain.Entities
         public List<HighResImage> Images { get; private set; }
 
 
+
         private Watches() { }
 
+        public Watches(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
+        {
+            Validate();
+            Name = name;
+            ModelNumber = modelNumber;
+            CaseSize = caseSize;
+            CaseShapeEnum = caseShapeEnum;
+            CaseMaterialEnum = caseMaterialEnum;
+            MovementTypeEnum = movementTypeEnum;
+            Style = style;
+            OriginalPrice = originalPrice;
+            GenderEnum = genderEnum;
+            ReleaseYear = releaseYear;
+            BraceletTypeEnum = braceletTypeEnum ?? new List<BraceletTypeEnum>();
+            Description = description;
+            Images = images ?? new List<HighResImage>();
+        }
+        public void Validate()
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+                throw new ArgumentException("Name cannot be null or empty.");
+            if (string.IsNullOrWhiteSpace(ModelNumber))
+                throw new ArgumentException("ModelNumber cannot be null or empty.");
+            if (CaseSize <= 0)
+                throw new ArgumentException("CaseSize must be greater than zero.");
+            if (OriginalPrice < 0)
+                throw new ArgumentException("OriginalPrice cannot be negative.");
+            if (ReleaseYear.Year > DateTime.Now.Year)
+                throw new ArgumentException("ReleaseYear must be before the current year.");
+        }
+        public void Update(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
+        {
+            Validate();
+            Name = name;
+            ModelNumber = modelNumber;
+            CaseSize = caseSize;
+            CaseShapeEnum = caseShapeEnum;
+            CaseMaterialEnum = caseMaterialEnum;
+            MovementTypeEnum = movementTypeEnum;
+            Style = style;
+            OriginalPrice = originalPrice;
+            GenderEnum = genderEnum;
+            ReleaseYear = releaseYear;
+            BraceletTypeEnum = braceletTypeEnum ?? new List<BraceletTypeEnum>();
+            Description = description;
+            Images = images;
+        }
+        public static Watches Create(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
+        {
+            return new Watches(name,
+                                modelNumber,
+                                caseSize,
+                                caseShapeEnum,
+                                caseMaterialEnum,
+                                movementTypeEnum,
+                                style,
+                                originalPrice,
+                                genderEnum,
+                                releaseYear,
+                                braceletTypeEnum,
+                                description,
+                                images);
+        }
     }
 }

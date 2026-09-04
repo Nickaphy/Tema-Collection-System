@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Globalization;
 using System.Text;
 using WatchWorld.Domain.ValueObjects;
+using WatchWorld.Domain.Enums;
 
 namespace WatchWorld.Domain.Entities
 {
