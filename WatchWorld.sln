@@ -1,14 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.9.12120.119 stable
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchWorld.Domain", "WatchWorld.Domain\WatchWorld.Domain.csproj", "{3D4E61AA-10E3-4821-A1D5-62C3DB1F289D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchWorld.Application", "WatchWorld.Application\WatchWorld.Application.csproj", "{5183F069-D576-47C0-8623-53920AE145B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchWorld.Facade", "WatchWorld.Facade\WatchWorld.Facade.csproj", "{65D04B23-40CB-41A9-B8C6-1602DEE04571}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchWorld.Infrastructure", "WatchWorld.Infrastructure\WatchWorld.Infrastructure.csproj", "{19BC8321-A913-43E3-BC53-632AE43E75DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchWorld.UI", "WatchWorld.UI\WatchWorld.UI.csproj", "{B4FDB866-731F-4ED5-93F2-0AC5EAE65139}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchWorld.BlazorUI", "WatchWorld.BlazorUI\WatchWorld.BlazorUI.csproj", "{C73A6EC9-0FB3-430F-A60F-FB260459B76C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchWorld.Api", "WatchWorld.Api\WatchWorld.Api.csproj", "{E14737B0-F028-4B59-B51C-22E14709F9C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,17 +27,23 @@ Global
 		{5183F069-D576-47C0-8623-53920AE145B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5183F069-D576-47C0-8623-53920AE145B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5183F069-D576-47C0-8623-53920AE145B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65D04B23-40CB-41A9-B8C6-1602DEE04571}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65D04B23-40CB-41A9-B8C6-1602DEE04571}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65D04B23-40CB-41A9-B8C6-1602DEE04571}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65D04B23-40CB-41A9-B8C6-1602DEE04571}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19BC8321-A913-43E3-BC53-632AE43E75DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19BC8321-A913-43E3-BC53-632AE43E75DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19BC8321-A913-43E3-BC53-632AE43E75DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19BC8321-A913-43E3-BC53-632AE43E75DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4FDB866-731F-4ED5-93F2-0AC5EAE65139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4FDB866-731F-4ED5-93F2-0AC5EAE65139}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4FDB866-731F-4ED5-93F2-0AC5EAE65139}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4FDB866-731F-4ED5-93F2-0AC5EAE65139}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C73A6EC9-0FB3-430F-A60F-FB260459B76C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C73A6EC9-0FB3-430F-A60F-FB260459B76C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C73A6EC9-0FB3-430F-A60F-FB260459B76C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C73A6EC9-0FB3-430F-A60F-FB260459B76C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E14737B0-F028-4B59-B51C-22E14709F9C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E14737B0-F028-4B59-B51C-22E14709F9C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E14737B0-F028-4B59-B51C-22E14709F9C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E14737B0-F028-4B59-B51C-22E14709F9C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB236E70-1C2C-45DE-9B10-4BAAB0480F62}
 	EndGlobalSection
 EndGlobal

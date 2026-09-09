@@ -18,9 +18,18 @@ namespace WatchWorld.Domain.Entities
 
         private Borrow(Guid borrowedByUserId, Guid borrowedFromUserId, TimeSlot borrowTimeSlot, BorrowStatus status)
         {
+            
+            
             BorrowedByUserId = borrowedByUserId;
             BorrowedFromUserId = borrowedFromUserId;
             BorrowTimeSlot = borrowTimeSlot;
+            
+            //Status Validation
+            if (Status == BorrowStatus.Cancelled)
+                throw new UserInvalidInputException("Kan ikke oprette et udlån som er annulleret");
+            else if (Status == BorrowStatus.Completed)
+                throw new UserInvalidInputException("Kan ikke oprette et udlån som er afsluttet");
+            else
             Status = status;
         }
 
