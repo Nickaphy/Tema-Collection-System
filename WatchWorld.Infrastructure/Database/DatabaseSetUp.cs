@@ -22,11 +22,11 @@ public static class DatabaseSetup
 
         return services;
     }
-    public static void InitializeDatabase(this IServiceProvider serviceProvider)
+    public static async Task InitializeDatabaseAsync(this IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        context.Database.EnsureCreated();
+        await context.Database.MigrateAsync();
     }
 }
