@@ -24,6 +24,13 @@ public class WatchesController : ControllerBase
         return Ok(watches);
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Watches>> GetById(Guid id, CancellationToken ct)
+    {
+        var watch = await _watchUseCase.GetWatchByIdAsync(id, ct);
+        return Ok(watch);
+    }
+
     [HttpPost]
     public async Task<ActionResult<Watches>> Create([FromBody] CreateWatchRequest request, CancellationToken ct)
     {
