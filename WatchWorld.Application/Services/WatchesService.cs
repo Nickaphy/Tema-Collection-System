@@ -9,23 +9,23 @@ namespace WatchWorld.Application.Services;
 
 public class WatchesService : IWatchesUseCase
 {
-    private readonly IWatchesRepository _repository;
+    private readonly IWatchesRepository _watchRepository;
     private static readonly SemaphoreSlim _Lock = new(1, 1);
 
     public WatchesService(IWatchesRepository repository)
     {
-        _repository = repository;
+        _watchRepository = repository;
     }
 
     public async Task<Result<IEnumerable<Watches?>>> GetAllAsync(CancellationToken ct = default)
     {
-        var watches = await _repository.GetAllAsync(ct);
-        return Result.Ok(watches);
+        var watches = await _watchRepository.GetAllAsync(ct);
+        return Result.Ok(watches.Value);
     }
 
     public async Task<Result<Watches>> CreateWatchAsync(CreateWatchCommand command, CancellationToken ct = default)
     {
-        var existingWatches = await _repository.GetAllAsync(ct);
+        var existingWatches = await _watchRepository.GetAllAsync(ct);
 
         await _Lock.WaitAsync();
         try
@@ -48,7 +48,7 @@ public class WatchesService : IWatchesUseCase
                 description: command.description,
                 images: command.images
             );
-                await _repository.CreateWatchAsync(watch);
+                await _watchRepository.CreateWatchAsync(watch, ct);
                 return Result.Ok(watch);
             }
             catch (DomainException ex)
@@ -70,5 +70,15 @@ public class WatchesService : IWatchesUseCase
         {
             _Lock.Release();
         }
+    }
+
+    public async Task<Result<Watches>> GetWatchByIdAsync(Guid id, CancellationToken ct = default)
+    {
+        var existingWatch = await _watchRepository.GetWatchByIdAsync(id.GetHashCode(), ct);
+        if (existingWatch.IsFailed || existingWatch.Value == null)
+        {
+            return Result.Fail("Uret blev ikke fundet.");
+        }
+        return Result.Ok(existingWatch.Value);
     }
 }
