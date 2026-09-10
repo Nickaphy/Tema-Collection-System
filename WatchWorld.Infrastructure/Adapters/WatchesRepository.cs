@@ -5,11 +5,11 @@ using WatchWorld.Infrastructure.Database;
 
 namespace WatchWorld.Infrastructure.Adapters;
 
-public class SqliteWatchRepository : IWatchesRepository
+public class SqlServerWatchRepository : IWatchesRepository
 {
     private readonly AppDbContext _context;
 
-    public SqliteWatchRepository(AppDbContext context)
+    public SqlServerWatchRepository(AppDbContext context)
     {
         _context = context;
     }
@@ -37,5 +37,12 @@ public class SqliteWatchRepository : IWatchesRepository
         }
 
         await _context.SaveChangesAsync(ct);
+    }
+
+    public async Task<Watches> CreateWatchAsync(Watches watch, CancellationToken ct = default)
+    {
+        await _context.Watchlist.AddAsync(watch, ct);
+        await _context.SaveChangesAsync(ct);
+        return watch;
     }
 }
