@@ -1,9 +1,9 @@
 ﻿using WatchWorld.Domain.Entities;
-using WatchWorld.Domain.Enums;
 
 namespace WatchWorld.Application.Commands.UserCommands
 {
     public record UpdateUserCommand(
+        Guid id,
         string firstName,
         string lastName,
         string phoneNumber,
