@@ -28,7 +28,7 @@ public class UserController : ControllerBase
     public async Task<ActionResult<User>> Create([FromBody] CreateUserRequest request, CancellationToken ct)
     {
         var command = new CreateUserCommand(
-            name: request.firstName,
+            firstName: request.firstName,
             lastName: request.lastName,
             phoneNumber: request.phoneNumber,
             email: request.email,
@@ -44,9 +44,12 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{userId}")]
-    public async Task<ActionResult> DeleteUser(Guid userId, CancellationToken ct)
+    public async Task<ActionResult> DeleteUser(DeleteUserRequest request, CancellationToken ct)
     {
-        await _userUseCase.DeleteUserAsync(userId, ct);
+        var command = new DeleteUserCommand(
+            userId: request.userId
+        );
+        await _userUseCase.DeleteUserAsync(command, ct);
         return NoContent();
     }
 
@@ -54,8 +57,8 @@ public class UserController : ControllerBase
     public async Task<ActionResult<User>> UpdateUser(Guid userId, UpdateUserRequest request, CancellationToken ct)
     {
         var command = new UpdateUserCommand(
-            userId: request.userId,
-            name: request.firstName,
+            id: request.id,
+            firstName: request.firstName,
             lastName: request.lastName,
             phoneNumber: request.phoneNumber,
             email: request.email,

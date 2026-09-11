@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentResults;
+using Microsoft.EntityFrameworkCore;
 using WatchWorld.Application.Ports.OutBound;
 using WatchWorld.Domain.Entities;
 using WatchWorld.Infrastructure.Database;
@@ -14,14 +15,23 @@ public class SqlServerWatchRepository : IWatchesRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Watches>> GetAllAsync(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<Watches>>> GetAllAsync(CancellationToken ct = default)
     {
-        return await _context.Watchlist.AsNoTracking().ToListAsync(ct);
+        var watches = await _context.Watchlist.AsNoTracking().ToListAsync(ct);
+
+        return Result.Ok<IEnumerable<Watches>>(watches);
     }
 
-    public async Task<Watches?> GetWatchByIdAsync(int id, CancellationToken ct = default)
+    public async Task<Result<Watches?>> GetWatchByIdAsync(Guid id, CancellationToken ct = default)
     {
-        return await _context.Watchlist.FindAsync(new object[] { id }, ct);
+        var watch = await _context.Watchlist.FindAsync(new object[] { id }, ct);
+        return Result.Ok(watch);
+    }
+    public async Task<Result<Watches>> CreateWatchAsync(Watches watch, CancellationToken ct = default)
+    {
+        await _context.Watchlist.AddAsync(watch, ct);
+        await _context.SaveChangesAsync(ct);
+        return Result.Ok(watch);
     }
 
     public async Task SaveAsync(Watches watch, CancellationToken ct = default)
@@ -39,10 +49,4 @@ public class SqlServerWatchRepository : IWatchesRepository
         await _context.SaveChangesAsync(ct);
     }
 
-    public async Task<Watches> CreateWatchAsync(Watches watch, CancellationToken ct = default)
-    {
-        await _context.Watchlist.AddAsync(watch, ct);
-        await _context.SaveChangesAsync(ct);
-        return watch;
-    }
 }

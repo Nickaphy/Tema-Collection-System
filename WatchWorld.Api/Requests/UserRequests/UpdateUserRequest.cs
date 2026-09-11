@@ -3,6 +3,7 @@
 namespace WatchWorld.Api.Requests.UserRequests
 {
     public record UpdateUserRequest(
+        Guid id,
         string firstName,
         string lastName,
         string phoneNumber,
