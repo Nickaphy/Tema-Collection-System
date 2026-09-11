@@ -37,8 +37,14 @@ namespace WatchWorld.Domain.Entities
         public static Borrow Create(Guid borrowerId, Guid lenderId, TimeSlot borrowTimeSlot, IEnumerable<Borrow> existingBorrows, BorrowStatus status = BorrowStatus.Active)
         {
             Borrow borrow = new Borrow(borrowerId, lenderId, borrowTimeSlot, status);
-            ValidateOverlap(existingBorrows, borrowTimeSlot);
+            ValidateOverlap(existingBorrows, borrowTimeSlot, borrow.Id);
             return borrow;
+        }
+
+        public void UpdateBorrowTimeSlot(TimeSlot newBorrowTimeSlot, IEnumerable<Borrow> existingBorrows)
+        {
+            ValidateOverlap(existingBorrows, newBorrowTimeSlot, this.Id);
+            BorrowTimeSlot = newBorrowTimeSlot;
         }
 
         public void CompleteBorrow()
@@ -58,9 +64,15 @@ namespace WatchWorld.Domain.Entities
         private static void ValidateOverlap(
             IEnumerable<Borrow> existingWatchBorrows,
             TimeSlot borrowTimeSlot,
-            Guid? currentBorrowId = null
+            Guid currentBorrowId
             ) //Validation method to check if the watch is already borrowed
         {
+            if (!existingWatchBorrows.Any())
+                return;
+            else if (currentBorrowId == Guid.Empty)
+                throw new DomainException("fejl under oprettelse af udlån, hvis problemet fortsætter kontakt support");
+
+
             var borrowOverlap = existingWatchBorrows
             .Where(c => c.Id != currentBorrowId)
             .Where(c => c.IsActive)

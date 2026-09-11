@@ -6,5 +6,7 @@
 
     public sealed class WatchNotFoundException(string message) : UseCaseException(message);
 
+    public sealed class BorrowNotFoundException(string message) : UseCaseException(message);
+
 }
 
