@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using WatchWorld.Application.Commands.ListingCommands;
 using WatchWorld.Application.Commands.UserCommands;
 using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Application.Ports.OutBound;
