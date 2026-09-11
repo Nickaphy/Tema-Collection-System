@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using WatchWorld.Domain.Entities;
+using WatchWorld.Domain.ValueObjects.ManyToMany;
 
 namespace WatchWorld.Infrastructure.Database
 {
