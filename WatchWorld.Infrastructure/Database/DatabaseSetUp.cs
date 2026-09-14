@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WatchWorld.Infrastructure.Database;
+using WatchWorld.Infrastructure.Database.Seed;
 
 public static class DatabaseSetup
 {
@@ -28,5 +29,11 @@ public static class DatabaseSetup
         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
         await context.Database.MigrateAsync();
+
+        // Both seeders are static (they check for existing rows before inserting),
+        // so it's safe to run them on every startup. WatchSeeder must run first -
+        // DbSeeder's borrow/listing data depends on watches already existing.
+        await WatchSeeder.SeedWatchesAsync(context);
+        await DbSeeder.SeedAsync(context);
     }
 }
