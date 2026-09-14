@@ -74,7 +74,7 @@ public class WatchesService : IWatchesUseCase
 
     public async Task<Result<Watches>> GetWatchByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var existingWatch = await _watchRepository.GetWatchByIdAsync(id.GetHashCode(), ct);
+        var existingWatch = await _watchRepository.GetWatchByIdAsync(id, ct);
         if (existingWatch.IsFailed || existingWatch.Value == null)
         {
             return Result.Fail("Uret blev ikke fundet.");
