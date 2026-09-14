@@ -34,6 +34,25 @@ public class SqlServerWatchRepository : IWatchesRepository
         return Result.Ok(watch);
     }
 
+    public async Task<Result<Watches>> UpdateWatchAsync(Watches watch, CancellationToken ct = default)
+    {
+        _context.Watchlist.Update(watch);
+        await _context.SaveChangesAsync(ct);
+        return Result.Ok(watch);
+    }
+
+    public async Task<Result> DeleteWatchAsync(Guid watchId, CancellationToken ct = default)
+    {
+        var watch = await _context.Watchlist.FindAsync(new object[] { watchId }, ct);
+        if (watch == null)
+        {
+            return Result.Fail($"Uret kunne ikke findes.");
+        }
+        _context.Watchlist.Remove(watch);
+        await _context.SaveChangesAsync(ct);
+        return Result.Ok();
+    }
+
     public async Task SaveAsync(Watches watch, CancellationToken ct = default)
     {
         var exists = await _context.Watchlist.AnyAsync(e => e.Id == watch.Id, ct);

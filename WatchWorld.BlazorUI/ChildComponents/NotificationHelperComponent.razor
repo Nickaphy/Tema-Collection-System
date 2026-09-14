@@ -1,0 +1,57 @@
+﻿@using WatchWorld.BlazorUI.Helpers
+@inject NotificationHelper Notification
+@implements IDisposable
+
+@*Notification child component has been made a child component since it's used on many different pages*@
+@*It uses the Notificationhelper to store the actual message and status*@
+@if (_isVisible)
+{
+    <aside class="notification @(Notification.IsSuccess ? "success" : "error")">
+        <span>@Notification.Message</span>
+        <button @onclick="Notification.Clear">✕</button>
+    </aside>
+}
+
+@code {
+    private bool _isVisible = false;
+    private System.Threading.CancellationTokenSource? _timerCts;
+
+    protected override void OnInitialized()
+        => Notification.OnChange += HandleChange;
+
+    private async void HandleChange()
+    {
+        _isVisible = Notification.IsVisible;
+        await InvokeAsync(StateHasChanged);
+
+        if (_isVisible)
+        {
+            StartAutoDismissTimer();
+        }
+    }
+
+    private async void StartAutoDismissTimer() @*Removes notification after a period of time*@
+    {
+        _timerCts?.Cancel();
+        _timerCts?.Dispose();
+        _timerCts = new System.Threading.CancellationTokenSource();
+
+        try
+        {
+            await Task.Delay(5000, _timerCts.Token);
+
+            Notification.Clear();
+        }
+        catch (TaskCanceledException)
+        {
+            //Set up in case of task being aborted
+        }
+    }
+
+    public void Dispose()
+    {
+        Notification.OnChange -= HandleChange;
+        _timerCts?.Cancel();
+        _timerCts?.Dispose();
+    }
+}

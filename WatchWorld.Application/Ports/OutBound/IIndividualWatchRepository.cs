@@ -5,8 +5,9 @@ namespace WatchWorld.Application.Ports.OutBound
 {
     public interface IIndividualWatchRepository
     {
-        Task<Result<IEnumerable<IndividualWatch?>>> GetAllAsync(CancellationToken ct = default);
-        Task<Result<IndividualWatch>> GetWatchByIdAsync(Guid id, CancellationToken ct = default);
+        Task<Result<IEnumerable<IndividualWatch>>> GetAllAsync(CancellationToken ct = default);
+        Task<Result<IndividualWatch?>> GetWatchByIdAsync(Guid id, CancellationToken ct = default);
+        Task<Result<IndividualWatch>> UpdateWatchAsync(IndividualWatch watch, CancellationToken ct = default);
         Task<Result<IndividualWatch>> CreateWatchAsync(IndividualWatch watch, CancellationToken ct = default);
         Task<Result> DeleteWatchAsync(Guid id, CancellationToken ct = default);
     }
