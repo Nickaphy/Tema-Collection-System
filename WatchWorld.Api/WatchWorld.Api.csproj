@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WatchWorld.Application\WatchWorld.Application.csproj" />
     <ProjectReference Include="..\WatchWorld.Domain\WatchWorld.Domain.csproj" />
+    <ProjectReference Include="..\WatchWorld.Infrastructure\WatchWorld.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

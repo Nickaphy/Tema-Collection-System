@@ -20,6 +20,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Radzen.Blazor" Version="11.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WatchWorld.Infrastructure\WatchWorld.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
