@@ -109,9 +109,11 @@ namespace WatchWorld.Infrastructure.Database
         IEntityTypeConfiguration<ActiveBorrows>,
         IEntityTypeConfiguration<WatchBorrow>
     {
-        public void Configure(EntityTypeBuilder<UserOwnsWatch> builder) => builder.HasNoKey();
-        public void Configure(EntityTypeBuilder<ActiveBorrows> builder) => builder.HasNoKey();
-        public void Configure(EntityTypeBuilder<WatchBorrow> builder) => builder.HasNoKey();
+        // Composite keys, not HasNoKey(): these are real join rows the seeder/repositories
+        // insert into, and EF's keyless entities are read-only (can't be tracked/inserted).
+        public void Configure(EntityTypeBuilder<UserOwnsWatch> builder) => builder.HasKey(x => new { x.UserId, x.WatchId });
+        public void Configure(EntityTypeBuilder<ActiveBorrows> builder) => builder.HasKey(x => new { x.ListingId, x.BorrowId });
+        public void Configure(EntityTypeBuilder<WatchBorrow> builder) => builder.HasKey(x => new { x.UserId, x.IndividualWatchId });
     }
 
     #endregion
