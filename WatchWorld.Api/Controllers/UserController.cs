@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.UserRequests;
 using WatchWorld.Application.Commands.UserCommands;
 using WatchWorld.Application.Ports.InBound;
@@ -18,13 +19,15 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllUsers(CancellationToken ct)
     {
         var users = await _userUseCase.GetAllUsersAsync();
         return Ok(users);
     }
 
-    [HttpPost]
+    [HttpPost("register")]
+    [AllowAnonymous]
     public async Task<ActionResult<User>> Create([FromBody] CreateUserRequest request, CancellationToken ct)
     {
         var command = new CreateUserCommand(
@@ -44,6 +47,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{userId}")]
+    [Authorize(Roles = "User,Admin")]
     public async Task<ActionResult> DeleteUser(DeleteUserRequest request, CancellationToken ct)
     {
         var command = new DeleteUserCommand(
@@ -54,6 +58,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{userId}")]
+    [Authorize(Roles = "User,Admin")]
     public async Task<ActionResult<User>> UpdateUser(Guid userId, UpdateUserRequest request, CancellationToken ct)
     {
         var command = new UpdateUserCommand(
@@ -66,10 +71,23 @@ public class UserController : ControllerBase
             city: request.city,
             note: request.note,
             password: request.password,
-            isAdmin: request.isAdmin,
+            isAdmin: false,
             rating: request.rating
         );
         var user = await _userUseCase.UpdateUserAsync(command, ct);
         return Ok(user);
+    }
+    
+    [HttpPatch("{userId}/role")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult> SetAdminStatus(Guid userId, [FromBody] SetAdminRoleRequest request, CancellationToken ct)
+    {
+        var command = new SetAdminRoleCommand(
+            id : userId,
+            isAdmin: request.isAdmin
+
+            );
+        await _userUseCase.SetAdminRoleAsync(command, ct);
+        return NoContent();
     }
 }

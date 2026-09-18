@@ -1,5 +1,4 @@
 using WatchWorld.Infrastructure;
-using WatchWorld.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 

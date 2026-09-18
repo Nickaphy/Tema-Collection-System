@@ -1,8 +1,6 @@
 ﻿namespace WatchWorld.Application.Commands.UserCommands
 {
-    public record DeleteUserCommand(
-        Guid userId
-    )
+    public class SetAdminRoleCommand (Guid id, bool isAdmin)
     {
     }
 }
