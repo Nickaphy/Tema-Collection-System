@@ -83,7 +83,7 @@ public class UserController : ControllerBase
     public async Task<ActionResult> SetAdminStatus(Guid userId, [FromBody] SetAdminRoleRequest request, CancellationToken ct)
     {
         var command = new SetAdminRoleCommand(
-            id : userId,
+            userId : userId,
             isAdmin: request.isAdmin
 
             );

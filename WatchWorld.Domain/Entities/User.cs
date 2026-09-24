@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Text;
+﻿
 using WatchWorld.Domain.Service;
 using WatchWorld.Domain.ValueObjects;
 
@@ -36,8 +32,6 @@ namespace WatchWorld.Domain.Entities
             bool isAdmin,
             List<UserRating> rating)
         {
-            Id = Guid.NewGuid();
-
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
@@ -97,21 +91,15 @@ namespace WatchWorld.Domain.Entities
 
             return user;
         }
-
-        public static User CreateAdmin(
-            string firstName,
-            string lastName,
-            string phoneNumber,
-            string email,
-            string address,
-            string city,
-            string? note,
-            string password,
-            List<UserRating> rating)
+        public void SetAdmin(
+            User user)
         {
-            var admin = new User(firstName, lastName, phoneNumber, email, address, city, note, password, true, rating);
-
-            return admin;
+            if (user.IsAdmin == true)
+                throw new UserInvalidInputException($"Brugeren er allerede en Admin");
+            else if (user.Id == Guid.Empty)
+                throw new UserInvalidInputException($"Brugeren skal have et gyldigt ID");
+            else
+                return;
         }
 
         public bool IsUserAdmin()
