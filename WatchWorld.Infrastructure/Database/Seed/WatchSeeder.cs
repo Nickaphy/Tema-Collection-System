@@ -6,11 +6,8 @@ namespace WatchWorld.Infrastructure.Database.Seed;
 
 public static class WatchSeeder
 {
-    // Idempotent - does nothing if Watchlist already has rows, so it's
-    // safe to call on every startup instead of only on a fresh database.
-    // useFullCatalog picks all 150 seeded watches (the shared Mother DB)
-    // vs. the smaller Basic slice (everyone's own Local dev DB) - see
-    // DatabaseSetup's SeedFullCatalog config flag for where this comes from.
+    
+    // Seed watches into database, basic = 20, full = 150. (local, mother)
     public static async Task SeedWatchesAsync(AppDbContext context, bool useFullCatalog)
     {
         if (await context.Watchlist.AnyAsync())
