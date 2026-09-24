@@ -10,5 +10,6 @@ namespace WatchWorld.Application.Ports.OutBound
         Task<Result<User>> CreateUserAsync(User user, CancellationToken ct = default);
         Task<Result<User>> UpdateUserAsync(User user, CancellationToken ct = default);
         Task<Result> DeleteUserAsync(Guid userId, CancellationToken cancellationToken = default);
+        Task<Result> SetUserAsAdminAsync(Guid userId, bool shouldBeAdmin, CancellationToken cancellationToken = default);
     }
 }

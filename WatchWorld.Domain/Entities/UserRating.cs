@@ -14,7 +14,7 @@ namespace WatchWorld.Domain.Entities
 
         private UserRating() { }
 
-        private UserRating(Guid ratedToUserId, int ratingAmount, string description, Guid ratedByUserId)
+        public UserRating(Guid ratedToUserId, int ratingAmount, string description, Guid ratedByUserId)
         {
             RatedToUserId = ratedToUserId;
             RatingAmount = ratingAmount;
@@ -22,9 +22,27 @@ namespace WatchWorld.Domain.Entities
             RatedByUserId = ratedByUserId;
         }
 
-        private static UserRating Create(Guid ratedToUserId, int ratingAmount, string description, Guid ratedByUserId)
+        public static UserRating Create(Guid ratedToUserId, int ratingAmount, string description, Guid ratedByUserId)
         {
             var rating = new UserRating(ratedToUserId, ratingAmount, description, ratedByUserId);
+            return rating;
+        }
+        public static UserRating Update(Guid specificUserRatingId, int ratingAmount, string description)
+        {
+            var rating = new UserRating
+            {
+                Id = specificUserRatingId,
+                RatingAmount = ratingAmount,
+                Description = description
+            };
+            return rating;
+        }
+        public static UserRating Delete(Guid specificUserRatingId)
+        {
+            var rating = new UserRating
+            {
+                Id = specificUserRatingId
+            };
             return rating;
         }
 

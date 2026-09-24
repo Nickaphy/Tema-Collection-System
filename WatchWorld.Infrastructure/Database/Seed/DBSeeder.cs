@@ -279,8 +279,8 @@
         private static TimeSlot CreateTimeSlot(DateTime from, DateTime to)
         {
             var timeSlot = (TimeSlot)FormatterServices.GetUninitializedObject(typeof(TimeSlot));
-            SetMemberValue(timeSlot, "From", from);
-            SetMemberValue(timeSlot, "To", to);
+            SetMemberValue(timeSlot, "From", (DateTimeOffset)from);
+            SetMemberValue(timeSlot, "To", (DateTimeOffset)to);
             return timeSlot;
         }
 
