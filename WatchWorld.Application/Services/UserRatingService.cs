@@ -24,6 +24,7 @@ public class UserRatingService : IUserRatingUseCase
                 ratedToUserId: command.ratedToUserId,
                 ratingAmount: command.ratingAmount,
                 description: command.description,
+                isRatingWatch: command.isRatingWatch,
                 ratedByUserId: command.ratedByUserId
             );
             await _userRatingRepository.CreateUserRatingAsync(command, ct);

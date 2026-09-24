@@ -6,25 +6,27 @@ namespace WatchWorld.Domain.Entities
 {
     public class UserRating : Aggregateroot
     {
-        public Guid RatedToUserId { get; private set; }
+        public Guid RatedTargetId { get; private set; }
         public int RatingAmount { get; private set; }
         public string Description { get; private set; }
         public Guid RatedByUserId { get; private set; }
+        public bool IsRatingWatch { get; private set; } = false;
+        public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
 
         private UserRating() { }
 
-        public UserRating(Guid ratedToUserId, int ratingAmount, string description, Guid ratedByUserId)
+        public UserRating(Guid ratedToUserId, int ratingAmount, string description, bool? isRatingWatch, Guid ratedByUserId)
         {
-            RatedToUserId = ratedToUserId;
+            RatedTargetId = ratedToUserId;
             RatingAmount = ratingAmount;
             Description = description;
             RatedByUserId = ratedByUserId;
         }
 
-        public static UserRating Create(Guid ratedToUserId, int ratingAmount, string description, Guid ratedByUserId)
+        public static UserRating Create(Guid ratedToUserId, int ratingAmount, string description, bool? isRatingWatch, Guid ratedByUserId)
         {
-            var rating = new UserRating(ratedToUserId, ratingAmount, description, ratedByUserId);
+            var rating = new UserRating(ratedToUserId, ratingAmount, description, isRatingWatch, ratedByUserId);
             return rating;
         }
         public static UserRating Update(Guid specificUserRatingId, int ratingAmount, string description)
