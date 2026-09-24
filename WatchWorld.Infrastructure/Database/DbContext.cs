@@ -44,7 +44,7 @@ namespace WatchWorld.Infrastructure.Database
 
             builder.HasMany(u => u.Rating)
                 .WithOne()
-                .HasForeignKey(r => r.RatedToUserId)
+                .HasForeignKey(r => r.RatedTargetId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
