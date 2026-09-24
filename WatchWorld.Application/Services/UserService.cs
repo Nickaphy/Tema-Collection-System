@@ -6,6 +6,7 @@ using WatchWorld.Domain.Entities;
 using WatchWorld.Domain.Service;
 
 namespace WatchWorld.Application.Services;
+
 public class UserService : IUserUseCase
 {
     private readonly IUserRepository _userRepository;
@@ -32,7 +33,7 @@ public class UserService : IUserUseCase
                 throw new UserNotFoundException($"Brugeren med ID {id} blev ikke fundet.");
             }
             else
-              return Result.Ok(user.Value);
+                return Result.Ok(user.Value);
         }
         catch (UserNotFoundException ex)
         {
@@ -83,7 +84,7 @@ public class UserService : IUserUseCase
             _Lock.Release();
         }
     }
-    
+
     public async Task<Result<User>> UpdateUserAsync(UpdateUserCommand command, CancellationToken ct = default)
     {
 
@@ -99,7 +100,7 @@ public class UserService : IUserUseCase
             var user = existingUser.Value;
             try
             {
-            
+
                 user.UpdateUser(
                     command.firstName,
                     command.lastName,
@@ -134,7 +135,7 @@ public class UserService : IUserUseCase
         }
         finally
         {
-          _Lock.Release();
+            _Lock.Release();
         }
     }
 
@@ -149,4 +150,35 @@ public class UserService : IUserUseCase
         return Result.Ok();
     }
 
+    public async Task<Result> SetAdminRoleAsync(SetAdminRoleCommand command, CancellationToken ct = default)
+    {
+        var userResult = await _userRepository.GetUserByIdAsync(command.userId, ct);
+        if (userResult.IsFailed || userResult.Value == null)
+        {
+            return Result.Fail("Brugeren kunne ikke findes");
+        }
+        try
+        {
+            var user = userResult.Value;
+            user.SetAdmin(user);
+            bool shouldBeAdmin = user.IsAdmin;
+            await _userRepository.SetUserAsAdminAsync(command.userId, shouldBeAdmin, ct);
+            return Result.Ok();
+        }
+        catch (DomainException ex)
+        {
+            return ex switch
+            {
+                UserInvalidInputException => Result.Fail("Et input var ikke korrekt. " + ex.Message),
+                ValidationException => Result.Fail("Der er sket en valideringsfejl. " + ex.Message),
+                _ => Result.Fail("Der er sket en uforventet fejl " + ex.Message) // Fallback catch-all for base DomainException
+            };
+        }
+        catch (Exception ex) // Catch-all for any other unexpected exceptions (typically SQL or Infrastructure exceptions)
+        {
+            System.Diagnostics.Debug.WriteLine($"Infrastructure Failure: {ex.Message}");
+            return Result.Fail("An unexpected system error occurred." + ex.Message);
+        }
+
+    }
 }

@@ -66,5 +66,17 @@ namespace WatchWorld.Infrastructure.Adapters
             return Result.Ok();
         }
 
+        public async Task<Result> SetUserAsAdminAsync(Guid userId, bool shouldBeAdmin, CancellationToken ct = default)
+        {
+            var user = await _context.Users.FindAsync(new object[] { userId }, ct);
+            if (user == null)
+            {
+                return Result.Fail("User not found.");
+            }
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync(ct);
+            return Result.Ok();
+        }
+
     }
 }
