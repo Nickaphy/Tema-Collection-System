@@ -1,6 +1,7 @@
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: "${SA_PASSWORD}"
@@ -26,7 +27,9 @@ services:
         condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=WatchWorld;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;"
+      ConnectionStrings__Mother: "Server=${MOTHER_LAN_IP:-192.168.0.236},1433;Database=WatchWorld;User Id=sa;Password=${MOTHER_SA_PASSWORD:-};TrustServerCertificate=True;Connect Timeout=3;"
+      ConnectionStrings__Local: "Server=sqlserver,1433;Database=WatchWorld;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;"
+      SeedFullCatalog: "${SEED_FULL_CATALOG:-false}"
     ports:
       - "8080:8080"
 

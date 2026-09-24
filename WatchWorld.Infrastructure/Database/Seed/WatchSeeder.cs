@@ -8,12 +8,17 @@ public static class WatchSeeder
 {
     // Idempotent - does nothing if Watchlist already has rows, so it's
     // safe to call on every startup instead of only on a fresh database.
-    public static async Task SeedWatchesAsync(AppDbContext context)
+    // useFullCatalog picks all 150 seeded watches (the shared Mother DB)
+    // vs. the smaller Basic slice (everyone's own Local dev DB) - see
+    // DatabaseSetup's SeedFullCatalog config flag for where this comes from.
+    public static async Task SeedWatchesAsync(AppDbContext context, bool useFullCatalog)
     {
         if (await context.Watchlist.AnyAsync())
             return;
 
-        foreach (var seed in WatchSeedData.All)
+        var seedSet = useFullCatalog ? WatchSeedData.All : WatchSeedData.Basic;
+
+        foreach (var seed in seedSet)
         {
             var watch = Watches.Create(
                 seed.Name,
