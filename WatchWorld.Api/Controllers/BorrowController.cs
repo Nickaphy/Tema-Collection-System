@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.BorrowRequests;
-using WatchWorld.Api.Requests.ListingRequests;
 using WatchWorld.Application.Commands.BorrowCommands;
 using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Domain.Entities;

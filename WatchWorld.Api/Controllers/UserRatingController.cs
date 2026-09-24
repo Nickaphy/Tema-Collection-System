@@ -32,7 +32,7 @@ public class UserRatingController : ControllerBase
     public async Task<ActionResult<UserRating>> GetUserRatingByIdAsync(Guid specificUserRatingId, CancellationToken ct)
     {
         await _userRatingUseCase.GetUserRatingByIdAsync(specificUserRatingId, ct);
-        if (specificUserRatingId == null)
+        if (specificUserRatingId == Guid.Empty)
         {
             return NotFound();
         }
