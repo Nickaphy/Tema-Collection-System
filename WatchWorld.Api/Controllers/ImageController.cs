@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WatchWorld.Api.Requests.ImageRequests;
 using WatchWorld.Application.Commands.ImageCommands;
 using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Domain.Entities;
-using WatchWorld.Api.Requests.ImageRequests;
 
 namespace WatchWorld.Api.Controllers
 {
@@ -18,6 +19,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<HighResImage>>> Get(CancellationToken ct)
         {
             var images = await _imageUseCase.GetAllAsync(ct);
@@ -25,6 +27,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<HighResImage>> Create([FromBody] CreateImageRequest request, CancellationToken ct)
         {
             var command = new CreateImageCommand(
@@ -38,6 +41,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> Delete(Guid id, CancellationToken ct)
         {
             await _imageUseCase.DeleteImageAsync(id, ct);

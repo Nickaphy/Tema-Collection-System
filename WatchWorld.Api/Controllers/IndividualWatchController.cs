@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WatchWorld.Application.Ports.InBound;
-using WatchWorld.Domain.Entities;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.IndividualWatchRequests;
 using WatchWorld.Application.Commands.IndividualWatchCommands;
+using WatchWorld.Application.Ports.InBound;
+using WatchWorld.Domain.Entities;
 
 namespace WatchWorld.Api.Controllers
 {
@@ -18,6 +19,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<IndividualWatch>>> Get(CancellationToken ct)
         {
             var individualWatches = await _individualWatchUseCase.GetAllAsync(ct);
@@ -25,6 +27,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IndividualWatch>> GetById(Guid id, CancellationToken ct)
         {
             var individualWatch = await _individualWatchUseCase.GetIndividualWatchByIdAsync(id, ct);
@@ -32,6 +35,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<IndividualWatch>> Create([FromBody] CreateIndividualWatchRequest request, CancellationToken ct)
         {
             var command = new CreateIndividualWatchCommand(
@@ -47,7 +51,13 @@ namespace WatchWorld.Api.Controllers
             return CreatedAtAction(nameof(Get), new { id = new Guid() }, individualWatch);
         }
 
+        public async Task<ActionResult<IndividualWatch>> UpdateWatch([FromBody] UpdateIndividualWatchRequest request, CancellationToken ct)
+        {
+
+        }
+
         [HttpDelete("{id}")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> Delete(DeleteIndividualWatchRequest request, CancellationToken ct)
         {
             await _individualWatchUseCase.DeleteIndividualWatchAsync(new DeleteIndividualWatchCommand(request.id), ct);

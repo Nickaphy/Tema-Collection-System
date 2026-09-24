@@ -72,6 +72,67 @@ public class WatchesService : IWatchesUseCase
         }
     }
 
+    public async Task<Result<Watches>> UpdateWatchAsync(UpdateWatchCommand command, CancellationToken ct = default)
+    {
+        var existingWatches = await _watchRepository.GetAllAsync(ct);
+
+        await _Lock.WaitAsync();
+        try
+        {
+            var existingWatch = await _watchRepository.GetWatchByIdAsync(command.id, ct);
+            if (existingWatch.Value == null || existingWatch.IsFailed)
+                return Result.Fail("Kan ikke opdatere et ur som ikke eksistere i databasen");
+            try
+            {
+
+                var watch = Watches.Update(
+                    name: command.name,
+                    modelNumber: command.modelNumber,
+                    caseSize: command.caseSize,
+                    caseShapeEnum: command.caseShapeEnum,
+                    caseMaterialEnum: command.caseMaterialEnum,
+                    movementTypeEnum: command.movementTypeEnum,
+                    style: command.style,
+                    originalPrice: command.originalPrice,
+                    genderEnum: command.genderEnum,
+                    releaseYear: command.releaseYear,
+                    braceletTypeEnum: command.braceletTypeEnum,
+                    description: command.description,
+                    images: command.images
+                );
+                await _watchRepository.UpdateWatchAsync(watch, ct);
+                return Result.Ok(watch);
+            }
+            catch (DomainException ex)
+            {
+                return ex switch
+                {
+                    UserInvalidInputException => Result.Fail("Et input var ikke korrekt. " + ex.Message),
+                    ValidationException => Result.Fail("Der er sket en valideringsfejl. " + ex.Message),
+                    _ => Result.Fail("Der er sket en uforventet fejl " + ex.Message) // Fallback catch-all for base DomainException
+                };
+            }
+            catch (Exception ex) // Catch-all for any other unexpected exceptions (typically SQL or Infrastructure exceptions)
+            {
+                System.Diagnostics.Debug.WriteLine($"Infrastructure Failure: {ex.Message}");
+                return Result.Fail("An unexpected system error occurred." + ex.Message);
+            }
+        }
+        finally
+        {
+            _Lock.Release();
+        }
+    }
+
+    public async Task<Result> DeleteWatchAsync(DeleteWatchCommand command, CancellationToken ct = default)
+    {
+        var existingWatch = await _watchRepository.GetWatchByIdAsync(command.watchId, ct);
+        if (existingWatch.Value == null || existingWatch.IsFailed)
+            return Result.Fail("Kan ikke slette et ur som ikke eksistere i databasen");
+        await _watchRepository.DeleteWatchAsync(command.watchId, ct);
+        return Result.Ok();
+    }
+
     public async Task<Result<Watches>> GetWatchByIdAsync(Guid id, CancellationToken ct = default)
     {
         var existingWatch = await _watchRepository.GetWatchByIdAsync(id, ct);
