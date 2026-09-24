@@ -54,19 +54,40 @@ namespace WatchWorld.Test
             Assert.Equal(Local, result);
         }
 
-        //Test 3: Mother bliver brugt og kan nås
-        [Fact(Skip = "Der kræves en kørende SQL Server")]
+        private static string? ReadSaPasswordFromEnvFile()
+        {
+            var dir = new DirectoryInfo(AppContext.BaseDirectory);
+
+            while (dir != null)
+            {
+                var envFile = Path.Combine(dir.FullName, ".env");
+                if (File.Exists(envFile))
+                {
+                    foreach (var line in File.ReadAllLines(envFile))
+                    {
+                        if (line.StartsWith("SA_PASSWORD="))
+                            return line.Substring("SA_PASSWORD=".Length).Trim().Trim('"', '\'');
+                    }
+                }
+                dir = dir.Parent;
+            }
+
+            return null;
+        }
+
+        //Her bliver mother brugt og kan nås ved hjælp af docker compose up
+        [Trait("Category", "Integration")]
+        [Fact]
         public void Uses_Mother_when_reachable()
         {
-            var password = Environment.GetEnvironmentVariable("SA_PASSWORD")
-                ?? throw new InvalidOperationException("Sæt variablen for SA_PASSWORD.");
+            var password = ReadSaPasswordFromEnvFile()
+                ?? throw new InvalidOperationException("Fandt ikke SA_PASSWORD i .env i project root.");
 
-            var reachableMother = $"Server=localhost,1433;Database=master;User Id=sa;Password={password};TrustServerCertificate=True;";
+            var reachableMother = $"Server=localhost,1433;Database=master;User Id=sa;Password={password};TrustServerCertificate=True;Connect Timeout=3;";
 
             var result = ResolvedConnectionString(reachableMother);
 
             Assert.Equal(reachableMother, result);
         }
-
     }
 }
