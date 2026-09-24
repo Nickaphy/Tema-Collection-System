@@ -53,7 +53,17 @@ namespace WatchWorld.Api.Controllers
 
         public async Task<ActionResult<IndividualWatch>> UpdateWatch([FromBody] UpdateIndividualWatchRequest request, CancellationToken ct)
         {
-
+            var command = new UpdateIndividualWatchCommand(
+                individualWatchId: request.individualWatchId,
+                specificWatchId: request.specificWatchId,
+                wearGrade: request.wearGrade,
+                age: request.age,
+                note: request.note,
+                estimatedValue: request.estimatedValue,
+                picture: request.picture
+            );
+            var individualWatch = await _individualWatchUseCase.UpdateIndividualWatchAsync(command, ct);
+            return Ok(individualWatch);
         }
 
         [HttpDelete("{id}")]

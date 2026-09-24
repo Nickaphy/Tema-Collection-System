@@ -61,6 +61,7 @@ public class UserRatingController : ControllerBase
             ratedToUserId: request.ratedToUserId,
             ratedByUserId: request.ratedByUserId,
             ratingAmount: request.ratingAmount,
+            isRatingWatch: request.isRatingWatch,
             description: request.description
         );
         await _userRatingUseCase.CreateUserRatingAsync(command, ct);
