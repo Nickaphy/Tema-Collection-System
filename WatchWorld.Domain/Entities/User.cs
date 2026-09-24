@@ -67,12 +67,8 @@ namespace WatchWorld.Domain.Entities
             if (string.IsNullOrWhiteSpace(City))
                 throw new UserInvalidInputException($"Du skal udfylde din by!");
 
-            if (string.IsNullOrWhiteSpace(Password)
-                || Password.Length < 8
-                || !Password.Any(Char.IsUpper)
-                || !Password.Any(Char.IsLower)
-                || !Password.Any(Char.IsDigit))
-                throw new UserInvalidInputException($"Du skal oprette en gyldig adgangskode!");
+            var validator = new PasswordValidatorService();
+            validator.ValidateAndThrow(Password, Email, $"{FirstName} {LastName}");
 
         }
 
