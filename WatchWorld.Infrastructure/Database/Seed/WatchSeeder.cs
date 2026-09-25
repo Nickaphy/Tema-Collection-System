@@ -6,14 +6,16 @@ namespace WatchWorld.Infrastructure.Database.Seed;
 
 public static class WatchSeeder
 {
-    // Idempotent - does nothing if Watchlist already has rows, so it's
-    // safe to call on every startup instead of only on a fresh database.
-    public static async Task SeedWatchesAsync(AppDbContext context)
+    
+    // Seed watches into database, basic = 20, full = 150. (local, mother)
+    public static async Task SeedWatchesAsync(AppDbContext context, bool useFullCatalog)
     {
         if (await context.Watchlist.AnyAsync())
             return;
 
-        foreach (var seed in WatchSeedData.All)
+        var seedSet = useFullCatalog ? WatchSeedData.All : WatchSeedData.Basic;
+
+        foreach (var seed in seedSet)
         {
             var watch = Watches.Create(
                 seed.Name,
