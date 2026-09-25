@@ -1967,4 +1967,10 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "The Zenith G.F.J. Calibre 135 40.1865.0135/51.C200 debuted in 2025 as a limited edition of 60 pieces for the 160th anniversary of the brand. It features a Platinum case of 39.00mm, and a 3-part blue dial combining a brick guilloche pattern, lapis lazuli and mother-of-pearl.")
     };
+
+    // Local/teammate dev DBs seed only this smaller slice - fast startup,
+    // enough variety to build and test against. The full 150-watch catalog
+    // in `All` above is reserved for the shared Mother DB (see WatchSeeder
+    // and DatabaseSetup's SeedFullCatalog flag) so it reads as a proper demo.
+    public static readonly IReadOnlyList<SeedWatch> Basic = All.Take(20).ToList();
 }
