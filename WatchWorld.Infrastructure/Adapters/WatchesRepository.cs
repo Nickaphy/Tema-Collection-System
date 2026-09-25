@@ -17,7 +17,10 @@ public class SqlServerWatchRepository : IWatchesRepository
 
     public async Task<Result<IEnumerable<Watches>>> GetAllAsync(CancellationToken ct = default)
     {
-        var watches = await _context.Watchlist.AsNoTracking().ToListAsync(ct);
+        var watches = await _context.Watchlist
+            .Include(w => w.Images)
+            .AsNoTracking()
+            .ToListAsync(ct);
 
         return Result.Ok<IEnumerable<Watches>>(watches);
     }

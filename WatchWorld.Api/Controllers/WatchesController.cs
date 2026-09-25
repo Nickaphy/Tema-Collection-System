@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc; 
 using WatchWorld.Api.Requests.WatchRequests;
 using WatchWorld.Application.Commands.WatchesCommands;
@@ -23,7 +24,9 @@ public class WatchesController : ControllerBase
     public async Task<ActionResult<IEnumerable<Watches>>> Get(CancellationToken ct)
     {
         var watches = await _watchUseCase.GetAllAsync(ct);
-        return Ok(watches);
+        if (watches.IsFailed)
+            return Problem(string.Join("; ", watches.Errors.Select(e => e.Message)));
+        return Ok(watches.Value);
     }
 
     [HttpGet("{id}")]

@@ -71,7 +71,7 @@
             // ==========================================
             var rating1 = CreateDomainObject<UserRating>(new()
             {
-                ["RatedToUserId"] = alice.Id,
+                ["RatedTargetId"] = alice.Id,   // was "RatedToUserId"
                 ["RatedByUserId"] = bob.Id,
                 ["RatingAmount"] = 5,
                 ["Description"] = "Alice returned my watch in pristine condition and right on time!"
@@ -79,7 +79,7 @@
 
             var rating2 = CreateDomainObject<UserRating>(new()
             {
-                ["RatedToUserId"] = bob.Id,
+                ["RatedTargetId"] = bob.Id,     // was "RatedToUserId"
                 ["RatedByUserId"] = alice.Id,
                 ["RatingAmount"] = 5,
                 ["Description"] = "Smooth experience. Watch came carefully packed with full documentation."
