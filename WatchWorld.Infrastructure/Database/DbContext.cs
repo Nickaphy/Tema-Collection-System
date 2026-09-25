@@ -44,7 +44,7 @@ namespace WatchWorld.Infrastructure.Database
 
             builder.HasMany(u => u.Rating)
                 .WithOne()
-                .HasForeignKey(r => r.RatedToUserId)
+                .HasForeignKey(r => r.RatedTargetId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
@@ -77,6 +77,9 @@ namespace WatchWorld.Infrastructure.Database
                 .WithOne()
                 .HasForeignKey("IndividualWatchId")
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(iw => iw.EstimatedValue)
+                .HasPrecision(10, 2);
         }
     }
 
@@ -101,6 +104,20 @@ namespace WatchWorld.Infrastructure.Database
                 .WithMany()
                 .HasForeignKey("IndividualWatchId")
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(l => l.PricePerDay)
+                .HasPrecision(10, 2);
+        }
+    }
+
+    public class WatchesConfiguration : IEntityTypeConfiguration<Watches>
+    {
+        public void Configure(EntityTypeBuilder<Watches> builder)
+        {
+            builder.HasKey(w => w.Id);
+
+            builder.Property(w => w.OriginalPrice)
+                .HasPrecision(10, 2);
         }
     }
 
