@@ -3,6 +3,7 @@ using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Domain.Entities;
 using WatchWorld.Application.Commands.ListingCommands;
 using WatchWorld.Api.Requests.ListingRequests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WatchWorld.Api.Controllers
 {
@@ -18,13 +19,19 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Listing>>> Get(CancellationToken ct)
         {
-            var listings = await _listingUseCase.GetAllAsync(ct);
-            return Ok(listings);
+            var result = await _listingUseCase.GetAllAsync(ct);
+
+            if (result.IsFailed)
+                return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+            return Ok(result.Value);
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Listing>> GetById(Guid id, CancellationToken ct)
         {
             var listing = await _listingUseCase.GetListingByIdAsync(id, ct);
@@ -32,6 +39,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Listing>> Create([FromBody] CreateListingRequest request, CancellationToken ct)
         {
             var command = new CreateListingCommand(
@@ -44,6 +52,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> Delete(DeleteListingRequest request, CancellationToken ct)
         {
             await _listingUseCase.DeleteListingAsync(new DeleteListingCommand(request.id), ct);

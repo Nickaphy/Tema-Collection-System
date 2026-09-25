@@ -54,3 +54,4 @@ Thumbs.db
 
 # Local secrets (docker-compose reads this automatically)
 .env
+

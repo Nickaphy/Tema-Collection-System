@@ -53,22 +53,25 @@ namespace WatchWorld.Domain.Entities
             if (ReleaseYear.Year > DateTime.Now.Year)
                 throw new UserInvalidInputException("ReleaseYear must be before the current year.");
         }
-        public void Update(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
+        public static Watches Update(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
         {
             Validate(name, modelNumber, caseSize, originalPrice, releaseYear);
-            Name = name;
-            ModelNumber = modelNumber;
-            CaseSize = caseSize;
-            CaseShapeEnum = caseShapeEnum;
-            CaseMaterialEnum = caseMaterialEnum;
-            MovementTypeEnum = movementTypeEnum;
-            Style = style;
-            OriginalPrice = originalPrice;
-            GenderEnum = genderEnum;
-            ReleaseYear = releaseYear;
-            BraceletTypeEnum = braceletTypeEnum ?? new List<BraceletTypeEnum>();
-            Description = description;
-            Images = images;
+            return new Watches
+            {
+                Name = name,
+                ModelNumber = modelNumber,
+                CaseSize = caseSize,
+                CaseShapeEnum = caseShapeEnum,
+                CaseMaterialEnum = caseMaterialEnum,
+                MovementTypeEnum = movementTypeEnum,
+                Style = style,
+                OriginalPrice = originalPrice,
+                GenderEnum = genderEnum,
+                ReleaseYear = releaseYear,
+                BraceletTypeEnum = braceletTypeEnum ?? new List<BraceletTypeEnum>(),
+                Description = description,
+                Images = images
+            };
         }
         public static Watches Create(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
         {

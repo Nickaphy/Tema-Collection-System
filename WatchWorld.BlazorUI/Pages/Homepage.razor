@@ -1,0 +1,168 @@
+﻿@page "/"
+@implements IDisposable
+@using Radzen
+@using Radzen.Blazor
+@inject NavigationManager Navigation
+@inject WatchWorldApiClient ApiClient
+@inject ILogger<Homepage> Logger
+
+<PageTitle>WatchWorld – Urenes encyklopædi</PageTitle>
+
+<div class="ww-page">
+
+    <header class="ww-header">
+        <div class="ww-header__inner">
+            <a href="/" class="ww-logo" aria-label="WatchWorld forside">
+                <span class="ww-logo__mark">W</span>
+                <span class="ww-logo__word">WatchWorld</span>
+            </a>
+
+            <nav class="ww-nav" aria-label="Hovedmenu">
+                <a href="/wiki">Wiki</a>
+                <a href="/maerker">Mærker</a>
+                <a href="/udlaan">Udlån</a>
+                <a href="/forum">Forum</a>
+                <a href="/om">Om</a>
+            </nav>
+
+            <div class="ww-search">
+                <RadzenIcon Icon="search" class="ww-search__icon" />
+                <input type="text" @bind="searchQuery" placeholder="Søg efter ure, mærker, modeller …" aria-label="Søg" />
+            </div>
+
+            <div class="ww-header__actions">
+                <RadzenButton Text="Log ind" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
+                              Click="@(() => Navigation.NavigateTo("/login"))" class="ww-btn-text" />
+                <RadzenButton Text="Opret bruger" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Filled"
+                              Click="@(() => Navigation.NavigateTo("/register"))" class="ww-btn-gold" />
+            </div>
+        </div>
+    </header>
+
+    <div class="ww-substrip">
+        <div class="ww-substrip__inner">
+            <RadzenBadge Text="ENCYKLOPÆDI" BadgeStyle="BadgeStyle.Dark" class="ww-substrip__badge" />
+            <span class="ww-substrip__text">Alt hvad du skal vide om urverdenen, skrevet af samlere for samlere</span>
+            <a href="/wiki" class="ww-substrip__link">Gå til encyklopædiet</a>
+        </div>
+    </div>
+
+    <main class="ww-main">
+
+        @if (isLoading)
+        {
+            <div class="ww-state">Indlæser forsiden …</div>
+        }
+        else if (errorMessage is not null)
+        {
+            <div class="ww-state ww-state--error">@errorMessage</div>
+        }
+        else
+        {
+            <div class="ww-grid">
+
+                <div class="ww-col-main">
+
+                    @if (Spotlight is not null)
+                    {
+                        <RadzenCard class="ww-hero">
+                            <div class="ww-hero__images">
+                                <img src="@Spotlight.PrimaryImageUrl" alt="@Spotlight.ModelName" />
+                                <img src="@Spotlight.SecondaryImageUrl" alt="Detaljebillede af @Spotlight.ModelName" />
+                                <span class="ww-hero__tag">MODELSIDE</span>
+                            </div>
+                            <h1 class="ww-hero__title">@Spotlight.ModelName</h1>
+                            <p class="ww-hero__subtitle">@Spotlight.Summary</p>
+                            <div class="ww-hero__facts">
+                                <div><span>Modelnummer</span><strong>@Spotlight.ModelNumber</strong></div>
+                                <div><span>Udgivelsesår</span><strong>@Spotlight.ReleaseYear</strong></div>
+                                <div><span>Kassestørrelse</span><strong>@Spotlight.CaseSize mm</strong></div>
+                            </div>
+                        </RadzenCard>
+                    }
+                    else
+                    {
+                        <p class="ww-empty">Encyklopædiet er tomt indtil videre — det første ur er endnu ikke oprettet.</p>
+                    }
+
+                    <section class="ww-listings" aria-labelledby="udvalgte-udlaan-heading">
+                        <div class="ww-section-head">
+                            <h2 id="udvalgte-udlaan-heading">Udvalgte udlån</h2>
+                            <div class="ww-filter-tabs" role="group" aria-label="Sortér udlån">
+                                @foreach (var filter in filters)
+                                {
+                                    <button type="button"
+                                            class="@(selectedFilter == filter ? "active" : "")"
+                                            @onclick="@(() => selectedFilter = filter)">
+                                        @filter
+                                    </button>
+                                }
+                            </div>
+                        </div>
+
+                        @if (FeaturedListings.Any())
+                        {
+                            <div class="ww-listing-row">
+                                @foreach (var listing in DisplayedListings)
+                                {
+                                    <a class="ww-listing-card" href="@listing.Url">
+                                        <div class="ww-listing-card__image">
+                                            <img src="@listing.ImageUrl" alt="@listing.WatchName" />
+                                            <RadzenBadge Text="UDLÅN" BadgeStyle="BadgeStyle.Dark" class="ww-listing-card__badge" />
+                                        </div>
+                                        <div class="ww-listing-card__body">
+                                            <div class="ww-listing-card__name">@listing.WatchName</div>
+                                            <div class="ww-listing-card__detail">@listing.Age år gammelt</div>
+                                            <div class="ww-listing-card__meta">
+                                                <span class="ww-listing-card__price">@FormatPrice(listing.PricePerDay) / dag</span>
+                                                <span class="ww-listing-card__cta">Se detaljer</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                }
+                            </div>
+                            <a href="/udlaan" class="ww-section-more">Se alle udlån</a>
+                        }
+                        else
+                        {
+                            <p class="ww-empty">Ingen udlån er oprettet endnu. Vær den første til at oprette et.</p>
+                        }
+                    </section>
+                </div>
+
+                <aside class="ww-col-side">
+                    <RadzenCard class="ww-stats-panel">
+                        <h3>Ur-encyklopædi</h3>
+                        <ul>
+                            <li><span>Registrerede modeller</span><strong>@Stats.WatchModels.ToString("N0", DanishCulture)</strong></li>
+                            <li><span>Aktive udlån</span><strong>@Stats.ActiveListings.ToString("N0", DanishCulture)</strong></li>
+                            <li><span>Medlemmer</span><strong>@Stats.Members.ToString("N0", DanishCulture)</strong></li>
+                        </ul>
+                    </RadzenCard>
+
+                    <RadzenCard class="ww-recent-panel">
+                        <h3>Senest tilføjet</h3>
+                        @if (RecentAdditions.Any())
+                        {
+                            @foreach (var item in RecentAdditions)
+                            {
+                                <a class="ww-recent-item" href="@item.Url">
+                                    <img src="@item.ImageUrl" alt="@item.Name" />
+                                    <div>
+                                        <div class="ww-recent-item__name">@item.Name</div>
+                                        <div class="ww-recent-item__by">@item.ModelNumber</div>
+                                    </div>
+                                </a>
+                            }
+                        }
+                        else
+                        {
+                            <p class="ww-empty ww-empty--tight">Ingen modeller i encyklopædiet endnu.</p>
+                        }
+                    </RadzenCard>
+                </aside>
+
+            </div>
+        }
+    </main>
+</div>

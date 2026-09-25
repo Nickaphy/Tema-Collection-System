@@ -1,6 +1,7 @@
 ﻿using WatchWorld.Domain.Enums;
 using WatchWorld.Domain.Service;
 using WatchWorld.Domain.ValueObjects;
+using static WatchWorld.Domain.Service.UrlValidatorService;
 
 namespace WatchWorld.Domain.Entities
 {
@@ -33,75 +34,23 @@ namespace WatchWorld.Domain.Entities
 
         public static void Validate(string url, int width, int height)
         {
-            //Url validation
-            var imageUrlValidationResult = UrlValidator.ValidateImageUrl(url);
-            if (imageUrlValidationResult.IsValid == false)
-                throw new UserInvalidInputException(imageUrlValidationResult.ErrorMessage);
 
             //Width and height validation
             if (width <= 0)
-                throw new UserInvalidInputException("Billedet skal have en bredde");
+                throw new UserInvalidInputException("Billedet skal have en bredde over 0px");
             else if (width <= 500)
                 throw new UserInvalidInputException("Bredden på et billede skal være over 500px");
             if (height <= 0)
                 throw new UserInvalidInputException("Højden på et billede skal være over 0px.");
             else if (height <= 500)
                 throw new UserInvalidInputException("Højden på et billede skal være over 500px");
+
+            //Url validation
+            var imageUrlValidationResult = UrlValidator.ValidateImageUrl(url);
+            if (imageUrlValidationResult.IsValid == false)
+                throw new UserInvalidInputException($"Der skete en fejl under billed validering: {imageUrlValidationResult.ErrorMessage}");
         }
 
-    public class ImageUrlValidationResult
-    {
-        public bool IsValid { get; set; }
-        public string ErrorMessage { get; set; }
     }
-
-    public class UrlValidator
-    {
-        public static ImageUrlValidationResult ValidateImageUrl(string url)
-        {
-            // 1. Validate that url isn't empty/null and is a valid URI
-            if (string.IsNullOrWhiteSpace(url) || !Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult))
-            {
-                return new ImageUrlValidationResult
-                {
-                    IsValid = false,
-                    ErrorMessage = "Den indtastede tekst er ikke en gyldig webadresse (URL)."
-                };
-            }
-
-            // 2. Validate protocol
-            string[] allowedProtocols = { Uri.UriSchemeHttp, Uri.UriSchemeHttps };
-            if (!allowedProtocols.Contains(uriResult.Scheme))
-            {
-                return new ImageUrlValidationResult
-                {
-                    IsValid = false,
-                    ErrorMessage = $"Webadressen skal starte med http:// eller https://. Den nuværende protokol er '{uriResult.Scheme}://'."
-                };
-            }
-
-            // 3. Validate format
-            string path = uriResult.AbsolutePath;
-            string[] validFormats = Enum.GetNames(typeof(ValidImageFormats));
-
-            bool hasValidExtension = validFormats.Any(ext => path.EndsWith($".{ext}", StringComparison.OrdinalIgnoreCase));
-
-            if (!hasValidExtension)
-            {
-                string allowedExtensionsList = string.Join(", ", validFormats.Select(f => $".{f}"));
-                return new ImageUrlValidationResult
-                {
-                    IsValid = false,
-                    ErrorMessage = $"Billedformatet er ikke understøttet. URL'en skal ende på et af følgende formater: {allowedExtensionsList}"
-                };
-            }
-
-            return new ImageUrlValidationResult { IsValid = true, ErrorMessage = null };
-        }
-    }
-
-
-
-}
 
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WatchWorld.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -93,7 +93,7 @@ namespace WatchWorld.Infrastructure.Migrations
                     CaseMaterialEnum = table.Column<int>(type: "int", nullable: false),
                     MovementTypeEnum = table.Column<int>(type: "int", nullable: false),
                     Style = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OriginalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OriginalPrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     GenderEnum = table.Column<int>(type: "int", nullable: false),
                     ReleaseYear = table.Column<DateOnly>(type: "date", nullable: false),
                     BraceletTypeEnum = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -109,10 +109,12 @@ namespace WatchWorld.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RatedToUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RatedTargetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RatingAmount = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RatedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    RatedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsRatingWatch = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,8 +126,8 @@ namespace WatchWorld.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserRatings_Users_RatedToUserId",
-                        column: x => x.RatedToUserId,
+                        name: "FK_UserRatings_Users_RatedTargetId",
+                        column: x => x.RatedTargetId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -140,7 +142,7 @@ namespace WatchWorld.Infrastructure.Migrations
                     WearGrade = table.Column<int>(type: "int", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EstimatedValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    EstimatedValue = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -186,7 +188,7 @@ namespace WatchWorld.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IndividualWatchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PricePerDay = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    PricePerDay = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -225,9 +227,9 @@ namespace WatchWorld.Infrastructure.Migrations
                 column: "RatedByUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRatings_RatedToUserId",
+                name: "IX_UserRatings_RatedTargetId",
                 table: "UserRatings",
-                column: "RatedToUserId");
+                column: "RatedTargetId");
         }
 
         /// <inheritdoc />

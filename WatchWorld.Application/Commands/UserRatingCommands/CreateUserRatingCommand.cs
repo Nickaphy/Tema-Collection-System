@@ -7,6 +7,7 @@ namespace WatchWorld.Application.Commands.UserRatingCommands
         Guid ratedByUserId,
         Guid ratedToUserId,
         int ratingAmount,
+        bool? isRatingWatch,
         string description
     )
     {

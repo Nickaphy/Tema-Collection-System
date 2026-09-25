@@ -24,9 +24,10 @@ public class UserRatingService : IUserRatingUseCase
                 ratedToUserId: command.ratedToUserId,
                 ratingAmount: command.ratingAmount,
                 description: command.description,
+                isRatingWatch: command.isRatingWatch,
                 ratedByUserId: command.ratedByUserId
             );
-            await _userRatingRepository.CreateUserRatingAsync(command, ct);
+            await _userRatingRepository.CreateUserRatingAsync(userRating, ct);
             return Result.Ok(userRating);
         }
         finally
@@ -49,7 +50,7 @@ public class UserRatingService : IUserRatingUseCase
                 ratingAmount: command.ratingAmount,
                 description: command.description
             );
-            await _userRatingRepository.UpdateUserRatingAsync(command, ct);
+            await _userRatingRepository.UpdateUserRatingAsync(updatedUserRating, ct);
             return Result.Ok(updatedUserRating);
         }
         finally
@@ -63,11 +64,11 @@ public class UserRatingService : IUserRatingUseCase
         try
         {
             var userRating = await _userRatingRepository.GetUserRatingByIdAsync(command.specificUserRatingId, ct);
-            if (userRating.IsFailed)
+            if (userRating.IsFailed || userRating.Value == null || userRating.Value.Id == Guid.Empty)
             {
                 return Result.Fail("User rating not found.");
             }
-            await _userRatingRepository.DeleteUserRatingAsync(command, ct);
+            await _userRatingRepository.DeleteUserRatingAsync(userRating.Value.Id, ct);
             return Result.Ok();
         }
         finally

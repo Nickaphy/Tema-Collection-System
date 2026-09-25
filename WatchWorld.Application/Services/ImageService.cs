@@ -25,7 +25,7 @@ public class ImageService : IImagesUseCase
 
     public async Task<Result<HighResImage>> GetImageByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var image = await _repository.GetImageByIdAsync(id.GetHashCode(), ct);
+        var image = await _repository.GetImageByIdAsync(id, ct);
         if (image.IsFailed || image.Value == null)
         {
             return Result.Fail("Billedet blev ikke fundet.");
@@ -74,7 +74,7 @@ public class ImageService : IImagesUseCase
 
     public async Task<Result> DeleteImageAsync(Guid id, CancellationToken ct = default)
     {
-        var existingImage = await _repository.GetImageByIdAsync(id.GetHashCode(), ct);
+        var existingImage = await _repository.GetImageByIdAsync(id, ct);
         if (existingImage == null)
         {
             return Result.Fail("Billedet blev ikke fundet.");

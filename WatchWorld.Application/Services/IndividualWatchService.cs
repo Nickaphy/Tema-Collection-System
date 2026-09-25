@@ -67,6 +67,53 @@ public class IndividualWatchService : IIndividualWatchUseCase
         }
     }
 
+    public async Task<Result<IndividualWatch>> UpdateIndividualWatchAsync(UpdateIndividualWatchCommand command, CancellationToken ct = default)
+    {
+        await _Lock.WaitAsync();
+        try
+        {
+            var existingWatch = await _watchRepository.GetWatchByIdAsync(command.specificWatchId, ct);
+            if (existingWatch.Value is null || existingWatch.IsFailed)
+                return Result.Fail("Urmodellen findes ikke");
+            var existingIndividualWatch = await _individualWatchRepository.GetWatchByIdAsync(command.individualWatchId, ct);
+            if (existingIndividualWatch.Value is null || existingIndividualWatch.IsFailed)
+                return Result.Fail("Kan ikke opdatere uret fordi uret findes ikke");
+            try
+            {
+                var watch = IndividualWatch.Update(
+                    existingWatch: existingIndividualWatch.Value,
+                    specificWatch: existingWatch.Value,
+                    wearGrade: command.wearGrade,
+                    age: command.age,
+                    note: command.note,
+                    estimatedValue: command.estimatedValue,
+                    picture: command.picture
+
+                );
+                await _individualWatchRepository.UpdateWatchAsync(watch, ct);
+                return Result.Ok(watch);
+            }
+            catch (DomainException ex)
+            {
+                return ex switch
+                {
+                    UserInvalidInputException => Result.Fail("Et input var ikke korrekt. " + ex.Message),
+                    ValidationException => Result.Fail("Der er sket en valideringsfejl. " + ex.Message),
+                    _ => Result.Fail("Der er sket en uforventet fejl " + ex.Message) // Fallback catch-all for base DomainException
+                };
+            }
+            catch (Exception ex) // Catch-all for any other unexpected exceptions (typically SQL or Infrastructure exceptions)
+            {
+                System.Diagnostics.Debug.WriteLine($"Infrastructure Failure: {ex.Message}");
+                return Result.Fail("An unexpected system error occurred." + ex.Message);
+            }
+        }
+        finally
+        {
+            _Lock.Release();
+        }
+    }
+
     public async Task<Result<IndividualWatch>> GetIndividualWatchByIdAsync(Guid id, CancellationToken ct = default)
     {
         var existingIndividualWatch = await _individualWatchRepository.GetWatchByIdAsync(id, ct);

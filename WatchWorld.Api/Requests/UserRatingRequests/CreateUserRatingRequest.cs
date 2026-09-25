@@ -7,6 +7,7 @@ namespace WatchWorld.Api.Requests.UserRatingRequests
         Guid ratedToUserId,
         int ratingAmount,
         string description,
+        bool? isRatingWatch,
         Guid ratedByUserId
     )
     {
