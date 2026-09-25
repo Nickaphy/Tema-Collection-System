@@ -12,8 +12,8 @@ using WatchWorld.Infrastructure.Database;
 namespace WatchWorld.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260914184104_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260925082342_FixDecimalPrecision")]
+    partial class FixDecimalPrecision
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,14 +175,20 @@ namespace WatchWorld.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsRatingWatch")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("RatedByUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RatedToUserId")
+                    b.Property<Guid>("RatedTargetId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("RatingAmount")
@@ -192,7 +198,7 @@ namespace WatchWorld.Infrastructure.Migrations
 
                     b.HasIndex("RatedByUserId");
 
-                    b.HasIndex("RatedToUserId");
+                    b.HasIndex("RatedTargetId");
 
                     b.ToTable("UserRatings");
                 });
@@ -351,7 +357,7 @@ namespace WatchWorld.Infrastructure.Migrations
 
                     b.HasOne("WatchWorld.Domain.Entities.User", null)
                         .WithMany("Rating")
-                        .HasForeignKey("RatedToUserId")
+                        .HasForeignKey("RatedTargetId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
