@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.UserRatingRequests;
 using WatchWorld.Application.Commands.UserRatingCommands;
@@ -21,8 +22,10 @@ public class UserRatingController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<UserRating>>> GetAllUserRatingsByUserIdAsync(Guid userId, CancellationToken ct)
     {
-        var ratingsBySpecificUser = await _userRatingUseCase.GetAllUserRatingsByUserIdAsync(userId, ct);
-        return Ok(ratingsBySpecificUser);
+        var result = await _userRatingUseCase.GetAllUserRatingsByUserIdAsync(userId, ct);
+        if (result.IsFailed)
+            return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+        return Ok(result.Value);
     }
     [HttpGet]
     [AllowAnonymous]

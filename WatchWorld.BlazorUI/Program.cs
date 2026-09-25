@@ -10,7 +10,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddHttpClient<WatchWorldApiClient>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:8080/"); // your API's base address
+    client.BaseAddress = new Uri("http://localhost:8080/"); // your API's base address
 });
 
 builder.Services.AddUIServices(builder.Configuration);

@@ -12,8 +12,8 @@ using WatchWorld.Infrastructure.Database;
 namespace WatchWorld.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260925082342_FixDecimalPrecision")]
-    partial class FixDecimalPrecision
+    [Migration("20260925093436_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,7 +86,8 @@ namespace WatchWorld.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("EstimatedValue")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Note")
                         .IsRequired()
@@ -115,7 +116,8 @@ namespace WatchWorld.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("PricePerDay")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("Id");
 
@@ -241,7 +243,8 @@ namespace WatchWorld.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OriginalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<DateOnly>("ReleaseYear")
                         .HasColumnType("date");
