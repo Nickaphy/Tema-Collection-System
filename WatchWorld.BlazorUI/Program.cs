@@ -10,7 +10,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddHttpClient<WatchWorldApiClient>(client =>
 {
-    BaseAddress = new Uri("http://localhost:8080/") //changed hardcoded 7123 to 8080 exposed docker port
+    client.BaseAddress = new Uri("http://localhost:8080/"); // your API's base address
 });
 
 builder.Services.AddUIServices(builder.Configuration);

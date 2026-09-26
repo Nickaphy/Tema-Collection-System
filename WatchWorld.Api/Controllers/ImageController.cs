@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.ImageRequests;
 using WatchWorld.Application.Commands.ImageCommands;
@@ -23,7 +24,9 @@ namespace WatchWorld.Api.Controllers
         public async Task<ActionResult<IEnumerable<HighResImage>>> Get(CancellationToken ct)
         {
             var images = await _imageUseCase.GetAllAsync(ct);
-            return Ok(images);
+            if (images.IsFailed)
+                return Problem(string.Join("; ", images.Errors.Select(e => e.Message)));
+            return Ok(images.Value);
         }
 
         [HttpPost]

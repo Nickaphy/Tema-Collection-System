@@ -6,11 +6,6 @@ public static class ApplicationServiceCollectionExtensions
 {
     public static IServiceCollection AddApplicationService(this IServiceCollection services)
     {
-        //UseCase injecting into services
-        // IBorrowUseCase, IImagesUseCase, IListingUseCase, IUserRatingUseCase are disabled:
-        // their backing repositories (IBorrowRepository, IImageRepository, IListingRepository,
-        // IUserRatingRepository) have no Infrastructure adapter yet, and ASP.NET's DI validation
-        // (ValidateOnBuild, on by default in Development) crashes app startup if these are
         services.AddScoped<IBorrowUseCase, BorrowService>();
         services.AddScoped<IImagesUseCase, ImageService>();
         services.AddScoped<IIndividualWatchUseCase, IndividualWatchService>();

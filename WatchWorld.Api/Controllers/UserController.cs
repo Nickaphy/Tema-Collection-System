@@ -18,12 +18,17 @@ public class UserController : ControllerBase
         _userUseCase = userUseCase;
     }
 
+
     [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> GetAllUsers(CancellationToken ct)
     {
-        var users = await _userUseCase.GetAllUsersAsync();
-        return Ok(users);
+        var result = await _userUseCase.GetAllUsersAsync();
+
+        if (result.IsFailed)
+            return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+        return Ok(result.Value);
     }
 
     [HttpPost("register")]

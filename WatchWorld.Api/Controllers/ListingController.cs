@@ -22,8 +22,12 @@ namespace WatchWorld.Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Listing>>> Get(CancellationToken ct)
         {
-            var listings = await _listingUseCase.GetAllAsync(ct);
-            return Ok(listings);
+            var result = await _listingUseCase.GetAllAsync(ct);
+
+            if (result.IsFailed)
+                return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+            return Ok(result.Value);
         }
 
         [HttpGet("{id}")]

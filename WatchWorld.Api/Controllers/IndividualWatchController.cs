@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentResults;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.IndividualWatchRequests;
 using WatchWorld.Application.Commands.IndividualWatchCommands;
@@ -23,7 +25,9 @@ namespace WatchWorld.Api.Controllers
         public async Task<ActionResult<IEnumerable<IndividualWatch>>> Get(CancellationToken ct)
         {
             var individualWatches = await _individualWatchUseCase.GetAllAsync(ct);
-            return Ok(individualWatches);
+            if (individualWatches.IsFailed)
+                return Problem(string.Join("; ", individualWatches.Errors.Select(e => e.Message)));
+            return Ok(individualWatches.Value);
         }
 
         [HttpGet("{id}")]

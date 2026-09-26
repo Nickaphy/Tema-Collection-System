@@ -71,10 +71,11 @@ namespace WatchWorld.BlazorUI.Pages
                     .ToList();
 
                 FeaturedListings = listings
+                    .Where(l => l.BorrowableWatch?.SpecificWatch is not null)
                     .Select(l => new ListingCardModel(
                         l.BorrowableWatch.SpecificWatch.Name,
                         l.BorrowableWatch.Age,
-                        ResolveImage(l.BorrowableWatch.Picture.Count > 0 ? l.BorrowableWatch.Picture : l.BorrowableWatch.SpecificWatch.Images),
+                        ResolveImage(l.BorrowableWatch.Picture?.Count > 0 ? l.BorrowableWatch.Picture : l.BorrowableWatch.SpecificWatch.Images),
                         l.PricePerDay,
                         $"/udlaan/{l.Id}"))
                     .ToList();
@@ -90,17 +91,21 @@ namespace WatchWorld.BlazorUI.Pages
             }
         }
 
-        private static SpotlightModel BuildSpotlight(WatchDto watch) => new(
-            ModelName: watch.Name,
-            ModelNumber: watch.ModelNumber,
-            Summary: string.IsNullOrWhiteSpace(watch.Description) ? "Beskrivelse følger snart." : watch.Description!,
-            ReleaseYear: watch.ReleaseYear.Year,
-            CaseSize: watch.CaseSize,
-            PrimaryImageUrl: watch.Images.Count > 0 ? watch.Images[0].Url : PlaceholderImage,
-            SecondaryImageUrl: watch.Images.Count > 1 ? watch.Images[1].Url : PlaceholderImage);
+        private static SpotlightModel BuildSpotlight(WatchDto watch)
+        {
+            var images = watch.Images ?? new();
+            return new(
+                ModelName: watch.Name,
+                ModelNumber: watch.ModelNumber,
+                Summary: string.IsNullOrWhiteSpace(watch.Description) ? "Beskrivelse følger snart." : watch.Description!,
+                ReleaseYear: watch.ReleaseYear.Year,
+                CaseSize: watch.CaseSize,
+                PrimaryImageUrl: images.Count > 0 ? images[0].Url : PlaceholderImage,
+                SecondaryImageUrl: images.Count > 1 ? images[1].Url : PlaceholderImage);
+        }
 
-        private static string ResolveImage(List<HighResImageDto> images) =>
-            images.Count > 0 ? images[0].Url : PlaceholderImage;
+        private static string ResolveImage(List<HighResImageDto>? images) =>
+            images is { Count: > 0 } ? images[0].Url : PlaceholderImage;
 
         public void Dispose()
         {

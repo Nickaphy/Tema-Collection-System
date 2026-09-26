@@ -121,7 +121,7 @@ public class BorrowService : IBorrowUseCase
                     command.borrowTimeSlot,
                     existingBorrows
                 );
-                await _borrowRepository.UpdateBorrowAsync(borrow, ct);
+                await _borrowRepository.UpdateBorrowTimeSlotAsync(borrow, ct);
                 return Result.Ok(borrow);
             }
             catch (DomainException ex)
@@ -210,7 +210,7 @@ public class BorrowService : IBorrowUseCase
         {
             return Result.Fail("Udlån blev ikke fundet.");
         }
-        await _borrowRepository.DeleteBorrowAsync(existingBorrow.Value, ct);
+        await _borrowRepository.DeleteBorrowAsync(existingBorrow.Value.Id, ct);
         return Result.Ok();
     }
 

@@ -83,7 +83,8 @@ namespace WatchWorld.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("EstimatedValue")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Note")
                         .IsRequired()
@@ -112,7 +113,8 @@ namespace WatchWorld.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("PricePerDay")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("Id");
 
@@ -238,7 +240,8 @@ namespace WatchWorld.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OriginalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<DateOnly>("ReleaseYear")
                         .HasColumnType("date");
