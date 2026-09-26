@@ -39,23 +39,26 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
         public async Task<ActionResult<Listing>> Create([FromBody] CreateListingRequest request, CancellationToken ct)
         {
             var command = new CreateListingCommand(
                 borrowableWatchId: request.borrowableWatchId,
                 pricePerDay: request.pricePerDay
             );
+            var result = await _listingUseCase.CreateListingAsync(command, ct);
+            if (result.IsFailed)
+                return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
 
-            var listing = await _listingUseCase.CreateListingAsync(command, ct);
-            return CreatedAtAction(nameof(Get), new { id = new Guid() }, listing);
+            return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
+            
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "User,Admin")]
-        public async Task<ActionResult> Delete(DeleteListingRequest request, CancellationToken ct)
+        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+        public async Task<ActionResult> Delete(Guid id, CancellationToken ct)
         {
-            await _listingUseCase.DeleteListingAsync(new DeleteListingCommand(request.id), ct);
+            await _listingUseCase.DeleteListingAsync(new DeleteListingCommand(id), ct);
             return NoContent();
         }
     }

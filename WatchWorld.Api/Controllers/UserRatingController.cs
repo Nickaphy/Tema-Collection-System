@@ -18,7 +18,7 @@ public class UserRatingController : ControllerBase
         _userRatingUseCase = userRatingUseCase;
     }
 
-    [HttpGet]
+    [HttpGet("by-user/{userId}")] // match the openapi.yaml path
     [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<UserRating>>> GetAllUserRatingsByUserIdAsync(Guid userId, CancellationToken ct)
     {
@@ -27,37 +27,50 @@ public class UserRatingController : ControllerBase
             return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
         return Ok(result.Value);
     }
-    [HttpGet]
+
+    
+    [HttpGet("to-user/{userId}")] // match the openapi.yaml path
     [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<UserRating>>> GetAllUserRatingsToUserIdAsync(Guid userId, CancellationToken ct)
     {
-        var ratingsToSpecificUsers = await _userRatingUseCase.GetAllUserRatingsToUserIdAsync(userId, ct);
-        return Ok(ratingsToSpecificUsers);
+        var result = await _userRatingUseCase.GetAllUserRatingsToUserIdAsync(userId, ct);
+        if (result.IsFailed)
+            return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+        return Ok(result.Value);
     }
-    [HttpGet]
+
+
+
+    [HttpGet("{id}")] // match the openapi.yaml path
     [AllowAnonymous]
-    public async Task<ActionResult<UserRating>> GetUserRatingByIdAsync(Guid specificUserRatingId, CancellationToken ct)
+    public async Task<ActionResult<UserRating>> GetUserRatingByIdAsync(Guid Id, CancellationToken ct)
     {
-        await _userRatingUseCase.GetUserRatingByIdAsync(specificUserRatingId, ct);
-        if (specificUserRatingId == Guid.Empty)
-        {
+        //route template is "id" while we had "specificUserRatingId" 
+        var result = await _userRatingUseCase.GetUserRatingByIdAsync(Id, ct); 
+        if (result.IsFailed)
+            return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+        if (result.Value is null)
             return NotFound();
-        }
-        return Ok(specificUserRatingId);
+        return Ok(result.Value);
     }
-    [HttpDelete]
-    [Authorize(Roles = "User,Admin")]
-    public async Task<ActionResult> DeleteUserRating(DeleteUserRatingRequest request, CancellationToken ct)
+
+
+
+    [HttpDelete("{id}")]
+    //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+    public async Task<ActionResult> DeleteUserRating(Guid id, CancellationToken ct)
     {
         var command = new DeleteUserRatingCommand(
-            specificUserRatingId: request.specificUserRatingId
+            specificUserRatingId: id
         );
         await _userRatingUseCase.DeleteUserRatingAsync(command, ct);
         return NoContent();
     }
 
+
+
     [HttpPost]
-    [Authorize(Roles = "User,Admin")]
+    //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
     public async Task<ActionResult> CreateUserRating(CreateUserRatingRequest request, CancellationToken ct)
     {
         var command = new CreateUserRatingCommand(
@@ -67,19 +80,31 @@ public class UserRatingController : ControllerBase
             isRatingWatch: request.isRatingWatch,
             description: request.description
         );
-        await _userRatingUseCase.CreateUserRatingAsync(command, ct);
-        return CreatedAtAction(nameof(CreateUserRating), new { id = new Guid() }, request.ratingAmount);
+      var result = await _userRatingUseCase.CreateUserRatingAsync(command, ct);
+        if (result.IsFailed)
+            return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+        return CreatedAtAction(
+            nameof(GetUserRatingByIdAsync),
+            new { id = result.Value.Id },
+            result.Value);
     }
-    [HttpPut]
-    [Authorize(Roles = "User,Admin")]
-    public async Task<ActionResult> UpdateUserRating(UpdateUserRatingRequest request, CancellationToken ct)
-    {
-        var command = new UpdateUserRatingCommand(
-            specificUserRatingId: request.specificUserRatingId,
-            ratingAmount: request.ratingAmount,
-            description: request.description
-        );
-        await _userRatingUseCase.UpdateUserRatingAsync(command, ct);
-        return NoContent();
-    }
+
+
+
+    [HttpPut("{id}")]
+    //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+   public async Task<ActionResult> UpdateUserRating(
+    Guid id,
+    UpdateUserRatingRequest request,
+    CancellationToken ct)
+{
+    var command = new UpdateUserRatingCommand(
+        specificUserRatingId: id,
+        ratingAmount: request.ratingAmount,
+        description: request.description
+    );
+    await _userRatingUseCase.UpdateUserRatingAsync(command, ct);
+    return NoContent();
+}
 }

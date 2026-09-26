@@ -1,0 +1,362 @@
+openapi: 3.0.0
+info:
+  title: WatchWorld API
+  version: 1.0.0
+  description: API that lives alongside the SQL Server in Docker.
+servers:
+  - url: http://localhost:8080/api
+    description: Local (Docker)
+
+paths:
+  # ---------------- Watches ----------------
+  /Watches:
+    get:
+      description: Returns all watches
+      responses:
+        '200':
+          description: OK
+    post:
+      description: Creates a new watch
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Invalid request
+  /Watches/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      description: Returns one watch
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not found
+    put:
+      description: Updates a watch
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Invalid request
+        '404':
+          description: Not found
+    delete:
+      description: Deletes a watch
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+
+
+  # ---------------- IndividualWatch ----------------
+  /IndividualWatch:
+    get:
+      description: Returns all individual (physical) watches
+      responses:
+        '200':
+          description: OK
+    post:
+      description: Creates an individual watch
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Invalid request
+  /IndividualWatch/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      description: Returns one individual watch
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not found
+    put:
+      description: Updates an individual watch
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Invalid request
+        '404':
+          description: Not found
+    delete:
+      description: Deletes an individual watch
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+
+  # ---------------- Listing ----------------
+  /Listing:
+    get:
+      description: Returns all listings
+      responses:
+        '200':
+          description: OK
+    post:
+      description: Creates a listing
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Invalid request
+  /Listing/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      description: Returns one listing
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not found
+    delete:
+      description: Deletes a listing
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+
+  # ---------------- Borrow ----------------
+  /Borrow:
+    get:
+      description: Returns all borrows
+      responses:
+        '200':
+          description: OK
+    post:
+      description: Creates a borrow
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Invalid request
+  /Borrow/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      description: Returns one borrow
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not found
+    delete:
+      description: Deletes a borrow
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+  /Borrow/{id}/timeslot:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    put:
+      description: Changes the borrow's time slot
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Invalid request
+        '404':
+          description: Not found
+  /Borrow/{id}/status:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    put:
+      description: Changes the borrow's status
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Invalid request
+        '404':
+          description: Not found
+
+  # ---------------- User ----------------
+  /User:
+    get:
+      description: Returns all users
+      responses:
+        '200':
+          description: OK
+  /User/register:
+    post:
+      description: Registers a new user
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Invalid request
+  /User/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    put:
+      description: Updates a user
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Invalid request
+        '404':
+          description: Not found
+    delete:
+      description: Deletes a user
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+  /User/{userId}/role:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    patch:
+      description: Sets or removes admin role
+      responses:
+        '200':
+          description: Updated
+        '404':
+          description: Not found
+
+  # ---------------- UserRating ----------------
+  /UserRating:
+    post:
+      description: Creates a rating
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Invalid request
+  /UserRating/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      description: Returns one rating
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not found
+    put:
+      description: Updates a rating
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Invalid request
+        '404':
+          description: Not found
+    delete:
+      description: Deletes a rating
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+  /UserRating/by-user/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      description: Ratings this user has given
+      responses:
+        '200':
+          description: OK
+  /UserRating/to-user/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      description: Ratings this user has received
+      responses:
+        '200':
+          description: OK
+
+  # ---------------- Image ----------------
+  /Image:
+    get:
+      description: Returns all images
+      responses:
+        '200':
+          description: OK
+    post:
+      description: Uploads an image
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Invalid request
+  /Image/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      description: Deletes an image
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found

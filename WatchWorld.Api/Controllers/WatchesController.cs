@@ -38,7 +38,7 @@ public class WatchesController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
     public async Task<ActionResult<Watches>> Create([FromBody] CreateWatchRequest request, CancellationToken ct)
     {
         var command = new CreateWatchCommand(
@@ -57,24 +57,27 @@ public class WatchesController : ControllerBase
             images: request.images
         );
 
-        var watch = await _watchUseCase.CreateWatchAsync(command, ct);
-        return CreatedAtAction(nameof(Get), new { id = new Guid() }, watch);
+        var result = await _watchUseCase.CreateWatchAsync(command, ct);
+        if (result.IsFailed)
+            return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+        return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
-    public async Task<ActionResult> DeleteWatch(DeleteWatchRequest request, CancellationToken ct)
+    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
+    public async Task<ActionResult> DeleteWatch(Guid id, CancellationToken ct)
     {
-        await _watchUseCase.DeleteWatchAsync(new DeleteWatchCommand(request.watchId), ct);
+        await _watchUseCase.DeleteWatchAsync(new DeleteWatchCommand(id), ct);
         return NoContent();
     }
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "User,Admin")]
-    public async Task<ActionResult<Watches>> UpdateWatch(UpdateWatchRequest request, CancellationToken ct)
+    //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+    public async Task<ActionResult<Watches>> UpdateWatch(Guid id, UpdateWatchRequest request, CancellationToken ct)
     {
         var command = new UpdateWatchCommand(
-            id: request.id,
+            id: id,
             name: request.name,
             modelNumber: request.modelNumber,
             caseSize: request.caseSize,

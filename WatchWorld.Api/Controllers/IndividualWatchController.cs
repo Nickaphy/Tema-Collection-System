@@ -39,7 +39,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
         public async Task<ActionResult<IndividualWatch>> Create([FromBody] CreateIndividualWatchRequest request, CancellationToken ct)
         {
             var command = new CreateIndividualWatchCommand(
@@ -50,15 +50,23 @@ namespace WatchWorld.Api.Controllers
                 estimatedValue: request.estimatedValue,
                 picture: request.picture
             );
+            var result = await _individualWatchUseCase.CreateIndividualWatchAsync(command, ct);
+            if (result.IsFailed)
+                return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
 
-            var individualWatch = await _individualWatchUseCase.CreateIndividualWatchAsync(command, ct);
-            return CreatedAtAction(nameof(Get), new { id = new Guid() }, individualWatch);
+            return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
+            
         }
 
-        public async Task<ActionResult<IndividualWatch>> UpdateWatch([FromBody] UpdateIndividualWatchRequest request, CancellationToken ct)
+        [HttpPut("{id}")]
+        //[Authorize(Roles = "User,Admin")]  // Commented out because Auth hasn't been enabled yet
+        public async Task<ActionResult<IndividualWatch>> UpdateWatch(
+            Guid id,
+            [FromBody] UpdateIndividualWatchRequest request,
+            CancellationToken ct)
         {
             var command = new UpdateIndividualWatchCommand(
-                individualWatchId: request.individualWatchId,
+                individualWatchId: id,  // The actual watch id, not the id from the request
                 specificWatchId: request.specificWatchId,
                 wearGrade: request.wearGrade,
                 age: request.age,
@@ -70,11 +78,12 @@ namespace WatchWorld.Api.Controllers
             return Ok(individualWatch);
         }
 
+
         [HttpDelete("{id}")]
-        [Authorize(Roles = "User,Admin")]
-        public async Task<ActionResult> Delete(DeleteIndividualWatchRequest request, CancellationToken ct)
+        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+        public async Task<ActionResult> Delete(Guid id, CancellationToken ct)
         {
-            await _individualWatchUseCase.DeleteIndividualWatchAsync(new DeleteIndividualWatchCommand(request.id), ct);
+            await _individualWatchUseCase.DeleteIndividualWatchAsync(new DeleteIndividualWatchCommand(id), ct);
             return NoContent();
         }
     }
