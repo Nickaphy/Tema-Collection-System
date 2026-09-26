@@ -47,23 +47,26 @@ public class UserController : ControllerBase
             isAdmin: request.isAdmin,
             rating: request.rating
         );
-        var user = await _userUseCase.CreateUserAsync(command, ct);
-        return CreatedAtAction(nameof(GetAllUsers), new { id = new Guid() }, user);
+       var result = await _userUseCase.CreateUserAsync(command, ct);
+       if (result.IsFailed)
+            return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+       return Created($"/api/User/{result.Value.Id}", result.Value);
     }
 
     [HttpDelete("{userId}")]
-    [Authorize(Roles = "User,Admin")]
-    public async Task<ActionResult> DeleteUser(DeleteUserRequest request, CancellationToken ct)
+    //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+    public async Task<ActionResult> DeleteUser(Guid userId, CancellationToken ct)
     {
         var command = new DeleteUserCommand(
-            userId: request.userId
+            userId: userId
         );
         await _userUseCase.DeleteUserAsync(command, ct);
         return NoContent();
     }
 
     [HttpPut("{userId}")]
-    [Authorize(Roles = "User,Admin")]
+    //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
     public async Task<ActionResult<User>> UpdateUser(Guid userId, UpdateUserRequest request, CancellationToken ct)
     {
         var command = new UpdateUserCommand(
@@ -84,7 +87,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPatch("{userId}/role")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
     public async Task<ActionResult> SetAdminStatus(Guid userId, [FromBody] SetAdminRoleRequest request, CancellationToken ct)
     {
         var command = new SetAdminRoleCommand(

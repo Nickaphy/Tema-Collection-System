@@ -19,7 +19,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<IEnumerable<Borrow>>> Get(CancellationToken ct)
         {
             var result = await _borrowUseCase.GetAllAsync(ct);
@@ -29,7 +29,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> GetById(Guid id, CancellationToken ct)
         {
             var borrow = await _borrowUseCase.GetBorrowByIdAsync(id, ct);
@@ -37,7 +37,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> Create([FromBody] CreateBorrowRequest request, CancellationToken ct)
         {
             var command = new CreateBorrowCommand(
@@ -46,24 +46,31 @@ namespace WatchWorld.Api.Controllers
                 borrowTimeSlot: request.borrowTimeSlot,
                 status: request.status
             );
-            var borrow = await _borrowUseCase.CreateBorrowAsync(command, ct);
-            return CreatedAtAction(nameof(GetById), new { id = new Guid() }, borrow);
+            var result = await _borrowUseCase.CreateBorrowAsync(command, ct);
+            if (result.IsFailed)
+                return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+            return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
+            
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "User,Admin")]
-        public async Task<ActionResult> Delete(DeleteBorrowRequest request, CancellationToken ct)
+        //[Authorize(Roles = "User,Admin")]
+        public async Task<ActionResult> Delete(Guid id, CancellationToken ct)
         {
-            await _borrowUseCase.DeleteBorrowAsync(new DeleteBorrowCommand(request.borrowId), ct);
+            await _borrowUseCase.DeleteBorrowAsync(new DeleteBorrowCommand(id), ct);
             return NoContent();
         }
 
-        [HttpPut("{userId}")]
-        [Authorize(Roles = "User,Admin")]
-        public async Task<ActionResult<Borrow>> UpdateTimeSlot(Guid id, [FromBody] UpdateBorrowTimeSlotRequest request, CancellationToken ct)
+        [HttpPut("{id}/timeslot")]
+        //[Authorize(Roles = "User,Admin")]
+        public async Task<ActionResult<Borrow>> UpdateTimeSlot(
+        Guid id,
+        [FromBody] UpdateBorrowTimeSlotRequest request,
+        CancellationToken ct)
         {
             var command = new UpdateBorrowTimeSlotCommand(
-                id: request.borrowId,
+                id: id,  // from route
                 borrowTimeSlot: request.borrowTimeSlot
             );
             var borrow = await _borrowUseCase.UpdateBorrowTimeSlotAsync(command, ct);
@@ -71,7 +78,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPut("{id}/status")]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> UpdateStatus(Guid id, [FromBody] UpdateBorrowStatusRequest request, CancellationToken ct)
         {
             var command = new UpdateBorrowStatusCommand(
