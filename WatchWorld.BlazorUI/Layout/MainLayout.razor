@@ -1,13 +1,23 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
+@using Radzen.Blazor
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
+
+<div class="ww-layout">
+    <Navbar />
+
+    <div class="ww-substrip">
+        <div class="ww-substrip__inner">
+            <RadzenBadge Text="ENCYKLOPÆDI" BadgeStyle="Radzen.BadgeStyle.Dark" class="ww-substrip__badge" />
+            <span class="ww-substrip__text">Alt hvad du skal vide om urverdenen, skrevet af samlere for samlere</span>
+            <a href="/wiki" class="ww-substrip__link">Gå til encyklopædiet</a>
         </div>
+    </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
+    <main class="ww-content">
+        @Body
     </main>
 </div>

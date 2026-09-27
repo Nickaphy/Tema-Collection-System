@@ -1,6 +1,3 @@
-﻿
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap');
-
 :root {
     --ww-navy-900: #0A1B30;
     --ww-navy-800: #0F2540;
@@ -12,7 +9,6 @@
     --ww-text: #14202E;
     --ww-text-muted: #5B6B7D;
     --ww-border: #E1E5EB;
-
     --rz-primary: var(--ww-navy-800);
     --rz-primary-light: var(--ww-navy-100);
     --rz-primary-dark: var(--ww-navy-900);
@@ -21,6 +17,10 @@
     --rz-text-secondary-color: var(--ww-text-muted);
     --rz-base-background-color: var(--ww-bg);
     --rz-border-radius: 6px;
+    --color-nav-bg: var(--ww-navy-900);
+    --color-nav-link: #000000;
+    --color-btn-register: #4b5563;
+    --color-btn-login: var(--ww-gold-500);
 }
 
 .ww-page {
@@ -58,7 +58,7 @@
 }
 
 .ww-header {
-    background: var(--ww-surface);
+    background: var(--color-nav-bg);
     border-bottom: 2px solid var(--ww-gold-500);
 }
 
@@ -93,7 +93,7 @@
 .ww-logo__word {
     font-weight: 700;
     font-size: 1.15rem;
-    color: var(--ww-navy-900);
+    color: var(--ww-gold-500);
     letter-spacing: 0.01em;
 }
 
@@ -106,12 +106,12 @@
     .ww-nav a {
         font-weight: 500;
         font-size: 0.95rem;
-        color: var(--ww-text-muted);
+        color: var(--color-nav-link);
     }
 
         .ww-nav a:hover,
         .ww-nav a:focus-visible {
-            color: var(--ww-navy-900);
+            color: #ffffff;
         }
 
 .ww-search {
@@ -148,8 +148,8 @@
 }
 
 .ww-btn-gold.rz-button {
-    background: var(--ww-gold-500);
-    border-color: var(--ww-gold-500);
+    background: var(--color-btn-login);
+    border-color: var(--color-btn-login);
     color: var(--ww-navy-900);
     font-weight: 600;
 }
@@ -159,47 +159,16 @@
         border-color: var(--ww-gold-600);
     }
 
-.ww-btn-text.rz-button {
-    color: var(--ww-text);
-    font-weight: 500;
-}
-
-.ww-substrip {
-    background: var(--ww-navy-900);
-    color: #fff;
-}
-
-.ww-substrip__inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0.6rem 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    font-size: 0.9rem;
-}
-
-.ww-substrip__badge.rz-badge {
-    background: var(--ww-gold-500);
-    color: var(--ww-navy-900);
-    font-weight: 700;
-    letter-spacing: 0.03em;
-}
-
-.ww-substrip__text {
-    color: #C9D2DE;
-    flex: 1;
-}
-
-.ww-substrip__link {
+.ww-btn-darkgrey.rz-button {
+    background: var(--color-btn-register);
+    border-color: var(--color-btn-register);
+    color: #ffffff;
     font-weight: 600;
-    color: var(--ww-gold-500);
-    white-space: nowrap;
 }
 
-    .ww-substrip__link:hover,
-    .ww-substrip__link:focus-visible {
-        text-decoration: underline;
+    .ww-btn-darkgrey.rz-button:hover {
+        background: #374151;
+        border-color: #374151;
     }
 
 .ww-main {

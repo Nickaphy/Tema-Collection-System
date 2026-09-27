@@ -48,7 +48,21 @@ public class UserController : ControllerBase
             rating: request.rating
         );
         var user = await _userUseCase.CreateUserAsync(command, ct);
-        return CreatedAtAction(nameof(GetAllUsers), new { id = new Guid() }, user);
+        return CreatedAtAction(nameof(GetAllUsers), new { id = user.Value.Id }, user);
+    }
+
+    [HttpPost("login")]
+    [AllowAnonymous]
+    public async Task<ActionResult<User>> LogIn([FromBody] LogInRequest request, CancellationToken ct)
+    {
+        var command = new LogInCommand(
+            firstName: request.firstName,
+            lastName: request.lastName,
+            email: request.email,
+            password: request.password
+        );
+        var user = await _userUseCase.LogInAsync(command, ct);
+        return CreatedAtAction(nameof(GetAllUsers), new { id = user.Value.Id }, user);
     }
 
     [HttpDelete("{userId}")]
@@ -95,4 +109,6 @@ public class UserController : ControllerBase
         await _userUseCase.SetAdminRoleAsync(command, ct);
         return NoContent();
     }
+
+
 }

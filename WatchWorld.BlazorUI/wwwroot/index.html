@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="da">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WatchWorld.BlazorUI</title>
+    <title>WatchWorld</title>
     <base href="/" />
-    <link rel="preload" id="webassembly" />
+
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/standard-base.css" />
     <link rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" href="css/WatchWorldTheme.css" />
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link href="WatchWorld.BlazorUI.styles.css" rel="stylesheet" />
-    <script type="importmap"></script>
-</head>
+    <link rel="stylesheet" href="WatchWorld.BlazorUI.styles.css" />
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <link rel="icon" type="image/png" href="favicon.png" />
+</head>
 <body>
     <div id="app">
         <svg class="loading-progress">
@@ -25,11 +27,12 @@
     </div>
 
     <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="." class="reload">Reload</a>
+        Der opstod en uventet fejl.
+        <a href="." class="reload">Genindlæs</a>
         <span class="dismiss">🗙</span>
     </div>
-    <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
-</body>
 
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+</body>
 </html>

@@ -2,50 +2,12 @@
 @implements IDisposable
 @using Radzen
 @using Radzen.Blazor
-@inject NavigationManager Navigation
 @inject WatchWorldApiClient ApiClient
 @inject ILogger<Homepage> Logger
 
 <PageTitle>WatchWorld – Urenes encyklopædi</PageTitle>
 
 <div class="ww-page">
-
-    <header class="ww-header">
-        <div class="ww-header__inner">
-            <a href="/" class="ww-logo" aria-label="WatchWorld forside">
-                <span class="ww-logo__mark">W</span>
-                <span class="ww-logo__word">WatchWorld</span>
-            </a>
-
-            <nav class="ww-nav" aria-label="Hovedmenu">
-                <a href="/wiki">Wiki</a>
-                <a href="/maerker">Mærker</a>
-                <a href="/udlaan">Udlån</a>
-                <a href="/forum">Forum</a>
-                <a href="/om">Om</a>
-            </nav>
-
-            <div class="ww-search">
-                <RadzenIcon Icon="search" class="ww-search__icon" />
-                <input type="text" @bind="searchQuery" placeholder="Søg efter ure, mærker, modeller …" aria-label="Søg" />
-            </div>
-
-            <div class="ww-header__actions">
-                <RadzenButton Text="Log ind" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
-                              Click="@(() => Navigation.NavigateTo("/login"))" class="ww-btn-text" />
-                <RadzenButton Text="Opret bruger" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Filled"
-                              Click="@(() => Navigation.NavigateTo("/register"))" class="ww-btn-gold" />
-            </div>
-        </div>
-    </header>
-
-    <div class="ww-substrip">
-        <div class="ww-substrip__inner">
-            <RadzenBadge Text="ENCYKLOPÆDI" BadgeStyle="BadgeStyle.Dark" class="ww-substrip__badge" />
-            <span class="ww-substrip__text">Alt hvad du skal vide om urverdenen, skrevet af samlere for samlere</span>
-            <a href="/wiki" class="ww-substrip__link">Gå til encyklopædiet</a>
-        </div>
-    </div>
 
     <main class="ww-main">
 

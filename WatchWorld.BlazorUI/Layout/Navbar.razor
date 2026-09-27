@@ -1,0 +1,61 @@
+﻿@namespace WatchWorld.BlazorUI.Layout
+@using Radzen
+@using Radzen.Blazor
+
+<header class="ww-header">
+    <div class="ww-header__inner">
+        <a href="/" class="ww-logo" aria-label="WatchWorld forside">
+            <span class="ww-logo__mark">W</span>
+            <span class="ww-logo__word">WatchWorld</span>
+        </a>
+
+        <nav class="ww-nav" aria-label="Hovedmenu">
+            <NavLink href="/wiki" Match="NavLinkMatch.Prefix">Wiki</NavLink>
+            <NavLink href="/maerker" Match="NavLinkMatch.Prefix">Mærker</NavLink>
+            <NavLink href="/udlaan" Match="NavLinkMatch.Prefix">Udlån</NavLink>
+            <NavLink href="/forum" Match="NavLinkMatch.Prefix">Forum</NavLink>
+            <NavLink href="/om" Match="NavLinkMatch.Prefix">Om</NavLink>
+        </nav>
+
+        <div class="ww-search-wrapper">
+            <div class="ww-search">
+                <svg class="ww-search__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text"
+                       value="@searchQuery"
+                       @oninput="OnSearchInput"
+                       @focusout="OnSearchFocusOut"
+                       placeholder="Søg efter ure, mærker, modeller …"
+                       aria-label="Søg" />
+            </div>
+
+            @if (showResults && searchResults.Any())
+            {
+                <div class="ww-search-dropdown">
+                    @foreach (var watch in searchResults)
+                    {
+                        <a href="/ure/@watch.Id" class="ww-search-item" @mousedown:preventDefault>
+                            <span class="ww-search-item__name">@watch.Name</span>
+                            <span class="ww-search-item__num">@watch.ModelNumber</span>
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="ww-header__actions">
+            <RadzenButton Text="Log ind"
+                          ButtonStyle="ButtonStyle.Base"
+                          Variant="Variant.Text"
+                          Click="@OpenLoginDialog"
+                          class="ww-btn-text" />
+            <RadzenButton Text="Opret bruger"
+                          ButtonStyle="ButtonStyle.Primary"
+                          Variant="Variant.Filled"
+                          Click="@OpenRegisterDialog"
+                          class="ww-btn-gold" />
+        </div>
+    </div>
+</header>

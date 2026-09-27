@@ -14,8 +14,6 @@ namespace WatchWorld.BlazorUI.Pages
         private bool isLoading = true;
         private string? errorMessage;
 
-        private string searchQuery = string.Empty;
-
         private readonly string[] filters = { "Nyeste", "Pris", "Højest vurderet" };
         private string selectedFilter = "Nyeste";
 
@@ -113,5 +111,4 @@ namespace WatchWorld.BlazorUI.Pages
             cts.Dispose();
         }
     }
-
 }

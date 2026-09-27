@@ -1,0 +1,113 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+
+<div class="ww-auth-dialog">
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Danger" AllowClose="false" class="rz-mb-4">
+            @errorMessage
+        </RadzenAlert>
+    }
+
+    <RadzenTemplateForm TItem="CreateUserRequestDto" Data="@model" Submit="@OnSubmit">
+        <div class="rz-row rz-mb-3">
+            <div class="rz-col-12 rz-col-md-6">
+                <RadzenFormField Text="Fornavn" Style="width: 100%;">
+                    <RadzenTextBox @bind-Value="@model.FirstName" Name="FirstName" />
+                </RadzenFormField>
+                <RadzenRequiredValidator Component="FirstName" Text="Fornavn er påkrævet" />
+            </div>
+            <div class="rz-col-12 rz-col-md-6">
+                <RadzenFormField Text="Efternavn" Style="width: 100%;">
+                    <RadzenTextBox @bind-Value="@model.LastName" Name="LastName" />
+                </RadzenFormField>
+                <RadzenRequiredValidator Component="LastName" Text="Efternavn er påkrævet" />
+            </div>
+        </div>
+
+        <div class="rz-mb-3">
+            <RadzenFormField Text="E-mail" Style="width: 100%;">
+                <RadzenTextBox @bind-Value="@model.Email" Name="Email" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="Email" Text="E-mail er påkrævet" />
+            <RadzenEmailValidator Component="Email" Text="Ugyldig e-mailadresse" />
+        </div>
+
+        <div class="rz-mb-3">
+            <RadzenFormField Text="Telefonnummer" Style="width: 100%;">
+                <RadzenTextBox @bind-Value="@model.PhoneNumber" Name="PhoneNumber" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="PhoneNumber" Text="Telefonnummer er påkrævet" />
+        </div>
+
+        <div class="rz-row rz-mb-3">
+            <div class="rz-col-12 rz-col-md-8">
+                <RadzenFormField Text="Adresse" Style="width: 100%;">
+                    <RadzenTextBox @bind-Value="@model.Address" Name="Address" />
+                </RadzenFormField>
+                <RadzenRequiredValidator Component="Address" Text="Adresse er påkrævet" />
+            </div>
+            <div class="rz-col-12 rz-col-md-4">
+                <RadzenFormField Text="By" Style="width: 100%;">
+                    <RadzenTextBox @bind-Value="@model.City" Name="City" />
+                </RadzenFormField>
+                <RadzenRequiredValidator Component="City" Text="By er påkrævet" />
+            </div>
+        </div>
+
+        <div class="rz-mb-4">
+            <RadzenFormField Text="Adgangskode" Style="width: 100%;">
+                <RadzenPassword @bind-Value="@model.Password" Name="Password" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="Password" Text="Adgangskode er påkrævet" />
+        </div>
+
+        <div class="rz-d-flex rz-justify-content-end rz-gap-2">
+            <RadzenButton ButtonType="ButtonType.Button"
+                          Text="Annuller"
+                          ButtonStyle="ButtonStyle.Light"
+                          Click="@(() => DialogService.Close(false))" />
+            <RadzenButton ButtonType="ButtonType.Submit"
+                          Text="Opret bruger"
+                          ButtonStyle="ButtonStyle.Primary"
+                          IsBusy="@isSubmitting" />
+        </div>
+    </RadzenTemplateForm>
+</div>
+
+@code {
+    [Inject] private DialogService DialogService { get; set; } = default!;
+    [Inject] private NotificationService NotificationService { get; set; } = default!;
+    [Inject] private WatchWorldApiClient ApiClient { get; set; } = default!;
+
+    private CreateUserRequestDto model = new();
+    private bool isSubmitting;
+    private string? errorMessage;
+
+    private async Task OnSubmit()
+    {
+        isSubmitting = true;
+        errorMessage = null;
+
+        var (success, error) = await ApiClient.RegisterUserAsync(model, CancellationToken.None);
+
+        isSubmitting = false;
+
+        if (!success)
+        {
+            errorMessage = error ?? "Kunne ikke oprette brugeren. Prøv igen.";
+            return;
+        }
+
+        NotificationService.Notify(new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Summary = "Bruger oprettet",
+            Detail = $"Velkommen til WatchWorld, {model.FirstName}!",
+            Duration = 4000
+        });
+
+        DialogService.Close(true);
+    }
+}
