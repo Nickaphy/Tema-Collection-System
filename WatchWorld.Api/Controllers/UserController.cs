@@ -61,8 +61,13 @@ public class UserController : ControllerBase
             email: request.email,
             password: request.password
         );
-        var user = await _userUseCase.LogInAsync(command, ct);
-        return CreatedAtAction(nameof(GetAllUsers), new { id = user.Value.Id }, user);
+
+        var result = await _userUseCase.LogInAsync(command, ct);
+
+        if (result.IsFailed)
+            return Unauthorized(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+        return Ok(result.Value);
     }
 
     [HttpDelete("{userId}")]

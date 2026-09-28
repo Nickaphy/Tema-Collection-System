@@ -1,0 +1,122 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+
+<div class="ww-dialog">
+    <div class="ww-dialog__row">
+        <div class="ww-dialog__field">
+            <label for="reg-firstname">Fornavn</label>
+            <input id="reg-firstname" type="text" @bind="firstName" />
+        </div>
+        <div class="ww-dialog__field">
+            <label for="reg-lastname">Efternavn</label>
+            <input id="reg-lastname" type="text" @bind="lastName" />
+        </div>
+    </div>
+
+    <div class="ww-dialog__field">
+        <label for="reg-email">Email</label>
+        <input id="reg-email" type="email" @bind="email" />
+    </div>
+
+    <div class="ww-dialog__field">
+        <label for="reg-phone">Telefonnummer</label>
+        <input id="reg-phone" type="tel" @bind="phoneNumber" />
+    </div>
+
+    <div class="ww-dialog__row">
+        <div class="ww-dialog__field">
+            <label for="reg-address">Adresse</label>
+            <input id="reg-address" type="text" @bind="address" />
+        </div>
+        <div class="ww-dialog__field">
+            <label for="reg-city">By</label>
+            <input id="reg-city" type="text" @bind="city" />
+        </div>
+    </div>
+
+    <div class="ww-dialog__field">
+        <label for="reg-password">Adgangskode</label>
+        <input id="reg-password" type="password" @bind="password" />
+    </div>
+
+    @if (errorMessage is not null)
+    {
+        <div class="ww-dialog__notice ww-dialog__notice--error">@errorMessage</div>
+    }
+
+    <div class="ww-dialog__actions">
+        <RadzenButton Text="Annuller" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
+                      Click="@(() => DialogService.Close(null))" Disabled="@isSubmitting" />
+        <RadzenButton Text="@(isSubmitting ? "Opretter..." : "Opret bruger")" ButtonStyle="ButtonStyle.Primary"
+                      class="ww-btn-gold" Click="@Submit" Disabled="@isSubmitting" />
+    </div>
+</div>
+
+
+@code {
+        [Inject] private DialogService DialogService { get; set; } = default!;
+        [Inject] private NotificationService NotificationService { get; set; } = default!;
+        [Inject] private WatchWorldApiClient ApiClient { get; set; } = default!;
+
+        private string firstName = string.Empty;
+        private string lastName = string.Empty;
+        private string email = string.Empty;
+        private string phoneNumber = string.Empty;
+        private string address = string.Empty;
+        private string city = string.Empty;
+        private string password = string.Empty;
+
+        private bool isSubmitting;
+        private string? errorMessage;
+
+        private async Task Submit()
+        {
+            errorMessage = null;
+
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName) ||
+                string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(phoneNumber) ||
+                string.IsNullOrWhiteSpace(address) || string.IsNullOrWhiteSpace(city) ||
+                string.IsNullOrWhiteSpace(password))
+            {
+                errorMessage = "Udfyld venligst alle felter.";
+                return;
+            }
+
+            isSubmitting = true;
+
+            var request = new CreateUserRequestDto
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                PhoneNumber = phoneNumber,
+                Address = address,
+                City = city,
+                Password = password,
+                IsAdmin = false,
+            };
+
+            var (success, error) = await ApiClient.RegisterUserAsync(request, CancellationToken.None);
+
+            isSubmitting = false;
+
+            if (!success)
+            {
+                errorMessage = error ?? "Der skete en ukendt fejl. Prøv igen.";
+                return;
+            }
+
+            NotificationService.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Bruger oprettet",
+                Detail = $"Velkommen til WatchWorld, {firstName}!",
+                Duration = 4000
+            });
+
+            DialogService.Close(true);
+        }
+    }
+
+}

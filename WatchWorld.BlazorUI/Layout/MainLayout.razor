@@ -1,23 +1,10 @@
 ﻿@inherits LayoutComponentBase
+@using Radzen
 @using Radzen.Blazor
 
-<RadzenDialog />
-<RadzenNotification />
-<RadzenTooltip />
-<RadzenContextMenu />
+<RadzenComponents />
 
-<div class="ww-layout">
+<div class="ww-page">
     <Navbar />
-
-    <div class="ww-substrip">
-        <div class="ww-substrip__inner">
-            <RadzenBadge Text="ENCYKLOPÆDI" BadgeStyle="Radzen.BadgeStyle.Dark" class="ww-substrip__badge" />
-            <span class="ww-substrip__text">Alt hvad du skal vide om urverdenen, skrevet af samlere for samlere</span>
-            <a href="/wiki" class="ww-substrip__link">Gå til encyklopædiet</a>
-        </div>
-    </div>
-
-    <main class="ww-content">
-        @Body
-    </main>
+    @Body
 </div>

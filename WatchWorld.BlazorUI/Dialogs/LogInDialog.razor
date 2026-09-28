@@ -1,0 +1,127 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+@using Microsoft.AspNetCore.Components;
+
+<div class="ww-dialog">
+    <div class="ww-login-toggle" role="group" aria-label="Log ind metode">
+        <button type="button" class="@(loginMode == LoginMode.Email ? "active" : "")"
+                @onclick="@(() => loginMode = LoginMode.Email)">
+            Email
+        </button>
+        <button type="button" class="@(loginMode == LoginMode.Name ? "active" : "")"
+                @onclick="@(() => loginMode = LoginMode.Name)">
+            Navn
+        </button>
+    </div>
+
+    @if (loginMode == LoginMode.Email)
+    {
+        <div class="ww-dialog__field">
+            <label for="login-email">Email</label>
+            <input id="login-email" type="email" @bind="email" placeholder="dig@eksempel.dk" />
+        </div>
+    }
+    else
+    {
+        <div class="ww-dialog__row">
+            <div class="ww-dialog__field">
+                <label for="login-firstname">Fornavn</label>
+                <input id="login-firstname" type="text" @bind="firstName" />
+            </div>
+            <div class="ww-dialog__field">
+                <label for="login-lastname">Efternavn</label>
+                <input id="login-lastname" type="text" @bind="lastName" />
+            </div>
+        </div>
+    }
+
+    <div class="ww-dialog__field">
+        <label for="login-password">Adgangskode</label>
+        <input id="login-password" type="password" @bind="password" />
+    </div>
+
+    @if (errorMessage is not null)
+    {
+        <div class="ww-dialog__notice ww-dialog__notice--error">@errorMessage</div>
+    }
+
+    <div class="ww-dialog__actions">
+        <RadzenButton Text="Annuller" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
+                      Click="@(() => DialogService.Close(null))" Disabled="@isSubmitting" />
+        <RadzenButton Text="@(isSubmitting ? "Logger ind..." : "Log ind")" ButtonStyle="ButtonStyle.Primary"
+                      class="ww-btn-gold" Click="@Submit" Disabled="@isSubmitting" />
+    </div>
+</div>
+
+@code {
+    [Inject] private DialogService DialogService { get; set; } = default!;
+    [Inject] private NotificationService NotificationService { get; set; } = default!;
+    [Inject] private WatchWorldApiClient ApiClient { get; set; } = default!;
+
+    private enum LoginMode { Email, Name }
+    private LoginMode loginMode = LoginMode.Email;
+
+    private string email = string.Empty;
+    private string firstName = string.Empty;
+    private string lastName = string.Empty;
+    private string password = string.Empty;
+
+    private bool isSubmitting;
+    private string? errorMessage;
+
+        private async Task Submit()
+        {
+            errorMessage = null;
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                errorMessage = "Udfyld venligst din adgangskode.";
+                return;
+            }
+
+            if (loginMode == LoginMode.Email && string.IsNullOrWhiteSpace(email))
+            {
+                errorMessage = "Udfyld venligst din email.";
+                return;
+            }
+
+            if (loginMode == LoginMode.Name && (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)))
+            {
+                errorMessage = "Udfyld venligst både fornavn og efternavn.";
+                return;
+            }
+
+            isSubmitting = true;
+
+            var request = new LogInRequestDto
+            {
+                Email = loginMode == LoginMode.Email ? email : null,
+                FirstName = loginMode == LoginMode.Name ? firstName : null,
+                LastName = loginMode == LoginMode.Name ? lastName : null,
+                Password = password
+            };
+
+            var (success, user, error) = await ApiClient.LogInAsync(request, CancellationToken.None);
+
+            isSubmitting = false;
+
+            if (!success || user is null)
+            {
+                errorMessage = error ?? "Login mislykkedes. Tjek dine oplysninger og prøv igen.";
+                return;
+            }
+
+            NotificationService.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Logget ind",
+                Detail = $"Velkommen tilbage, {user.FirstName}!",
+                Duration = 4000
+            });
+
+            DialogService.Close(user);
+        }
+    }
+
+}
