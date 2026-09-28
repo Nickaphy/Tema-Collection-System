@@ -59,7 +59,7 @@
                 ["Address"] = "Åboulevarden 12",
                 ["City"] = "Aarhus",
                 ["Note"] = "Platform Administrator.",
-                ["Password"] = "$2a$12$eImiTXuWVxfM37uY4JANjO5E/Qd/./v7YdZ2Y2q8.1M22.GfK9999",
+                ["Password"] = "LeAdminos123!",
                 ["IsAdmin"] = true
             });
 
@@ -99,7 +99,7 @@
 
             var img2 = CreateDomainObject<HighResImage>(new()
             {
-                ["Url"] = "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1200",
+                ["Url"] = "https://upload.wikimedia.org/wikipedia/commons/2/23/Audemars_Piguet_Royal_Oak_in_oro_e_tantalio%2C_fine_anni_%2780-primi_%2790.jpg",
                 ["Width"] = 1920,
                 ["Height"] = 1080
             });
