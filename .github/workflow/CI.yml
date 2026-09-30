@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push: # On pushes to DevBranch
+    branches:
+      - DevBranch
+
+  pull_request: # On pull requests to DevBranch
+    branches:
+      - DevBranch
+      
+  jobs:
+    build:
+      runs-on: ubuntu-latest # The ubuntu runner that it will run on.
+      
+      steps: 
+        - uses: actions/checkout@v4
+
+      - name: Setup .NET # Setup the .NET SDK on the runner.
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x' 
+
+      - name: Restore # Restore the dependencies for the project.
+        run: dotnet restore WatchWorld.sln
+
+      - name: Build # Build the project.
+        run: dotnet build WatchWorld.sln --configuration Release --no-restore
+
+  # CI V1
+  # --------------------------------------------------------------------------------------------------    
+  # CI V2 - Xunit tests, when they are done...
+            
+            
