@@ -55,7 +55,7 @@ namespace WatchWorld.BlazorUI.Layout
         {
             var result = await _dialogService.OpenAsync<LogInDialog>(
                     "Log ind",
-                    options: new DialogOptions { Width = "420px" });
+                    options: new DialogOptions { Width = "620px" });
 
             if (result is UserDto user)
             {

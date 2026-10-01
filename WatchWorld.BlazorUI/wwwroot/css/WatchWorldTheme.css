@@ -1,4 +1,12 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap');
+﻿/* ==========================================================================
+   WatchWorld theme
+   Load AFTER Radzen's base theme stylesheet, so these overrides win.
+   Also add a Radzen icon font link (Material Symbols Outlined or Material
+   Icons, depending on your Radzen version - inspect a broken RadzenIcon's
+   class in dev tools to tell which) to index.html's <head>.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap');
 
 :root {
     --ww-navy-900: #0A1B30;
@@ -10,7 +18,7 @@
     --ww-surface: #FFFFFF;
     --ww-text: #14202E;
     --ww-text-muted: #5B6B7D;
-    --ww-border: #E1E5EB;
+    --ww-border: #D6DCE4;
     --rz-primary: var(--ww-navy-800);
     --rz-primary-light: var(--ww-navy-100);
     --rz-primary-dark: var(--ww-navy-900);
@@ -54,6 +62,10 @@
         animation: none !important;
     }
 }
+
+/* ---------------------------------------------------------------------- */
+/* Header                                                                  */
+/* ---------------------------------------------------------------------- */
 
 .ww-header {
     background: var(--ww-surface);
@@ -101,17 +113,25 @@
     flex-shrink: 0;
 }
 
-    .ww-nav a {
-        font-weight: 500;
-        font-size: 0.95rem;
-        color: var(--ww-text-muted);
+.ww-header .ww-nav a {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--ww-text-muted);
+}
+
+    /* !important here specifically because something with higher specificity -
+   almost certainly Radzen's base theme's own a:hover rule - was overriding
+   this with white text on the white header, making nav links disappear on
+   hover. Raising our own specificity (.ww-header .ww-nav a) wasn't enough on
+   its own, so this forces our color to win regardless of load order. */
+    .ww-header .ww-nav a:hover,
+    .ww-header .ww-nav a:focus-visible {
+        color: var(--ww-navy-900) !important;
     }
 
-        .ww-nav a:hover,
-        .ww-nav a:focus-visible {
-            color: var(--ww-navy-900);
-        }
-
+/* position: relative is required here - it's what anchors the absolutely
+   positioned .ww-search__results dropdown below, instead of the dropdown
+   floating relative to the whole page. */
 .ww-search {
     position: relative;
     flex: 1;
@@ -211,6 +231,42 @@
     font-weight: 500;
 }
 
+.ww-header__greeting {
+    font-size: 0.85rem;
+    color: var(--ww-text-muted);
+    margin-right: 0.25rem;
+}
+
+.ww-login-toggle {
+    display: flex;
+    gap: 0.25rem;
+    background: var(--ww-navy-100);
+    border-radius: 999px;
+    padding: 0.2rem;
+    align-self: flex-start;
+}
+
+    .ww-login-toggle button {
+        border: none;
+        background: transparent;
+        padding: 0.35rem 1rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 500;
+        color: var(--ww-text-muted);
+        cursor: pointer;
+    }
+
+        .ww-login-toggle button.active {
+            background: var(--ww-navy-900);
+            color: #fff;
+        }
+
+/* ---------------------------------------------------------------------- */
+/* Wiki strip                                                              */
+/* ---------------------------------------------------------------------- */
+
 .ww-substrip {
     background: var(--ww-navy-900);
     color: #fff;
@@ -249,6 +305,10 @@
         text-decoration: underline;
     }
 
+/* ---------------------------------------------------------------------- */
+/* Layout grid                                                             */
+/* ---------------------------------------------------------------------- */
+
 .ww-main {
     max-width: 1280px;
     margin: 0 auto;
@@ -277,6 +337,10 @@
         flex-basis: 100%;
     }
 }
+
+/* ---------------------------------------------------------------------- */
+/* Hero                                                                     */
+/* ---------------------------------------------------------------------- */
 
 .ww-hero.rz-card {
     border: 1px solid var(--ww-border);
@@ -328,6 +392,9 @@
     max-width: 62ch;
 }
 
+/* Each fact is its own flex item (side by side); span/strong stack inside
+   each one (label above value). The markup also has a literal space between
+   </span> and <strong> as a fallback in case this rule doesn't load. */
 .ww-hero__facts {
     display: flex;
     gap: 2rem;
@@ -348,6 +415,10 @@
         font-size: 0.9rem;
         color: var(--ww-navy-900);
     }
+
+/* ---------------------------------------------------------------------- */
+/* Listings                                                                 */
+/* ---------------------------------------------------------------------- */
 
 .ww-section-head {
     display: flex;
@@ -476,6 +547,10 @@
     border-bottom: 1px solid var(--ww-gold-500);
 }
 
+/* ---------------------------------------------------------------------- */
+/* Sidebar                                                                  */
+/* ---------------------------------------------------------------------- */
+
 .ww-stats-panel.rz-card,
 .ww-recent-panel.rz-card {
     border: 1px solid var(--ww-border);
@@ -552,6 +627,10 @@
     color: var(--ww-text-muted);
 }
 
+/* ---------------------------------------------------------------------- */
+/* Dialogs (Login / Register)                                              */
+/* ---------------------------------------------------------------------- */
+
 .rz-dialog {
     border-top: 3px solid var(--ww-gold-500);
     font-family: 'Source Serif 4', Georgia, serif;
@@ -620,6 +699,9 @@
     margin-top: 0.5rem;
 }
 
+/* ---------------------------------------------------------------------- */
+/* Loading / error / empty states                                          */
+/* ---------------------------------------------------------------------- */
 
 .ww-state {
     padding: 4rem 1rem;
@@ -641,6 +723,331 @@
 .ww-empty--tight {
     padding: 0.25rem 0;
 }
+
+/* ---------------------------------------------------------------------- */
+/* Wiki list page                                                           */
+/* ---------------------------------------------------------------------- */
+
+.ww-wiki {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+.ww-wiki__header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    margin-bottom: 0.3rem;
+}
+
+.ww-wiki__header p {
+    color: var(--ww-text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.ww-wiki__search {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--ww-surface);
+    border: 1px solid var(--ww-border);
+    border-radius: 6px;
+    padding: 0.65rem 1rem;
+    max-width: 480px;
+    margin-bottom: 2rem;
+}
+
+    .ww-wiki__search input {
+        border: none;
+        background: transparent;
+        outline: none;
+        width: 100%;
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 1rem;
+        color: var(--ww-text);
+    }
+
+.ww-wiki__layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .ww-wiki__layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ww-wiki__sidebar {
+    border: 1px solid var(--ww-border);
+    border-top: 3px solid var(--ww-gold-500);
+    border-radius: 6px;
+    padding: 1.25rem;
+    background: var(--ww-surface);
+}
+
+.ww-facet-group {
+    margin-bottom: 1.25rem;
+}
+
+    .ww-facet-group:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .ww-facet-group h3 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--ww-navy-900);
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--ww-gold-500);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+.ww-facet-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--ww-text);
+    padding: 0.25rem 0.4rem;
+    margin: 0 -0.4rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    .ww-facet-option.checked {
+        background: var(--ww-navy-100);
+        color: var(--ww-navy-900);
+        font-weight: 600;
+    }
+
+    .ww-facet-option input[type="checkbox"] {
+        accent-color: var(--ww-navy-800);
+    }
+
+    .ww-facet-option span:first-of-type {
+        flex: 1;
+    }
+
+.ww-facet-count {
+    color: var(--ww-text-muted);
+    font-size: 0.75rem;
+}
+
+.ww-facet-empty {
+    font-size: 0.8rem;
+    color: var(--ww-text-muted);
+}
+
+.ww-facet-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .ww-facet-range input {
+        width: 0;
+        flex: 1;
+        border: 1px solid var(--ww-border);
+        border-radius: 4px;
+        padding: 0.35rem 0.5rem;
+        font-size: 0.85rem;
+        font-family: 'Source Serif 4', Georgia, serif;
+    }
+
+    .ww-facet-range span {
+        color: var(--ww-text-muted);
+    }
+
+.ww-facet-clear {
+    width: 100%;
+    border: 1px solid var(--ww-navy-900);
+    background: transparent;
+    color: var(--ww-navy-900);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.ww-wiki__results-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--ww-text-muted);
+}
+
+    .ww-wiki__results-head select {
+        border: 1px solid var(--ww-border);
+        border-radius: 4px;
+        padding: 0.4rem 0.6rem;
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 0.85rem;
+        color: var(--ww-text);
+        background: var(--ww-surface);
+    }
+
+.ww-wiki__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+.ww-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--ww-navy-100);
+    color: var(--ww-navy-900);
+    border: none;
+    border-radius: 999px;
+    padding: 0.3rem 0.4rem 0.3rem 0.75rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+    .ww-chip .rzi {
+        font-size: 0.9rem;
+    }
+
+.ww-wiki__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.ww-wiki-card .ww-listing-card__image {
+    height: 180px;
+}
+
+.ww-wiki__more {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Wiki detail page                                                         */
+/* ---------------------------------------------------------------------- */
+
+.ww-detail {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+.ww-detail__breadcrumb {
+    font-size: 0.85rem;
+    color: var(--ww-text-muted);
+    margin-bottom: 1.25rem;
+}
+
+    .ww-detail__breadcrumb a {
+        color: var(--ww-navy-900);
+        font-weight: 600;
+    }
+
+    .ww-detail__breadcrumb span:first-of-type {
+        margin: 0 0.4rem;
+    }
+
+.ww-detail__main-image {
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--ww-navy-900);
+    margin-bottom: 0.75rem;
+}
+
+    .ww-detail__main-image img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+    }
+
+.ww-detail__thumbs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+}
+
+.ww-detail__thumb {
+    flex: 0 0 72px;
+    height: 72px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 0;
+    cursor: pointer;
+    background: none;
+}
+
+    .ww-detail__thumb.active {
+        border-color: var(--ww-gold-500);
+    }
+
+    .ww-detail__thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.ww-detail__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    margin-bottom: 0.2rem;
+}
+
+.ww-detail__subtitle {
+    color: var(--ww-text-muted);
+    font-family: 'Space Grotesk', sans-serif;
+    margin-bottom: 1.25rem;
+}
+
+.ww-detail__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--ww-border);
+    border-bottom: 1px solid var(--ww-border);
+    margin-bottom: 1.5rem;
+}
+
+    .ww-detail__facts span {
+        display: block;
+        font-size: 0.75rem;
+        color: var(--ww-text-muted);
+        margin-bottom: 0.15rem;
+    }
+
+    .ww-detail__facts strong {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.9rem;
+        color: var(--ww-navy-900);
+    }
+
+.ww-detail__description {
+    color: var(--ww-text);
+    max-width: 70ch;
+    margin-bottom: 2rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Focus states (accessibility)                                            */
+/* ---------------------------------------------------------------------- */
 
 .ww-page a:focus-visible,
 .ww-page button:focus-visible,

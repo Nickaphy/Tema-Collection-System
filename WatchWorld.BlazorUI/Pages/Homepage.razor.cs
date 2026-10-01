@@ -65,7 +65,7 @@ namespace WatchWorld.BlazorUI.Pages
 
                 RecentAdditions = watches
                     .Take(6)
-                    .Select(w => new RecentAdditionModel(w.Name, w.ModelNumber, ResolveImage(w.Images), $"/ure/{w.Id}"))
+                    .Select(w => new RecentAdditionModel(w.Name, w.ModelNumber, ResolveImage(w.Images), $"/wiki/{w.ModelNumber}"))
                     .ToList();
 
                 FeaturedListings = listings

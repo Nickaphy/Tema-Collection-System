@@ -1,5 +1,7 @@
 ﻿@using Radzen
 @using Radzen.Blazor
+@using WatchWorld.BlazorUI.Dialogs
+@inject DialogService DialogService
 
 <header class="ww-header">
     <div class="ww-header__inner">
@@ -34,7 +36,7 @@
                     {
                         @foreach (var result in searchResults)
                         {
-                            <a class="ww-search__result" href="@($"/wiki/{result.Id}")">
+                            <a class="ww-search__result" href="@($"/wiki/{result.ModelNumber}")">
                                 <span class="ww-search__result-name">@result.Name</span>
                                 <span class="ww-search__result-model">@result.ModelNumber</span>
                             </a>
@@ -65,3 +67,4 @@
         </div>
     </div>
 </header>
+

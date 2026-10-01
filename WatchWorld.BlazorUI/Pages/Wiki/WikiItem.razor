@@ -1,0 +1,101 @@
+﻿@page "/wiki/{ModelNumber}"
+@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+@inject WatchWorldApiClient ApiClient
+@inject ILogger<WikiItem> Logger
+
+<PageTitle>@(watch?.Name ?? "Wiki") – WatchWorld</PageTitle>
+
+<div class="ww-detail">
+
+    @if (isLoading)
+    {
+        <div class="ww-state">Indlæser model …</div>
+    }
+    else if (errorMessage is not null)
+    {
+        <div class="ww-state ww-state--error">@errorMessage</div>
+    }
+    else if (watch is null)
+    {
+        <div class="ww-state">
+            Modellen "@ModelNumber" findes ikke i encyklopædiet.
+            <a href="/wiki">Tilbage til encyklopædiet</a>
+        </div>
+    }
+    else
+    {
+        <nav class="ww-detail__breadcrumb" aria-label="Brødkrumme">
+            <a href="/wiki">Wiki</a> <span>/</span> <span>@watch.Name</span>
+        </nav>
+
+        <div class="ww-detail__gallery">
+            <div class="ww-detail__main-image">
+                <img src="@MainImageUrl" alt="@watch.Name" />
+            </div>
+            @if (watch.Images.Count > 1)
+            {
+                <div class="ww-detail__thumbs">
+                    @for (var i = 0; i < watch.Images.Count; i++)
+                    {
+                        var index = i;
+                        <button type="button" class="ww-detail__thumb @(index == selectedImageIndex ? "active" : "")"
+                                @onclick="@(() => selectedImageIndex = index)">
+                            <img src="@watch.Images[index].Url" alt="@($"{watch.Name} billede {index + 1}")" />
+                        </button>
+                    }
+                </div>
+            }
+        </div>
+
+        <h1 class="ww-detail__title">@watch.Name</h1>
+        <p class="ww-detail__subtitle">@watch.ModelNumber</p>
+
+        <div class="ww-detail__facts">
+            <div><span>Modelnummer</span> <strong>@watch.ModelNumber</strong></div>
+            <div><span>Udgivelsesår</span> <strong>@watch.ReleaseYear.Year</strong></div>
+            <div><span>Kassestørrelse</span> <strong>@watch.CaseSize mm</strong></div>
+            <div><span>Kassefacon</span> <strong>@EnumDisplay.CaseShape(watch.CaseShapeEnum)</strong></div>
+            <div><span>Kassemateriale</span> <strong>@EnumDisplay.CaseMaterial(watch.CaseMaterialEnum)</strong></div>
+            <div><span>Værk</span> <strong>@EnumDisplay.MovementType(watch.MovementTypeEnum)</strong></div>
+            <div><span>Stil</span> <strong>@watch.Style</strong></div>
+            <div><span>Køn</span> <strong>@EnumDisplay.Gender(watch.GenderEnum)</strong></div>
+            <div><span>Remtype</span> <strong>@BraceletTypesText</strong></div>
+            <div><span>Oprindelig pris</span> <strong>@watch.OriginalPrice.ToString("C0", DanishCulture)</strong></div>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(watch.Description))
+        {
+            <p class="ww-detail__description">@watch.Description</p>
+        }
+
+        @if (relatedListings.Count > 0)
+        {
+            <section class="ww-listings">
+                <div class="ww-section-head">
+                    <h2>Udlån af denne model</h2>
+                </div>
+                <div class="ww-listing-row">
+                    @foreach (var listing in relatedListings)
+                    {
+                        <a class="ww-listing-card" href="@($"/udlaan/{listing.Id}")">
+                            <div class="ww-listing-card__image">
+                                <img src="@(listing.BorrowableWatch.Picture?.Count > 0 ? listing.BorrowableWatch.Picture[0].Url : MainImageUrl)" alt="@watch.Name" />
+                                <RadzenBadge Text="UDLÅN" BadgeStyle="BadgeStyle.Dark" class="ww-listing-card__badge" />
+                            </div>
+                            <div class="ww-listing-card__body">
+                                <div class="ww-listing-card__name">@watch.Name</div>
+                                <div class="ww-listing-card__detail">@listing.BorrowableWatch.Age år gammelt</div>
+                                <div class="ww-listing-card__meta">
+                                    <span class="ww-listing-card__price">@listing.PricePerDay.ToString("C0", DanishCulture) / dag</span>
+                                    <span class="ww-listing-card__cta">Se detaljer</span>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </section>
+        }
+    }
+</div>

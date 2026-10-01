@@ -1,0 +1,136 @@
+﻿@page "/wiki"
+@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+@inject WatchWorldApiClient ApiClient
+@inject ILogger<Wiki> Logger
+
+<PageTitle>Wiki – WatchWorld</PageTitle>
+
+<div class="ww-wiki">
+    <div class="ww-wiki__header">
+        <h1>Ur-encyklopædi</h1>
+        <p>Søg og filtrer blandt alle registrerede urmodeller.</p>
+        <div class="ww-wiki__search">
+            <RadzenIcon Icon="search" class="ww-search__icon" />
+            <input type="text" value="@searchQuery" @oninput="OnSearchInput"
+                   placeholder="Søg på navn eller modelnummer …" aria-label="Søg i encyklopædiet" />
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="ww-state">Indlæser encyklopædiet …</div>
+    }
+    else if (errorMessage is not null)
+    {
+        <div class="ww-state ww-state--error">@errorMessage</div>
+    }
+    else
+    {
+        <div class="ww-wiki__layout">
+            <aside class="ww-wiki__sidebar">
+
+                <Facetgroup Title="Stil" Options="StyleFacet" Selected="selectedStyles" OnToggle="@(v => ToggleFacet(selectedStyles, v))" />
+                <Facetgroup Title="Kassefacon" Options="CaseShapeFacet" Selected="selectedCaseShapes" OnToggle="@(v => ToggleFacet(selectedCaseShapes, v))" />
+                <Facetgroup Title="Kassemateriale" Options="CaseMaterialFacet" Selected="selectedCaseMaterials" OnToggle="@(v => ToggleFacet(selectedCaseMaterials, v))" />
+                <Facetgroup Title="Værk" Options="MovementTypeFacet" Selected="selectedMovementTypes" OnToggle="@(v => ToggleFacet(selectedMovementTypes, v))" />
+                <Facetgroup Title="Køn" Options="GenderFacet" Selected="selectedGenders" OnToggle="@(v => ToggleFacet(selectedGenders, v))" />
+                <Facetgroup Title="Remtype" Options="BraceletTypeFacet" Selected="selectedBraceletTypes" OnToggle="@(v => ToggleFacet(selectedBraceletTypes, v))" />
+
+                <div class="ww-facet-group">
+                    <h3>Kassestørrelse (mm)</h3>
+                    <div class="ww-facet-range">
+                        <input type="number" placeholder="Min" @bind="minCaseSize" @bind:after="ResetPaging" />
+                        <span>–</span>
+                        <input type="number" placeholder="Max" @bind="maxCaseSize" @bind:after="ResetPaging" />
+                    </div>
+                </div>
+
+                <div class="ww-facet-group">
+                    <h3>Pris (kr.)</h3>
+                    <div class="ww-facet-range">
+                        <input type="number" placeholder="Min" @bind="minPrice" @bind:after="ResetPaging" />
+                        <span>–</span>
+                        <input type="number" placeholder="Max" @bind="maxPrice" @bind:after="ResetPaging" />
+                    </div>
+                </div>
+
+                <div class="ww-facet-group">
+                    <h3>Udgivelsesår</h3>
+                    <div class="ww-facet-range">
+                        <input type="number" placeholder="Fra" @bind="minYear" @bind:after="ResetPaging" />
+                        <span>–</span>
+                        <input type="number" placeholder="Til" @bind="maxYear" @bind:after="ResetPaging" />
+                    </div>
+                </div>
+
+                @if (ActiveChips.Count > 0)
+                {
+                    <button type="button" class="ww-facet-clear" @onclick="ClearAllFilters">Ryd alle filtre</button>
+                }
+            </aside>
+
+            <div class="ww-wiki__results">
+                <div class="ww-wiki__results-head">
+                    <span>@SortedWatches.Count resultater</span>
+                    <select @bind="sortOption" aria-label="Sortér resultater">
+                        <option value="relevance">Mest relevante</option>
+                        <option value="name-asc">Navn A-Å</option>
+                        <option value="price-asc">Pris: Lav til høj</option>
+                        <option value="price-desc">Pris: Høj til lav</option>
+                        <option value="year-desc">Nyeste model</option>
+                    </select>
+                </div>
+
+                @if (ActiveChips.Count > 0)
+                {
+                    <div class="ww-wiki__chips">
+                        @foreach (var chip in ActiveChips)
+                        {
+                            <button type="button" class="ww-chip" @onclick="chip.Remove">
+                                @chip.Label
+                                <RadzenIcon Icon="close" />
+                            </button>
+                        }
+                    </div>
+                }
+
+                @if (DisplayedWatches.Count == 0)
+                {
+                    <p class="ww-empty">Ingen ure matcher dine filtre.</p>
+                }
+                else
+                {
+                    <div class="ww-wiki__grid">
+                        @foreach (var watch in DisplayedWatches)
+                        {
+                            <a class="ww-listing-card ww-wiki-card" href="@($"/wiki/{watch.ModelNumber}")">
+                                <div class="ww-listing-card__image">
+                                    <img src="@(watch.Images.Count > 0 ? watch.Images[0].Url : PlaceholderImage)" alt="@watch.Name" />
+                                </div>
+                                <div class="ww-listing-card__body">
+                                    <div class="ww-listing-card__name">@watch.Name</div>
+                                    <div class="ww-listing-card__detail">
+                                        @EnumDisplay.CaseShape(watch.CaseShapeEnum) · @EnumDisplay.CaseMaterial(watch.CaseMaterialEnum)
+                                    </div>
+                                    <div class="ww-listing-card__meta">
+                                        <span class="ww-listing-card__price">@watch.ModelNumber</span>
+                                        <span class="ww-listing-card__cta">Se mere</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </div>
+
+                    @if (DisplayedWatches.Count < SortedWatches.Count)
+                    {
+                        <div class="ww-wiki__more">
+                            <RadzenButton Text="Vis flere" ButtonStyle="ButtonStyle.Base" Click="@(() => visibleCount += PageSize)" />
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+</div>

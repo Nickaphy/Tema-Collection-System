@@ -33,8 +33,25 @@ public static class WatchSeeder
     // Seed watches into database, basic = 20, full = 150. (local, mother)
     public static async Task SeedWatchesAsync(AppDbContext context, bool useFullCatalog)
     {
+        // =========================================================
+        // TEMPORARY BACKDOOR: Wipe existing watches to test images
+        // =========================================================
         if (await context.Watchlist.AnyAsync())
-            return;
+        {
+            // 1. Delete the dependent child records first using raw SQL
+            // This satisfies the Foreign Key constraint "FK_IndividualWatches_Watchlist_WatchesId"
+            await context.Database.ExecuteSqlRawAsync("DELETE FROM IndividualWatches");
+
+            // Note: If you get another FK error for images or bracelets, add another raw SQL delete here, e.g.:
+            // await context.Database.ExecuteSqlRawAsync("DELETE FROM HighResImage");
+
+            // 2. Now it is safe to delete the parent watches
+            var existingWatches = await context.Watchlist.ToListAsync();
+            context.Watchlist.RemoveRange(existingWatches);
+
+            await context.SaveChangesAsync();
+        }
+        // =========================================================
 
         var seedSet = useFullCatalog ? WatchSeedData.All : WatchSeedData.Basic;
         int fallbackIndex = 0;
