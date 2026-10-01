@@ -1,6 +1,7 @@
 using WatchWorld.Domain.ValueObjects;
 using WatchWorld.Domain.Enums;
 using WatchWorld.Domain.Service;
+using System.ComponentModel.DataAnnotations;
 
 namespace WatchWorld.Domain.Entities
 {

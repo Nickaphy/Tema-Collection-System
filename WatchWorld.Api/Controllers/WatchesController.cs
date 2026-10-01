@@ -23,7 +23,7 @@ public class WatchesController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<Watches>>> Get(CancellationToken ct)
     {
-        var watches = await _watchUseCase.GetAllAsync(ct);
+        var watches = await _watchUseCase.GetAllWatchesAsync(ct);
         if (watches.IsFailed)
             return Problem(string.Join("; ", watches.Errors.Select(e => e.Message)));
         return Ok(watches.Value);

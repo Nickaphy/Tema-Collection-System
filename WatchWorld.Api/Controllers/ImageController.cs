@@ -23,7 +23,7 @@ namespace WatchWorld.Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<HighResImage>>> Get(CancellationToken ct)
         {
-            var images = await _imageUseCase.GetAllAsync(ct);
+            var images = await _imageUseCase.GetAllImagesAsync(ct);
             if (images.IsFailed)
                 return Problem(string.Join("; ", images.Errors.Select(e => e.Message)));
             return Ok(images.Value);
