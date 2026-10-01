@@ -6,70 +6,48 @@ using WatchWorld.Infrastructure.Database.Seed;
 
 public static class WatchSeeder
 {
-    private static readonly Dictionary<string, string> ImageDictionary = new(StringComparer.OrdinalIgnoreCase)
-    {
-        // Audemars Piguet Models
-        { "26393OR.OO.A056KB.01", "https://upload.wikimedia.org/wikipedia/commons/2/23/Audemars_Piguet_Royal_Oak_in_oro_e_tantalio%2C_fine_anni_%2780-primi_%2790.jpg" },
-        { "26395NR.OO.D002KB.01", "https://upload.wikimedia.org/wikipedia/commons/6/60/Audemars_Piguet_skeleton_watch.jpg" },
-        { "26441OR.OO.D405CR.01", "https://upload.wikimedia.org/wikipedia/commons/3/30/Audemars_Piguet_Royal_Oak_Offshore_Chronograph.jpg" },
-        { "6393OR.OO.A056KB.01",  "https://upload.wikimedia.org/wikipedia/commons/2/23/Audemars_Piguet_Royal_Oak_in_oro_e_tantalio%2C_fine_anni_%2780-primi_%2790.jpg" }, // Used same as above due to typo in model nr
-        { "77410OR.OO.A623CR.01", "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Audemars_Piguet_watch.jpg/1024px-Audemars_Piguet_watch.jpg" },
-        { "77410OR.ZZ.D343CR.01", "https://upload.wikimedia.org/wikipedia/commons/8/89/Audemars_Piguet_-_Royal_Oak_Concept_Laptimer_Michael_Schumacher.jpg" },
-        
-        // Breitling Models
-        { "A17328101B1X1", "https://upload.wikimedia.org/wikipedia/commons/8/87/Breitling_Navitimer_01.jpg" },
-        { "A173283A1I1X1", "https://upload.wikimedia.org/wikipedia/commons/d/df/Breitling_Superocean_Steelfish_X-Plus.jpg" },
-        { "A24315101C1X2", "https://upload.wikimedia.org/wikipedia/commons/c/cd/Breitling_Chronomat_B01.jpg" },
-        { "AB0147101L1A1", "https://upload.wikimedia.org/wikipedia/commons/e/ea/Breitling_Emergency_2.jpg" }
-    };
+    private const string BaseUrl = "https://localhost:64369/images/seed";
+    private const string PlaceholderImage = $"{BaseUrl}/OnTheWay.png";
 
-    private static readonly string[] DefaultFallbackImages = new[]
+    // The 10 model numbers you manually saved in wwwroot/images/seed/
+    private static readonly HashSet<string> LocalModelImages = new(StringComparer.OrdinalIgnoreCase)
     {
-        "https://upload.wikimedia.org/wikipedia/commons/8/87/Breitling_Navitimer_01.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/2/23/Audemars_Piguet_Royal_Oak_in_oro_e_tantalio%2C_fine_anni_%2780-primi_%2790.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/3/30/Audemars_Piguet_Royal_Oak_Offshore_Chronograph.jpg"
+        "26393OR.OO.A056KB.01",
+        "26395NR.OO.D002KB.01",
+        "26441OR.OO.D405CR.01",
+        "6393OR.OO.A056KB.01",
+        "77410OR.OO.A623CR.01",
+        "77410OR.ZZ.D343CR.01",
+        "A17328101B1X1",
+        "A173283A1I1X1",
+        "A24315101C1X2",
+        "AB0147101L1A1"
     };
 
     // Seed watches into database, basic = 20, full = 150. (local, mother)
     public static async Task SeedWatchesAsync(AppDbContext context, bool useFullCatalog)
     {
-        // =========================================================
-        // TEMPORARY BACKDOOR: Wipe existing watches to test images
-        // =========================================================
+        // 1. BACKDOOR: Wipe existing records in dependency order
         if (await context.Watchlist.AnyAsync())
         {
-            // 1. Delete the dependent child records first using raw SQL
-            // This satisfies the Foreign Key constraint "FK_IndividualWatches_Watchlist_WatchesId"
             await context.Database.ExecuteSqlRawAsync("DELETE FROM IndividualWatches");
-
-            // Note: If you get another FK error for images or bracelets, add another raw SQL delete here, e.g.:
-            // await context.Database.ExecuteSqlRawAsync("DELETE FROM HighResImage");
-
-            // 2. Now it is safe to delete the parent watches
-            var existingWatches = await context.Watchlist.ToListAsync();
-            context.Watchlist.RemoveRange(existingWatches);
-
-            await context.SaveChangesAsync();
+            await context.Database.ExecuteSqlRawAsync("DELETE FROM HighResImages");
+            await context.Database.ExecuteSqlRawAsync("DELETE FROM Watchlist");
         }
-        // =========================================================
 
         var seedSet = useFullCatalog ? WatchSeedData.All : WatchSeedData.Basic;
-        int fallbackIndex = 0;
 
         foreach (var seed in seedSet)
         {
-            var watchImages = new List<HighResImage>();
+            // 2. Use exact model image if available; otherwise use OnTheWay.png
+            string imageUrl = LocalModelImages.Contains(seed.ModelNumber)
+                ? $"{BaseUrl}/{seed.ModelNumber}.jpg"
+                : PlaceholderImage;
 
-            if (ImageDictionary.TryGetValue(seed.ModelNumber, out string matchedUrl))
+            var watchImages = new List<HighResImage>
             {
-                watchImages.Add(HighResImage.Create(matchedUrl, 1000, 1000));
-            }
-            else
-            {
-                string fallbackUrl = DefaultFallbackImages[fallbackIndex % DefaultFallbackImages.Length];
-                watchImages.Add(HighResImage.Create(fallbackUrl, 1000, 1000));
-                fallbackIndex++;
-            }
+                HighResImage.Create(imageUrl, 1000, 1000)
+            };
 
             var watch = Watches.Create(
                 seed.Name,

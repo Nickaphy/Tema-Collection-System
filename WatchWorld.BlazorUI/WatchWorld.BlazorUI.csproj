@@ -28,8 +28,4 @@
     <ProjectReference Include="..\WatchWorld.Infrastructure\WatchWorld.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\WatchImages\" />
-  </ItemGroup>
-
 </Project>
