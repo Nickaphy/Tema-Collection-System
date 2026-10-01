@@ -27,6 +27,15 @@ jobs:
       - name: Build # Build the project.
         run: dotnet build WatchWorld.sln --configuration Release --no-restore
 
+      - name: Build Docker Images # Confirming that our docker images build
+        run: docker build -f WatchWorld.Api/Dockerfile -t watchworld-api:ci .
+
+      - name: Validate Docker Compose
+        run: docker compose config
+
+      - name: Validate docker compose configuration
+        run: docker compose up -d
+
   # CI V1
   # --------------------------------------------------------------------------------------------------
   # CI V2 - Xunit tests, when they are done...
