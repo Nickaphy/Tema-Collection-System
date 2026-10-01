@@ -29,7 +29,7 @@ public class SqlServerWatchRepository : IWatchesRepository
         var watch = await _context.Watchlist.FindAsync(new object[] { id }, ct);
         if (watch == null)
             {
-                return Result.Fail<Watches>("Watch not found.");
+                return Result.Fail("Watch not found.");
             }
         return Result.Ok(watch);
     }
@@ -38,7 +38,7 @@ public class SqlServerWatchRepository : IWatchesRepository
         var result = await _context.Watchlist.AddAsync(watch, ct);
         if (result == null)
             {
-                return Result.Fail<Watches>("Failed to create watch.");
+                return Result.Fail("Failed to create watch.");
             }
         await _context.SaveChangesAsync(ct);
         return Result.Ok(watch);
