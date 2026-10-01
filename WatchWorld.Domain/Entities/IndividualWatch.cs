@@ -55,7 +55,7 @@ namespace WatchWorld.Domain.Entities
                 throw new UserInvalidInputException("Et ur kan ikke have en negativ værdi");
             if (!Enum.IsDefined(typeof(WearGradeEnum), wearGrade))
                 throw new UserInvalidInputException("Et ur skal have et gyldigt slidniveau");
-            if (specificWatch.ReleaseYear.Year < (DateTime.Now.Year - age))
+            if (specificWatch.ReleaseYear.Year > (DateTime.Now.Year - age))
                 throw new UserInvalidInputException("Et ur kan ikke være ældre end modellets udgivelsesår");
         }
     }
