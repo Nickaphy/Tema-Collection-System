@@ -13,6 +13,9 @@ jobs:
   build:
     runs-on: ubuntu-latest # The ubuntu runner that it will run on.
 
+    env:
+      MSSQL_SA_PASSWORD: "${SA_PASSWORD}" # In github secrets
+
     steps:
       - uses: actions/checkout@v4
 
@@ -33,8 +36,16 @@ jobs:
       - name: Validate Docker Compose
         run: docker compose config
 
-      - name: Validate docker compose configuration
-        run: docker compose up -d
+      - name: Validate docker compose configuration # SA password (stored in github secrets)
+        run: docker compose up -d --build --wait
+
+      - name: Show Containers 
+        run: docker compose ps
+
+      - name: Show down docker compose stack
+        if: always() # Even if another step fails, always clean up the containers.
+        run: docker compose down -v
+
 
   # CI V1
   # --------------------------------------------------------------------------------------------------
