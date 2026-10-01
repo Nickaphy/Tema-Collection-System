@@ -28,11 +28,7 @@ namespace WatchWorld.Infrastructure.Adapters
                     .ThenInclude(iw => iw.Picture)
                 .AsNoTracking()
                 .ToListAsync(ct);
-            if (listings == null || !listings.Any())
-            {
-                return Result.Fail<IEnumerable<Listing>>("No listings found.");
-            }
-            return Result.Ok<IEnumerable<Listing>>(listings);
+            return Result.Ok(listings.AsEnumerable());
         }
 
         public async Task<Result<Listing>> GetListingByIdAsync(Guid id, CancellationToken ct = default)

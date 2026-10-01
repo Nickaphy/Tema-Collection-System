@@ -22,7 +22,7 @@ namespace WatchWorld.Api.Controllers
         //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<IEnumerable<Borrow>>> Get(CancellationToken ct)
         {
-            var result = await _borrowUseCase.GetAllAsync(ct);
+            var result = await _borrowUseCase.GetAllBorrowAsync(ct);
             if (result.IsFailed)
                 return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
             return Ok(result.Value);

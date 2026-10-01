@@ -18,15 +18,11 @@ namespace WatchWorld.Infrastructure.Adapters
             _context = context;
         }
 
-        public async Task<Result<IEnumerable<UserRating>>> GetAllUserRatingsAsync(CancellationToken ct = default)
-        {
-            var userRatings = await _context.UserRatings.ToListAsync(ct);
-            if (userRatings == null || !userRatings.Any())
-            {
-                return Result.Fail<IEnumerable<UserRating>>("No user ratings found.");
-            }
-            return Result.Ok(userRatings.AsEnumerable());
-        }
+        // public async Task<Result<IEnumerable<UserRating>>> GetAllUserRatingsAsync(CancellationToken ct = default)
+        // {
+        //     var userRatings = await _context.UserRatings.ToListAsync(ct);
+        //     return Result.Ok(userRatings.AsEnumerable());
+        // }
 
         public async Task<Result<UserRating>> GetUserRatingByIdAsync(Guid id, CancellationToken ct = default)
         {
@@ -41,24 +37,16 @@ namespace WatchWorld.Infrastructure.Adapters
         public async Task<Result<IEnumerable<UserRating>>> GetAllUserRatingsByUserIdAsync(Guid id, CancellationToken ct = default)
         {
             var userRatings = await _context.UserRatings
-                .Where(ur => ur.Id == id)
+                .Where(ur => ur.RatedByUserId == id)
                 .ToListAsync(ct);
-            if (userRatings == null || !userRatings.Any())
-            {
-                return Result.Ok(userRatings.Select(r => (UserRating)r));
-            }
             return Result.Ok(userRatings.AsEnumerable());
         }
 
         public async Task<Result<IEnumerable<UserRating>>> GetAllUserRatingsToUserIdAsync(Guid id, CancellationToken ct = default)
         {
             var userRatings = await _context.UserRatings
-                .Where(ur => ur.Id == userId)
+                .Where(ur => ur.RatedTargetId == id)
                 .ToListAsync(ct);
-            if (userRatings == null || !userRatings.Any())
-            {
-                return Result.Ok(userRatings.Select(r => (UserRating)r));
-            }
             return Result.Ok(userRatings.AsEnumerable());
         }
 

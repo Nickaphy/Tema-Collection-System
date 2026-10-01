@@ -18,9 +18,9 @@ public class ListingService : IListingUseCase
         _repository = repository;
     }
 
-    public async Task<Result<IEnumerable<Listing?>>> GetAllAsync(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<Listing>>> GetAllListingsAsync(CancellationToken ct = default)
     {
-        var listings = await _repository.GetAllAsync(ct);
+        var listings = await _repository.GetAllListingsAsync(ct);
         return Result.Ok(listings.Value);
     }
 
@@ -36,7 +36,7 @@ public class ListingService : IListingUseCase
 
     public async Task<Result<Listing>> CreateListingAsync(CreateListingCommand command, CancellationToken ct = default)
     {
-        var existingListings = await _repository.GetAllAsync(ct);
+        var existingListings = await _repository.GetAllListingsAsync(ct);
 
         await _Lock.WaitAsync();
         try
@@ -75,7 +75,7 @@ public class ListingService : IListingUseCase
     public async Task<Result> DeleteListingAsync(DeleteListingCommand deleteListingCommand, CancellationToken ct = default)
     {
         var existingListing = await _repository.GetListingByIdAsync(deleteListingCommand.id, ct);
-        if (existingListing == null)
+        if (existingListing.IsFailed)
         {
             return Result.Fail("Opstillingen blev ikke fundet.");
         }

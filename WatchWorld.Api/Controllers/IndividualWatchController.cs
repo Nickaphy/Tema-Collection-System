@@ -24,7 +24,7 @@ namespace WatchWorld.Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<IndividualWatch>>> Get(CancellationToken ct)
         {
-            var individualWatches = await _individualWatchUseCase.GetAllAsync(ct);
+            var individualWatches = await _individualWatchUseCase.GetAllIndividualWatchesAsync(ct);
             if (individualWatches.IsFailed)
                 return Problem(string.Join("; ", individualWatches.Errors.Select(e => e.Message)));
             return Ok(individualWatches.Value);

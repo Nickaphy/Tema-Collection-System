@@ -21,10 +21,6 @@ public class SqlServerWatchRepository : IWatchesRepository
             .Include(w => w.Images)
             .AsNoTracking()
             .ToListAsync(ct);
-        if (watches == null || !watches.Any())
-        {
-            return Result.Fail<IEnumerable<Watches>>("No watches found.");
-        }
         return Result.Ok(watches.AsEnumerable());
     }
 

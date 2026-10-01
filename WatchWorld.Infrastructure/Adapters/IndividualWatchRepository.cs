@@ -21,10 +21,6 @@ public class SqlServerIndividualWatchRepository : IIndividualWatchRepository
             .Include(w => w.SpecificWatch)
             .Include(w => w.Picture)
             .ToListAsync(ct);
-        if (watches == null || !watches.Any())
-            {
-                return Result.Fail<IEnumerable<IndividualWatch>>("No individual watches found.");
-            }
         return Result.Ok(watches.AsEnumerable());
     }
 
