@@ -46,6 +46,10 @@ jobs:
         if: always() # Even if another step fails, always clean up the containers.
         run: docker compose down -v
 
+      - name: Debug Docker Compose # Figuring out why SQL is unhelthy :C
+        if: failure()
+        run: docker compose ps && docker compose logs sqlserver
+
 
   # CI V1
   # --------------------------------------------------------------------------------------------------
