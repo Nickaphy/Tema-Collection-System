@@ -18,7 +18,7 @@ namespace WatchWorld.Infrastructure.Adapters
             _context = context;
         }
 
-        public async Task<Result<IEnumerable<Listing>>> GetAllAsync(CancellationToken ct = default)
+        public async Task<Result<IEnumerable<Listing>>> GetAllListingsAsync(CancellationToken ct = default)
         {
             var listings = await _context.Listings
                 .Include(l => l.BorrowableWatch)
@@ -28,8 +28,7 @@ namespace WatchWorld.Infrastructure.Adapters
                     .ThenInclude(iw => iw.Picture)
                 .AsNoTracking()
                 .ToListAsync(ct);
-
-            return Result.Ok<IEnumerable<Listing>>(listings);
+            return Result.Ok(listings.AsEnumerable());
         }
 
         public async Task<Result<Listing>> GetListingByIdAsync(Guid id, CancellationToken ct = default)

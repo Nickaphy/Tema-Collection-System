@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push: # On pushes to DevBranch
+    branches:
+      - DevBranch
+
+  pull_request: # On pull requests to DevBranch
+    branches:
+      - DevBranch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # The ubuntu runner that it will run on.
+
+    env:
+      SA_PASSWORD: ${{ secrets.CI_SA_PASSWORD }} # password stored in github secrets
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET # Setup the .NET SDK on the runner.
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore # Restore the dependencies for the project.
+        run: dotnet restore WatchWorld.sln
+
+      - name: Build # Build the project.
+        run: dotnet build WatchWorld.sln --configuration Release --no-restore
+
+      - name: Build Docker Images # Confirming that our docker images build
+        run: docker build -f WatchWorld.Api/Dockerfile -t watchworld-api:ci .
+
+      - name: Validate Docker Compose
+        run: docker compose config
+
+      - name: Validate docker compose configuration # SA password (stored in github secrets)
+        run: docker compose up -d --build --wait
+
+      - name: Show Containers 
+        run: docker compose ps
+
+      - name: Show down docker compose stack
+        if: always() # Even if another step fails, always clean up the containers.
+        run: docker compose down -v
+
+      - name: Debug Docker Compose # Figuring out why SQL is unhelthy :C
+        if: failure()
+        run: docker compose ps && docker compose logs sqlserver
+
+
+  # CI V1
+  # --------------------------------------------------------------------------------------------------
+  # CI V2 - Xunit tests, when they are done...

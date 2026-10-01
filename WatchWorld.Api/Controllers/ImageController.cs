@@ -23,14 +23,14 @@ namespace WatchWorld.Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<HighResImage>>> Get(CancellationToken ct)
         {
-            var images = await _imageUseCase.GetAllAsync(ct);
+            var images = await _imageUseCase.GetAllImagesAsync(ct);
             if (images.IsFailed)
                 return Problem(string.Join("; ", images.Errors.Select(e => e.Message)));
             return Ok(images.Value);
         }
 
         [HttpPost]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
         public async Task<ActionResult<HighResImage>> Create([FromBody] CreateImageRequest request, CancellationToken ct)
         {
             var command = new CreateImageCommand(
@@ -38,13 +38,15 @@ namespace WatchWorld.Api.Controllers
                 height: request.height,
                 width: request.width
             );
+            var result = await _imageUseCase.CreateImageAsync(command, ct);
+            if (result.IsFailed)
+                return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
 
-            var image = await _imageUseCase.CreateImageAsync(command, ct);
-            return CreatedAtAction(nameof(Get), new { id = new Guid()}, image);
+            return Created($"/api/Image/{result.Value.Id}", result.Value);
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
         public async Task<ActionResult> Delete(Guid id, CancellationToken ct)
         {
             await _imageUseCase.DeleteImageAsync(id, ct);
