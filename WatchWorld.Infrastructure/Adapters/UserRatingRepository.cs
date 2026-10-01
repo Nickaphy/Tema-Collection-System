@@ -18,46 +18,46 @@ namespace WatchWorld.Infrastructure.Adapters
             _context = context;
         }
 
-        public async Task<Result<IEnumerable<UserRating>>> GetAllAsync(CancellationToken ct = default)
+        public async Task<Result<IEnumerable<UserRating>>> GetAllUserRatingsAsync(CancellationToken ct = default)
         {
             var userRatings = await _context.UserRatings.ToListAsync(ct);
             if (userRatings == null || !userRatings.Any())
             {
-                return Result.Fail("No user ratings found.");
+                return Result.Fail<IEnumerable<UserRating>>("No user ratings found.");
             }
             return Result.Ok(userRatings.AsEnumerable());
         }
 
-        public async Task<Result<UserRating?>> GetUserRatingByIdAsync(Guid id, CancellationToken ct = default)
+        public async Task<Result<UserRating>> GetUserRatingByIdAsync(Guid id, CancellationToken ct = default)
         {
             var userRating = await _context.UserRatings.FindAsync(new object[] { id }, ct);
             if (userRating == null)
             {
-                return Result.Fail<UserRating?>("User rating not found.");
+                return Result.Fail<UserRating>("User rating not found.");
             }
             return Result.Ok(userRating);
         }
 
-        public async Task<Result<IEnumerable<UserRating?>>> GetAllUserRatingsByUserIdAsync(Guid userId, CancellationToken ct = default)
+        public async Task<Result<IEnumerable<UserRating>>> GetAllUserRatingsByUserIdAsync(Guid id, CancellationToken ct = default)
         {
             var userRatings = await _context.UserRatings
-                .Where(ur => ur.Id == userId)
+                .Where(ur => ur.Id == id)
                 .ToListAsync(ct);
             if (userRatings == null || !userRatings.Any())
             {
-                return Result.Ok(userRatings.Select(r => (UserRating?)r));
+                return Result.Ok(userRatings.Select(r => (UserRating)r));
             }
             return Result.Ok(userRatings.AsEnumerable());
         }
 
-        public async Task<Result<IEnumerable<UserRating?>>> GetAllUserRatingsToUserIdAsync(Guid userId, CancellationToken ct = default)
+        public async Task<Result<IEnumerable<UserRating>>> GetAllUserRatingsToUserIdAsync(Guid id, CancellationToken ct = default)
         {
             var userRatings = await _context.UserRatings
                 .Where(ur => ur.Id == userId)
                 .ToListAsync(ct);
             if (userRatings == null || !userRatings.Any())
             {
-                return Result.Ok(userRatings.Select(r => (UserRating?)r));
+                return Result.Ok(userRatings.Select(r => (UserRating)r));
             }
             return Result.Ok(userRatings.AsEnumerable());
         }

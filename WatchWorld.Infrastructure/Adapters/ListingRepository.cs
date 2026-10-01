@@ -18,7 +18,7 @@ namespace WatchWorld.Infrastructure.Adapters
             _context = context;
         }
 
-        public async Task<Result<IEnumerable<Listing>>> GetAllAsync(CancellationToken ct = default)
+        public async Task<Result<IEnumerable<Listing>>> GetAllListingsAsync(CancellationToken ct = default)
         {
             var listings = await _context.Listings
                 .Include(l => l.BorrowableWatch)
@@ -28,7 +28,10 @@ namespace WatchWorld.Infrastructure.Adapters
                     .ThenInclude(iw => iw.Picture)
                 .AsNoTracking()
                 .ToListAsync(ct);
-
+            if (listings == null || !listings.Any())
+            {
+                return Result.Fail<IEnumerable<Listing>>("No listings found.");
+            }
             return Result.Ok<IEnumerable<Listing>>(listings);
         }
 

@@ -1,8 +1,5 @@
 ﻿using FluentResults;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using WatchWorld.Application.Ports.OutBound;
 using WatchWorld.Domain.Entities;
 using WatchWorld.Infrastructure.Database;
@@ -18,7 +15,7 @@ namespace WatchWorld.Infrastructure.Adapters
             _context = context;
         }
 
-        public async Task<Result<IEnumerable<Borrow>>> GetAllAsync(CancellationToken ct = default)
+        public async Task<Result<IEnumerable<Borrow>>> GetAllBorrowAsync(CancellationToken ct = default)
         {
             var borrows = await _context.Borrows.ToListAsync(ct);
             if (borrows == null || !borrows.Any())

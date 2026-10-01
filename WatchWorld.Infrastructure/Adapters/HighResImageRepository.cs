@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using WatchWorld.Application.Ports.OutBound;
+using WatchWorld.Application.Services;
 using WatchWorld.Domain.Entities;
 using WatchWorld.Infrastructure.Database;
 
@@ -18,20 +19,23 @@ namespace WatchWorld.Infrastructure.Adapters
             _context = context;
         }
 
-        public async Task<Result<IEnumerable<HighResImage?>>> GetAllAsync(CancellationToken ct = default)
+        public async Task<Result<IEnumerable<HighResImage>>> GetAllImagesAsync(CancellationToken ct = default)
         {
-            var images = await _context.HighResImages
-                .ToListAsync(ct);
+            var images = await _context.HighResImages.ToListAsync(ct);
+            if (images == null || !images.Any())
+            {
+                return Result.Fail<IEnumerable<HighResImage>>("Images not found.");
+            }
             return Result.Ok(images.AsEnumerable());
         }
 
-        public async Task<Result<HighResImage?>> GetImageByIdAsync(Guid id, CancellationToken ct = default)
+        public async Task<Result<HighResImage>> GetImageByIdAsync(Guid id, CancellationToken ct = default)
         {
+            var image = await _context.HighResImages.FirstOrDefaultAsync(w => w.Id == id, ct);
             if (id == Guid.Empty)
-                return Result.Fail("Kan ikke finde et billede da intet billede er blevet valgt");
-            var image = await _context.HighResImages
-                .FirstOrDefaultAsync(w => w.Id == id, ct);
-
+            {
+                return Result.Fail("Image not found.");
+            }
             return Result.Ok(image);
         }
 
