@@ -8,6 +8,7 @@ namespace WatchWorld.Domain.Entities
     public class Watches : Aggregateroot
     {
         public string Name { get; private set; }
+        public string Brand { get; private set; }
         public string ModelNumber { get; private set; }
         public int CaseSize { get; private set; }
         public CaseShapeEnum CaseShapeEnum { get; private set; }
@@ -25,9 +26,10 @@ namespace WatchWorld.Domain.Entities
 
         private Watches() { }
 
-        private Watches(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
+        private Watches(string name, string brand, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
         {
             Name = name;
+            Brand = brand;
             ModelNumber = modelNumber;
             CaseSize = caseSize;
             CaseShapeEnum = caseShapeEnum;
@@ -41,10 +43,12 @@ namespace WatchWorld.Domain.Entities
             Description = description;
             Images = images ?? new List<HighResImage>();
         }
-        public static void Validate(string Name, string ModelNumber, int CaseSize, decimal OriginalPrice, DateOnly ReleaseYear)
+        public static void Validate(string Name, string Brand, string ModelNumber, int CaseSize, decimal OriginalPrice, DateOnly ReleaseYear)
         {
             if (string.IsNullOrWhiteSpace(Name))
                 throw new UserInvalidInputException("Name cannot be null or empty.");
+            if (string.IsNullOrWhiteSpace(Brand))
+                throw new UserInvalidInputException("Brand cannot be null or empty.");
             if (string.IsNullOrWhiteSpace(ModelNumber))
                 throw new UserInvalidInputException("ModelNumber cannot be null or empty.");
             if (CaseSize <= 0)
@@ -54,12 +58,13 @@ namespace WatchWorld.Domain.Entities
             if (ReleaseYear.Year > DateTime.Now.Year)
                 throw new UserInvalidInputException("ReleaseYear must be before the current year.");
         }
-        public static Watches Update(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
+        public static Watches Update(string name, string brand, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
         {
-            Validate(name, modelNumber, caseSize, originalPrice, releaseYear);
+            Validate(name, brand, modelNumber, caseSize, originalPrice, releaseYear);
             return new Watches
             {
                 Name = name,
+                Brand = brand,
                 ModelNumber = modelNumber,
                 CaseSize = caseSize,
                 CaseShapeEnum = caseShapeEnum,
@@ -74,10 +79,11 @@ namespace WatchWorld.Domain.Entities
                 Images = images
             };
         }
-        public static Watches Create(string name, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
+        public static Watches Create(string name, string brand, string modelNumber, int caseSize, CaseShapeEnum caseShapeEnum, CaseMaterialEnum caseMaterialEnum, MovementTypeEnum movementTypeEnum, string style, decimal originalPrice, GenderEnum genderEnum, DateOnly releaseYear, List<BraceletTypeEnum> braceletTypeEnum, string description, List<HighResImage> images)
         {
             
             var watch = new Watches(name,
+                                brand,
                                 modelNumber,
                                 caseSize,
                                 caseShapeEnum,
@@ -90,7 +96,7 @@ namespace WatchWorld.Domain.Entities
                                 braceletTypeEnum,
                                 description,
                                 images);
-            Validate(watch.Name, watch.ModelNumber, watch.CaseSize, watch.OriginalPrice, watch.ReleaseYear);
+            Validate(watch.Name, watch.Brand, watch.ModelNumber, watch.CaseSize, watch.OriginalPrice, watch.ReleaseYear);
             return watch;
         }
     }

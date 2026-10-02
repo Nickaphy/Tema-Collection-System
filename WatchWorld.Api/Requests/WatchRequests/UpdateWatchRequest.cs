@@ -6,6 +6,7 @@ namespace WatchWorld.Api.Requests.WatchRequests
     public record UpdateWatchRequest(
     Guid id,
     string name,
+    string brand,
     string modelNumber,
     int caseSize,
     CaseShapeEnum caseShapeEnum,

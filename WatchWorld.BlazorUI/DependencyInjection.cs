@@ -1,5 +1,6 @@
 ﻿using Radzen;
 using WatchWorld.BlazorUI.Helpers;
+using WatchWorld.BlazorUI.Services;
 
 namespace WatchWorld.BlazorUI
 {
@@ -11,6 +12,7 @@ namespace WatchWorld.BlazorUI
             services.AddRadzenComponents();
             services.AddScoped<LogInContext>();
             services.AddScoped<NotificationHelper>();
+            services.AddScoped<CurrentUserState>();
             return services;
         }
     }

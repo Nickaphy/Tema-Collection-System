@@ -1,24 +1,29 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Radzen;
 using WatchWorld.BlazorUI.Dialogs;
 using WatchWorld.BlazorUI.ResponseDTO;
+using WatchWorld.BlazorUI.ResponseDTO.UserResponseDTO;
+using WatchWorld.BlazorUI.Services;
 
 namespace WatchWorld.BlazorUI.Layout
 {
-    public partial class Navbar : ComponentBase
+    public partial class Navbar : ComponentBase, IDisposable
     {
         [Inject] private WatchWorldApiClient ApiClient { get; set; } = default!;
         [Inject] private ILogger<Navbar> Logger { get; set; } = default!;
-        [Inject] private DialogService _dialogService { get; set; }
+        [Inject] private CurrentUserState CurrentUser { get; set; } = default!;
+
         private List<WatchDto> allWatches = new();
         private List<WatchDto> searchResults = new();
         private string searchQuery = string.Empty;
         private bool showResults;
-        private UserDto? loggedInUser;
 
         protected override async Task OnInitializedAsync()
         {
+            CurrentUser.Changed += OnCurrentUserChanged;
+
             try
             {
                 allWatches = await ApiClient.GetWatchesAsync(CancellationToken.None);
@@ -28,6 +33,8 @@ namespace WatchWorld.BlazorUI.Layout
                 Logger.LogError(ex, "NavBar could not preload watches for search");
             }
         }
+
+        private void OnCurrentUserChanged() => InvokeAsync(StateHasChanged);
 
         private void OnSearchInput(ChangeEventArgs e)
         {
@@ -53,27 +60,30 @@ namespace WatchWorld.BlazorUI.Layout
 
         private async Task OpenLoginDialog()
         {
-            var result = await _dialogService.OpenAsync<LogInDialog>(
-                    "Log ind",
-                    options: new DialogOptions { Width = "620px" });
+            var result = await DialogService.OpenAsync<LogInDialog>(
+                "Log ind",
+                options: new DialogOptions { Width = "620px", ShowClose = true });
 
             if (result is UserDto user)
-            {
-                loggedInUser = user;
-                StateHasChanged();
-            }
+                CurrentUser.SetUser(user);
         }
 
         private async Task OpenRegisterDialog()
         {
-            await _dialogService.OpenAsync<RegisterUserDialog>(
+            await DialogService.OpenAsync<RegisterUserDialog>(
                 "Opret bruger",
                 options: new DialogOptions { Width = "480px", ShowClose = true });
         }
 
         private void LogOut()
         {
-            loggedInUser = null;
+            CurrentUser.Clear();
+            Navigation.NavigateTo("/");
+        }
+
+        public void Dispose()
+        {
+            CurrentUser.Changed -= OnCurrentUserChanged;
         }
     }
 }

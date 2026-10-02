@@ -2,6 +2,8 @@
 @using Radzen.Blazor
 @using WatchWorld.BlazorUI.Dialogs
 @inject DialogService DialogService
+@inject NavigationManager Navigation
+@implements IDisposable
 
 <header class="ww-header">
     <div class="ww-header__inner">
@@ -51,7 +53,7 @@
         </div>
 
         <div class="ww-header__actions">
-            @if (loggedInUser is null)
+            @if (CurrentUser.User is null)
             {
                 <RadzenButton Text="Log ind" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
                               Click="@OpenLoginDialog" class="ww-btn-text" />
@@ -60,11 +62,12 @@
             }
             else
             {
-                <span class="ww-header__greeting">Logget ind som @loggedInUser.FirstName</span>
                 <RadzenButton Text="Log ud" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
                               Click="@LogOut" class="ww-btn-text" />
+                <a href="@($"/bruger/{CurrentUser.User.Id}")" class="ww-user-icon" aria-label="Min profil" title="Min profil">
+                    <RadzenIcon Icon="person" />
+                </a>
             }
         </div>
     </div>
 </header>
-

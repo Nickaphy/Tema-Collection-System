@@ -35,6 +35,7 @@ public class WatchesService : IWatchesUseCase
 
             var watch = Watches.Create(
                 name: command.name,
+                brand: command.brand,
                 modelNumber: command.modelNumber,
                 caseSize: command.caseSize,
                 caseShapeEnum: command.caseShapeEnum,
@@ -87,6 +88,7 @@ public class WatchesService : IWatchesUseCase
 
                 var watch = Watches.Update(
                     name: command.name,
+                    brand: command.brand,
                     modelNumber: command.modelNumber,
                     caseSize: command.caseSize,
                     caseShapeEnum: command.caseShapeEnum,

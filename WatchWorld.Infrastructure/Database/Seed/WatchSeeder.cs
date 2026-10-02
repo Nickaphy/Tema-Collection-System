@@ -51,6 +51,7 @@ public static class WatchSeeder
 
             var watch = Watches.Create(
                 seed.Name,
+                seed.Brand,
                 seed.ModelNumber,
                 seed.CaseSize,
                 seed.CaseShape,

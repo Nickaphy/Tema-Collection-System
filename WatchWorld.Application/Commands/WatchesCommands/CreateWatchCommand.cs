@@ -5,6 +5,7 @@ namespace WatchWorld.Application.Commands.WatchesCommands
 {
     public record CreateWatchCommand(
     string name,
+    string brand,
     string modelNumber,
     int caseSize,
     CaseShapeEnum caseShapeEnum,

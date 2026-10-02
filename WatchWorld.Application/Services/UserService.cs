@@ -55,7 +55,7 @@ public class UserService : IUserUseCase
             var validator = new PasswordValidatorService();
             validator.ValidateAndThrow(command.password, command.email, name);
             var user = await _userRepository.GetUserByLoginCredentialsAsync(command.email, name, command.password, ct);
-            if (!user.IsFailed)
+            if (user.IsFailed)
             {
                 return Result.Fail("Denne bruger er ikke oprettet endnu, hvis du allerede er oprettet -- kontakt support");
             }

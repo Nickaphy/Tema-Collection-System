@@ -1046,6 +1046,172 @@
 }
 
 /* ---------------------------------------------------------------------- */
+/* Navbar user icon (logged in state)                                      */
+/* ---------------------------------------------------------------------- */
+
+.ww-user-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--ww-navy-900);
+    color: #fff;
+}
+
+    .ww-user-icon:hover,
+    .ww-user-icon:focus-visible {
+        background: var(--ww-gold-500);
+        color: var(--ww-navy-900);
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Om os                                                                    */
+/* ---------------------------------------------------------------------- */
+
+.ww-about {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+    .ww-about h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--ww-navy-900);
+        margin-bottom: 1.25rem;
+        border-bottom: 3px solid var(--ww-gold-500);
+        padding-bottom: 0.75rem;
+    }
+
+    .ww-about h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--ww-navy-900);
+        margin: 2rem 0 0.75rem;
+    }
+
+    .ww-about p {
+        color: var(--ww-text);
+        margin-bottom: 1rem;
+    }
+
+    .ww-about a {
+        color: var(--ww-gold-600);
+        font-weight: 600;
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Profile                                                                  */
+/* ---------------------------------------------------------------------- */
+
+.ww-profile {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+.ww-profile__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.ww-profile__avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--ww-navy-900);
+    border: 3px solid var(--ww-gold-500);
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ww-profile__header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+}
+
+.ww-profile__city {
+    color: var(--ww-text-muted);
+    font-size: 0.9rem;
+}
+
+.ww-profile__note {
+    color: var(--ww-text);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    padding: 0.85rem 1rem;
+    background: var(--ww-navy-100);
+    border-radius: 6px;
+}
+
+.ww-profile__card {
+    border: 1px solid var(--ww-border);
+    border-top: 3px solid var(--ww-gold-500);
+    border-radius: 6px;
+    padding: 1.5rem;
+    background: var(--ww-surface);
+    margin-bottom: 1.5rem;
+}
+
+    .ww-profile__card h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--ww-navy-900);
+        margin-bottom: 1rem;
+    }
+
+    .ww-profile__card select,
+    .ww-profile__card textarea {
+        border: 1px solid var(--ww-border);
+        border-radius: 4px;
+        padding: 0.5rem 0.65rem;
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 0.9rem;
+        color: var(--ww-text);
+        width: 100%;
+        resize: vertical;
+    }
+
+.ww-profile__ratings h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    margin-bottom: 1rem;
+}
+
+.ww-rating-card {
+    border: 1px solid var(--ww-border);
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: var(--ww-surface);
+}
+
+.ww-rating-card__stars {
+    color: var(--ww-gold-600);
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.ww-rating-card p {
+    color: var(--ww-text);
+    font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------- */
 /* Focus states (accessibility)                                            */
 /* ---------------------------------------------------------------------- */
 

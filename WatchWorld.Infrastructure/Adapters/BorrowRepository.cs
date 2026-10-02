@@ -26,7 +26,7 @@ namespace WatchWorld.Infrastructure.Adapters
             var borrow = await _context.Borrows.FindAsync(new object[] { id }, ct);
             if (borrow == null)
             {
-                return Result.Fail<Borrow>("Borrow not found.");
+                return Result.Fail("Borrow not found.");
             }
             return Result.Ok(borrow);
         }
@@ -44,7 +44,7 @@ namespace WatchWorld.Infrastructure.Adapters
             var result = await _context.Borrows.AddAsync(borrow, ct);
             if (result == null)
             {
-                return Result.Fail<Borrow>("Failed to create borrow.");
+                return Result.Fail("Failed to create borrow.");
             }
 
             await _context.SaveChangesAsync(ct);

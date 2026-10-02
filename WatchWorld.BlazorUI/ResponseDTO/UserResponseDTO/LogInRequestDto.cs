@@ -1,4 +1,4 @@
-﻿namespace WatchWorld.BlazorUI.ResponseDTO
+﻿namespace WatchWorld.BlazorUI.ResponseDTO.UserResponseDTO
 {
     public class LogInRequestDto
     {

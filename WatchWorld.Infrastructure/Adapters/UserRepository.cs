@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WatchWorld.Application.Ports.OutBound;
 using WatchWorld.Domain.Entities;
 using WatchWorld.Infrastructure.Database;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WatchWorld.Infrastructure.Adapters
 {
@@ -26,18 +27,24 @@ namespace WatchWorld.Infrastructure.Adapters
             var user = await _context.Users.FindAsync(new object[] { id }, ct);
             if (user == null)
             {
-                return Result.Fail<User>("User not found.");
+                return Result.Fail("User not found.");
             }
             return Result.Ok(user);
         }
 
         public async Task<Result<User>> GetUserByLoginCredentialsAsync(string? email, string? name, string password, CancellationToken ct = default)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password && $"{u.FirstName} {u.LastName}" == name, ct);
-            if (user == null)
-            {
-                return Result.Fail("User not found with the provided credentials.");
-            }
+            IQueryable<User> query = _context.Users;
+
+            query = !string.IsNullOrWhiteSpace(email)
+                ? query.Where(u => u.Email == email)
+                : query.Where(u => u.FirstName == name && u.LastName == name);
+
+            var user = await query.FirstOrDefaultAsync(ct);
+
+            if (user is null || user.Password != password)
+                return Result.Fail("Forkert login.");
+
             return Result.Ok(user);
         }
 
@@ -46,7 +53,7 @@ namespace WatchWorld.Infrastructure.Adapters
             var result = await _context.Users.AddAsync(user, ct);
             if (result == null)
             {
-                return Result.Fail<User>("Failed to create user.");
+                return Result.Fail("Failed to create user.");
             }
 
             await _context.SaveChangesAsync(ct);

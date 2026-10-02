@@ -7,6 +7,7 @@ namespace WatchWorld.Domain.Entities
     public class IndividualWatch : Aggregateroot
     {
         public Watches SpecificWatch { get; private set; }
+        public Guid UserId { get; private set; }
         public WearGradeEnum WearGrade { get; private set; }
         public int Age { get; private set; } 
         public string Note { get; private set; }
@@ -16,9 +17,10 @@ namespace WatchWorld.Domain.Entities
 
         private IndividualWatch() { }
 
-        private IndividualWatch(Watches specificWatch, WearGradeEnum wearGrade, int age, string note, decimal estimatedValue, List<HighResImage> picture)
+        private IndividualWatch(Watches specificWatch, Guid userId, WearGradeEnum wearGrade, int age, string note, decimal estimatedValue, List<HighResImage> picture)
         {
             SpecificWatch = specificWatch;
+            UserId = userId;
             WearGrade = wearGrade;
             Age = age;
             Note = note;
@@ -26,16 +28,16 @@ namespace WatchWorld.Domain.Entities
             Picture = picture ?? new List<HighResImage>();
         }
 
-        public static IndividualWatch Create(Watches specificWatch, WearGradeEnum wearGrade, int age, string note, decimal estimatedValue, List<HighResImage> picture)
+        public static IndividualWatch Create(Watches specificWatch, Guid userId, WearGradeEnum wearGrade, int age, string note, decimal estimatedValue, List<HighResImage> picture)
         {
-            var IndividualWatch = new IndividualWatch(specificWatch, wearGrade, age, note, estimatedValue, picture);
-            Validate(specificWatch, wearGrade, age, estimatedValue);
+            var IndividualWatch = new IndividualWatch(specificWatch, userId, wearGrade, age, note, estimatedValue, picture);
+            Validate(specificWatch, userId, wearGrade, age, estimatedValue);
             return IndividualWatch;
         }
 
         public static IndividualWatch Update(IndividualWatch existingWatch, Watches specificWatch, WearGradeEnum wearGrade, int age, string note, decimal estimatedValue, List<HighResImage> picture)
         {
-            Validate(specificWatch, wearGrade, age, estimatedValue);
+            Validate(specificWatch, null, wearGrade, age, estimatedValue);
             existingWatch.SpecificWatch = specificWatch;
             existingWatch.WearGrade = wearGrade;
             existingWatch.Age = age;
@@ -45,10 +47,12 @@ namespace WatchWorld.Domain.Entities
             return existingWatch;
         }
 
-        public static void Validate(Watches specificWatch, WearGradeEnum wearGrade, int age, decimal estimatedValue)
+        public static void Validate(Watches specificWatch, Guid? userId ,WearGradeEnum wearGrade, int age, decimal estimatedValue)
         {
             if (specificWatch is null)
                 throw new UserInvalidInputException("Der skal vælges en ur model");
+            if (userId == Guid.Empty)
+                throw new UserInvalidInputException("En bruger skal være tilknyttet et ur");
             if (age < 0)
                 throw new UserInvalidInputException("Et ur kan ikke være mindre end 0 år");
             if (estimatedValue < 0)

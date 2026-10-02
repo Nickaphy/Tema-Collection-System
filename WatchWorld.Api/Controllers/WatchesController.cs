@@ -43,6 +43,7 @@ public class WatchesController : ControllerBase
     {
         var command = new CreateWatchCommand(
             name: request.name,
+            brand: request.brand,
             modelNumber: request.modelNumber,
             caseSize: request.caseSize,
             caseShapeEnum: request.caseShapeEnum,
@@ -73,12 +74,13 @@ public class WatchesController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
     public async Task<ActionResult<Watches>> UpdateWatch(Guid id, UpdateWatchRequest request, CancellationToken ct)
     {
         var command = new UpdateWatchCommand(
             id: id,
             name: request.name,
+            brand: request.brand,
             modelNumber: request.modelNumber,
             caseSize: request.caseSize,
             caseShapeEnum: request.caseShapeEnum,

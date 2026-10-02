@@ -6,6 +6,7 @@ namespace WatchWorld.Infrastructure.Database.Seed;
 // aggregate so this file carries no business logic, only data.
 public record SeedWatch(
     string Name,
+    string Brand,
     string ModelNumber,
     int CaseSize,
     CaseShapeEnum CaseShape,

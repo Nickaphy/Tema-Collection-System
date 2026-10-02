@@ -1,6 +1,6 @@
-﻿namespace WatchWorld.BlazorUI.ResponseDTO
+﻿namespace WatchWorld.BlazorUI.ResponseDTO.UserResponseDTO
 {
-    public class CreateUserRequestDto
+    public class UpdateUserRequestDto
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
@@ -10,8 +10,6 @@
         public string City { get; set; } = string.Empty;
         public string? Note { get; set; }
         public string Password { get; set; } = string.Empty;
-        public bool IsAdmin { get; set; }
-        public List<object> Rating { get; set; } = new();
     }
 
 }
