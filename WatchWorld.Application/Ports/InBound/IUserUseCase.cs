@@ -9,7 +9,7 @@ namespace WatchWorld.Application.Ports.InBound
         Task<Result<User>> CreateUserAsync(CreateUserCommand command, CancellationToken cancellationToken = default);
         Task<Result<User>> UpdateUserAsync(UpdateUserCommand command, CancellationToken cancellationToken = default);
         Task<Result> DeleteUserAsync(DeleteUserCommand command, CancellationToken cancellationToken = default);
-        Task<Result<IEnumerable<User?>>> GetAllUsersAsync(CancellationToken cancellationToken = default);
+        Task<Result<IEnumerable<User>>> GetAllUsersAsync(CancellationToken cancellationToken = default);
         Task<Result> SetAdminRoleAsync(SetAdminRoleCommand command, CancellationToken cancellationToken = default);
     }
 }

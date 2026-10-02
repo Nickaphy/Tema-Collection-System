@@ -1,8 +1,5 @@
 ﻿using FluentResults;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using WatchWorld.Application.Ports.OutBound;
 using WatchWorld.Domain.Entities;
 using WatchWorld.Infrastructure.Database;
@@ -18,13 +15,9 @@ namespace WatchWorld.Infrastructure.Adapters
             _context = context;
         }
 
-        public async Task<Result<IEnumerable<Borrow>>> GetAllAsync(CancellationToken ct = default)
+        public async Task<Result<IEnumerable<Borrow>>> GetAllBorrowAsync(CancellationToken ct = default)
         {
             var borrows = await _context.Borrows.ToListAsync(ct);
-            if (borrows == null || !borrows.Any())
-            {
-                return Result.Fail<IEnumerable<Borrow>>("No borrows found.");
-            }
             return Result.Ok(borrows.AsEnumerable());
         }
 
@@ -40,17 +33,10 @@ namespace WatchWorld.Infrastructure.Adapters
 
         public async Task<Result<IEnumerable<Borrow>>> GetBorrowsByUserIdAsync(Guid id, CancellationToken ct = default)
         {
-            var borrows = _context.Borrows.Where(b => b.BorrowedByUserId == id).ToAsyncEnumerable();
             var borrowsList = await _context.Borrows
                 .Where(b => b.BorrowedByUserId == id)
                 .ToListAsync(ct);
-
-            if (borrowsList == null || !borrowsList.Any())
-            {
-                return Result.Fail("No borrows found for the specified user.");
-            }
-
-            return Result.Ok<IEnumerable<Borrow>>(borrowsList);
+            return Result.Ok(borrowsList.AsEnumerable());
         }
 
         public async Task<Result<Borrow>> CreateBorrowAsync(Borrow borrow, CancellationToken ct = default)
