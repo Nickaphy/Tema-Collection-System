@@ -224,7 +224,7 @@
 
         #region Reflection Infrastructure for Private Setters and Records
 
-        private static T CreateDomainObject<T>(Dictionary<string, object?> properties) where T : class
+        public static T CreateDomainObject<T>(Dictionary<string, object?> properties) where T : class
         {
             // Bypasses missing default constructor or private constructors
             var instance = (T)FormatterServices.GetUninitializedObject(typeof(T));

@@ -2,8 +2,13 @@
 @using Radzen
 @using Radzen.Blazor
 @using WatchWorld.BlazorUI.ResponseDTO
+@using WatchWorld.BlazorUI.Services
+@using WatchWorld.BlazorUI.Dialogs
 @inject WatchWorldApiClient ApiClient
 @inject ILogger<Wiki> Logger
+@inject BrandCatalogHelper Brands
+@inject CurrentUserState CurrentUser
+@inject DialogService DialogService
 
 <PageTitle>Wiki – WatchWorld</PageTitle>
 
@@ -11,10 +16,18 @@
     <div class="ww-wiki__header">
         <h1>Ur-encyklopædi</h1>
         <p>Søg og filtrer blandt alle registrerede urmodeller.</p>
-        <div class="ww-wiki__search">
-            <RadzenIcon Icon="search" class="ww-search__icon" />
-            <input type="text" value="@searchQuery" @oninput="OnSearchInput"
-                   placeholder="Søg på navn eller modelnummer …" aria-label="Søg i encyklopædiet" />
+        <div class="ww-wiki__toolbar">
+            <div class="ww-wiki__search">
+                <RadzenIcon Icon="search" class="ww-search__icon" />
+                <input type="text" value="@searchQuery" @oninput="OnSearchInput"
+                       placeholder="Søg på navn eller modelnummer …" aria-label="Søg i encyklopædiet" />
+            </div>
+
+            @if (CurrentUser.User?.IsAdmin == true)
+            {
+                <RadzenButton Text="Opret ur" ButtonStyle="ButtonStyle.Primary" class="ww-btn-gold"
+                              Click="@OpenCreateWatchDialog" />
+            }
         </div>
     </div>
 
@@ -31,6 +44,7 @@
         <div class="ww-wiki__layout">
             <aside class="ww-wiki__sidebar">
 
+                <Facetgroup Title="Mærke" Options="BrandFacet" Selected="selectedBrands" OnToggle="@(v => ToggleFacet(selectedBrands, v))" />
                 <Facetgroup Title="Stil" Options="StyleFacet" Selected="selectedStyles" OnToggle="@(v => ToggleFacet(selectedStyles, v))" />
                 <Facetgroup Title="Kassefacon" Options="CaseShapeFacet" Selected="selectedCaseShapes" OnToggle="@(v => ToggleFacet(selectedCaseShapes, v))" />
                 <Facetgroup Title="Kassemateriale" Options="CaseMaterialFacet" Selected="selectedCaseMaterials" OnToggle="@(v => ToggleFacet(selectedCaseMaterials, v))" />
@@ -110,9 +124,10 @@
                                     <img src="@(watch.Images.Count > 0 ? watch.Images[0].Url : PlaceholderImage)" alt="@watch.Name" />
                                 </div>
                                 <div class="ww-listing-card__body">
+                                    <div class="ww-listing-card__brand">@Brands.NameOf(watch.BrandId)</div>
                                     <div class="ww-listing-card__name">@watch.Name</div>
                                     <div class="ww-listing-card__detail">
-                                        @EnumDisplay.CaseShape(watch.CaseShapeEnum) · @EnumDisplay.CaseMaterial(watch.CaseMaterialEnum)
+                                        @EnumDisplayConverter.CaseShape(watch.CaseShapeEnum) · @EnumDisplayConverter.CaseMaterial(watch.CaseMaterialEnum)
                                     </div>
                                     <div class="ww-listing-card__meta">
                                         <span class="ww-listing-card__price">@watch.ModelNumber</span>

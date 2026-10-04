@@ -13,6 +13,7 @@ namespace WatchWorld.BlazorUI
             services.AddScoped<LogInContext>();
             services.AddScoped<NotificationHelper>();
             services.AddScoped<CurrentUserState>();
+            services.AddScoped<BrandCatalogHelper>();
             return services;
         }
     }

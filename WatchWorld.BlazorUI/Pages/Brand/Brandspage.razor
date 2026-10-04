@@ -1,0 +1,78 @@
+﻿@page "/maerker"
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.Helpers.BrandHelpers
+@using WatchWorld.BlazorUI.Services
+@inject WatchWorldApiClient ApiClient
+@inject BrandCatalogHelper Brands
+@inject ILogger<Brandspage> Logger
+
+<PageTitle>Mærker – WatchWorld</PageTitle>
+
+<div class="ww-wiki">
+    <div class="ww-wiki__header">
+        <h1>Mærker</h1>
+        <p>Urmagerne bag modellerne - fra gamle schweiziske huse til nye uafhængige værksteder.</p>
+
+        <div class="ww-wiki__toolbar">
+            <div class="ww-wiki__search">
+                <RadzenIcon Icon="search" class="ww-search__icon" />
+                <input type="text" value="@searchQuery" @oninput="OnSearchInput"
+                       placeholder="Søg på mærke eller land …" aria-label="Søg i mærker" />
+            </div>
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="ww-state">Indlæser mærker …</div>
+    }
+    else if (errorMessage is not null)
+    {
+        <div class="ww-state ww-state--error">@errorMessage</div>
+    }
+    else if (Groups.Count == 0)
+    {
+        <p class="ww-empty">
+            @(string.IsNullOrWhiteSpace(searchQuery) ? "Der er ingen mærker i encyklopædien endnu." : $"Ingen mærker matcher \"{searchQuery}\".")
+        </p>
+    }
+    else
+    {
+        <nav class="ww-az" aria-label="Spring til bogstav">
+            @foreach (var group in Groups)
+            {
+                <a href="@($"/maerker#letter-{group.Letter}")">@group.Letter</a>
+            }
+        </nav>
+
+        @foreach (var group in Groups)
+        {
+            <section class="ww-brands__group" id="@($"letter-{group.Letter}")">
+                <h2 class="ww-brands__letter">@group.Letter</h2>
+                <div class="ww-brands__grid">
+                    @foreach (var brand in group.Brands)
+                    {
+                        <a class="ww-brand-card" href="@($"/maerker/{BrandTextHelper.Slug(brand.Name)}")">
+                            <div class="ww-brand-card__logo">
+                                @if (!string.IsNullOrWhiteSpace(brand.LogoUrl))
+                                {
+                                    <img src="@brand.LogoUrl" alt="@($"{brand.Name} logo")" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <span>@BrandTextHelper.Initials(brand.Name)</span>
+                                }
+                            </div>
+                            <div class="ww-brand-card__body">
+                                <div class="ww-brand-card__name">@brand.Name</div>
+                                <div class="ww-brand-card__meta">@brand.CountryOfOrigin · Grundlagt @brand.FoundingYear</div>
+                                <div class="ww-brand-card__count">@WatchCountLabel(brand.Id)</div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </section>
+        }
+    }
+</div>
+

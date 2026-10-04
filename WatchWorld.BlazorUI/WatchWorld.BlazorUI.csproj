@@ -28,4 +28,8 @@
     <ProjectReference Include="..\WatchWorld.Infrastructure\WatchWorld.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enum\" />
+  </ItemGroup>
+
 </Project>

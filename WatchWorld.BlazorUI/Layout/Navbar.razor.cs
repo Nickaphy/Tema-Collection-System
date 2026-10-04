@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Radzen;
 using WatchWorld.BlazorUI.Dialogs;
-using WatchWorld.BlazorUI.ResponseDTO;
 using WatchWorld.BlazorUI.ResponseDTO.UserResponseDTO;
+using WatchWorld.BlazorUI.ResponseDTO.WatchResponseDTO;
 using WatchWorld.BlazorUI.Services;
 
 namespace WatchWorld.BlazorUI.Layout

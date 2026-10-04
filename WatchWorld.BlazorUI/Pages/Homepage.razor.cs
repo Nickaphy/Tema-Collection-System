@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using WatchWorld.BlazorUI.ResponseDTO;
+using WatchWorld.BlazorUI.ResponseDTO.WatchResponseDTO;
 
 namespace WatchWorld.BlazorUI.Pages
 {

@@ -1,10 +1,14 @@
 ﻿@page "/bruger/{Id:guid}"
 @using Radzen
 @using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
 @using WatchWorld.BlazorUI.Services
+@using WatchWorld.BlazorUI.Dialogs
 @inject WatchWorldApiClient ApiClient
+@inject BrandCatalogHelper Brands
 @inject CurrentUserState CurrentUser
 @inject NotificationService NotificationService
+@inject DialogService DialogService
 @inject ILogger<ProfilePage> Logger
 
 <PageTitle>@(profileUser is not null ? $"{profileUser.FirstName} {profileUser.LastName}" : "Profil") – WatchWorld</PageTitle>
@@ -89,6 +93,37 @@
                     <RadzenButton Text="@(isSaving ? "Gemmer..." : "Gem ændringer")" ButtonStyle="ButtonStyle.Primary"
                                   class="ww-btn-gold" Click="@SaveChanges" Disabled="@isSaving" />
                 </div>
+            </div>
+
+            <div class="ww-profile__card">
+                <div class="ww-profile__card-head">
+                    <h2>Mine ure (@ownedWatches.Count)</h2>
+                    <RadzenButton Text="Tilføj ur" ButtonStyle="ButtonStyle.Base" Variant="Variant.Outlined"
+                                  Click="@OpenAddWatchDialog" />
+                </div>
+
+                @if (ownedWatches.Count == 0)
+                {
+                    <p class="ww-empty">Du har ikke registreret nogen ure endnu.</p>
+                }
+                else
+                {
+                    <div class="ww-wiki__grid">
+                        @foreach (var watch in ownedWatches)
+                        {
+                            <div class="ww-listing-card">
+                                <div class="ww-listing-card__image">
+                                    <img src="@(watch.Picture.Count > 0 ? watch.Picture[0].Url : "/images/seed/OnTheWay.png")" alt="@watch.SpecificWatch.Name" />
+                                </div>
+                                <div class="ww-listing-card__body">
+                                    <div class="ww-listing-card__brand">@Brands.NameOf(watch.SpecificWatch.BrandId)</div>
+                                    <div class="ww-listing-card__name">@watch.SpecificWatch.Name</div>
+                                    <div class="ww-listing-card__detail">@EnumDisplayConverter.WearGrade(watch.WearGrade) · @watch.Age år</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
             </div>
         }
         else

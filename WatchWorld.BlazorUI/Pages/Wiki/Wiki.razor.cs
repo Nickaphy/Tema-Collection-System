@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Radzen;
+using WatchWorld.BlazorUI.Dialogs;
 using WatchWorld.BlazorUI.ResponseDTO;
+using WatchWorld.BlazorUI.ResponseDTO.WatchResponseDTO;
+using WatchWorld.Domain.Entities;
 using static WatchWorld.BlazorUI.Pages.Facetgroup;
 
 namespace WatchWorld.BlazorUI.Pages.Wiki
@@ -18,6 +22,7 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
         private string sortOption = "relevance";
         private int visibleCount = PageSize;
 
+        private readonly HashSet<string> selectedBrands = new(StringComparer.OrdinalIgnoreCase);
         private readonly HashSet<string> selectedStyles = new(StringComparer.OrdinalIgnoreCase);
         private readonly HashSet<string> selectedCaseShapes = new(StringComparer.OrdinalIgnoreCase);
         private readonly HashSet<string> selectedCaseMaterials = new(StringComparer.OrdinalIgnoreCase);
@@ -34,8 +39,17 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
 
         protected override async Task OnInitializedAsync()
         {
+            await LoadWatches();
+        }
+
+        private async Task LoadWatches()
+        {
+            isLoading = true;
+            errorMessage = null;
+
             try
             {
+                await Brands.EnsureLoadedAsync();
                 allWatches = await ApiClient.GetWatchesAsync(CancellationToken.None);
             }
             catch (Exception ex)
@@ -47,6 +61,16 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
             {
                 isLoading = false;
             }
+        }
+
+        private async Task OpenCreateWatchDialog()
+        {
+            var result = await DialogService.OpenAsync<CreateWatchDialog>(
+                "Opret urmodel",
+                options: new DialogOptions { Width = "640px", ShowClose = true });
+
+            if (result is true)
+                await LoadWatches();
         }
 
         private void OnSearchInput(ChangeEventArgs e)
@@ -66,6 +90,7 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
         private void ClearAllFilters()
         {
             searchQuery = string.Empty;
+            selectedBrands.Clear();
             selectedStyles.Clear();
             selectedCaseShapes.Clear();
             selectedCaseMaterials.Clear();
@@ -92,6 +117,7 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
                 var q = searchQuery.Trim();
                 result = result.Where(w =>
                     w.Name.Contains(q, StringComparison.OrdinalIgnoreCase) ||
+                    Brands.NameOf(w.BrandId).Contains(q, StringComparison.OrdinalIgnoreCase) ||
                     w.ModelNumber.Contains(q, StringComparison.OrdinalIgnoreCase));
             }
 
@@ -102,23 +128,26 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
             if (minYear.HasValue) result = result.Where(w => w.ReleaseYear.Year >= minYear.Value);
             if (maxYear.HasValue) result = result.Where(w => w.ReleaseYear.Year <= maxYear.Value);
 
+            if (exceptCategory != "brand" && selectedBrands.Count > 0)
+                result = result.Where(w => selectedBrands.Contains(Brands.NameOf(w.BrandId)));
+
             if (exceptCategory != "style" && selectedStyles.Count > 0)
                 result = result.Where(w => selectedStyles.Contains(w.Style));
 
             if (exceptCategory != "caseShape" && selectedCaseShapes.Count > 0)
-                result = result.Where(w => selectedCaseShapes.Contains(EnumDisplay.CaseShape(w.CaseShapeEnum)));
+                result = result.Where(w => selectedCaseShapes.Contains(EnumDisplayConverter.CaseShape(w.CaseShapeEnum)));
 
             if (exceptCategory != "caseMaterial" && selectedCaseMaterials.Count > 0)
-                result = result.Where(w => selectedCaseMaterials.Contains(EnumDisplay.CaseMaterial(w.CaseMaterialEnum)));
+                result = result.Where(w => selectedCaseMaterials.Contains(EnumDisplayConverter.CaseMaterial(w.CaseMaterialEnum)));
 
             if (exceptCategory != "movementType" && selectedMovementTypes.Count > 0)
-                result = result.Where(w => selectedMovementTypes.Contains(EnumDisplay.MovementType(w.MovementTypeEnum)));
+                result = result.Where(w => selectedMovementTypes.Contains(EnumDisplayConverter.MovementType(w.MovementTypeEnum)));
 
             if (exceptCategory != "gender" && selectedGenders.Count > 0)
-                result = result.Where(w => selectedGenders.Contains(EnumDisplay.Gender(w.GenderEnum)));
+                result = result.Where(w => selectedGenders.Contains(EnumDisplayConverter.Gender(w.GenderEnum)));
 
             if (exceptCategory != "braceletType" && selectedBraceletTypes.Count > 0)
-                result = result.Where(w => w.BraceletTypeEnum.Any(b => selectedBraceletTypes.Contains(EnumDisplay.BraceletType(b))));
+                result = result.Where(w => w.BraceletTypeEnum.Any(b => selectedBraceletTypes.Contains(EnumDisplayConverter.BraceletType(b))));
 
             return result;
         }
@@ -149,12 +178,13 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
                 .ToList();
         }
 
+        private List<FacetOption> BrandFacet => BuildFacet("brand", w => new[] { Brands.NameOf(w.BrandId) });
         private List<FacetOption> StyleFacet => BuildFacet("style", w => new[] { w.Style });
-        private List<FacetOption> CaseShapeFacet => BuildFacet("caseShape", w => new[] { EnumDisplay.CaseShape(w.CaseShapeEnum) });
-        private List<FacetOption> CaseMaterialFacet => BuildFacet("caseMaterial", w => new[] { EnumDisplay.CaseMaterial(w.CaseMaterialEnum) });
-        private List<FacetOption> MovementTypeFacet => BuildFacet("movementType", w => new[] { EnumDisplay.MovementType(w.MovementTypeEnum) });
-        private List<FacetOption> GenderFacet => BuildFacet("gender", w => new[] { EnumDisplay.Gender(w.GenderEnum) });
-        private List<FacetOption> BraceletTypeFacet => BuildFacet("braceletType", w => w.BraceletTypeEnum.Select(EnumDisplay.BraceletType));
+        private List<FacetOption> CaseShapeFacet => BuildFacet("caseShape", w => new[] { EnumDisplayConverter.CaseShape(w.CaseShapeEnum) });
+        private List<FacetOption> CaseMaterialFacet => BuildFacet("caseMaterial", w => new[] { EnumDisplayConverter.CaseMaterial(w.CaseMaterialEnum) });
+        private List<FacetOption> MovementTypeFacet => BuildFacet("movementType", w => new[] { EnumDisplayConverter.MovementType(w.MovementTypeEnum) });
+        private List<FacetOption> GenderFacet => BuildFacet("gender", w => new[] { EnumDisplayConverter.Gender(w.GenderEnum) });
+        private List<FacetOption> BraceletTypeFacet => BuildFacet("braceletType", w => w.BraceletTypeEnum.Select(EnumDisplayConverter.BraceletType));
 
         private record ChipItem(string Label, Action Remove);
 
@@ -163,6 +193,7 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
             get
             {
                 var chips = new List<ChipItem>();
+                foreach (var v in selectedBrands) chips.Add(new($"Mærke: {v}", () => ToggleFacet(selectedBrands, v)));
                 foreach (var v in selectedStyles) chips.Add(new($"Stil: {v}", () => ToggleFacet(selectedStyles, v)));
                 foreach (var v in selectedCaseShapes) chips.Add(new($"Facon: {v}", () => ToggleFacet(selectedCaseShapes, v)));
                 foreach (var v in selectedCaseMaterials) chips.Add(new($"Materiale: {v}", () => ToggleFacet(selectedCaseMaterials, v)));

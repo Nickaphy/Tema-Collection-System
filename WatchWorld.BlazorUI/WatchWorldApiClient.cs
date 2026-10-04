@@ -1,8 +1,12 @@
 ﻿using System.Net.Http.Json;
 using WatchWorld.BlazorUI.ResponseDTO;
+using WatchWorld.BlazorUI.ResponseDTO.BrandResponseDto;
+using WatchWorld.BlazorUI.ResponseDTO.IndividualWatchResponseDto;
+using WatchWorld.BlazorUI.ResponseDTO.ListingResponseDto;
 using WatchWorld.BlazorUI.ResponseDTO.UserRatingDTO;
 using WatchWorld.BlazorUI.ResponseDTO.UserRatingResponseDTO;
 using WatchWorld.BlazorUI.ResponseDTO.UserResponseDTO;
+using WatchWorld.BlazorUI.ResponseDTO.WatchResponseDTO;
 
 namespace WatchWorld.BlazorUI
 {
@@ -14,7 +18,6 @@ namespace WatchWorld.BlazorUI
         {
             _http = http;
         }
-
         public async Task<List<WatchDto>> GetWatchesAsync(CancellationToken ct) =>
     await _http.GetFromJsonAsync<List<WatchDto>>("api/Watches", ct) ?? new();
 
@@ -78,6 +81,65 @@ namespace WatchWorld.BlazorUI
             var body = await response.Content.ReadAsStringAsync(ct);
             return (false, string.IsNullOrWhiteSpace(body) ? $"Fejl ({(int)response.StatusCode})" : body);
         }
-    }
 
+        public async Task<List<IndividualWatchDto>> GetIndividualWatchesByUserAsync(Guid userId, CancellationToken ct) =>
+            await _http.GetFromJsonAsync<List<IndividualWatchDto>>($"api/IndividualWatch/by-user/{userId}", ct) ?? new();
+
+        public async Task<(bool Success, string? Error)> CreateIndividualWatchAsync(CreateIndividualWatchRequestDto request, CancellationToken ct)
+        {
+            var response = await _http.PostAsJsonAsync("api/IndividualWatch", request, ct);
+
+            if (response.IsSuccessStatusCode)
+                return (true, null);
+
+            var body = await response.Content.ReadAsStringAsync(ct);
+            return (false, string.IsNullOrWhiteSpace(body) ? $"Fejl ({(int)response.StatusCode})" : body);
+        }
+
+        public async Task<(bool Success, string? Error)> CreateListingAsync(CreateListingRequestDto request, CancellationToken ct)
+        {
+            var response = await _http.PostAsJsonAsync("api/Listing", request, ct);
+
+            if (response.IsSuccessStatusCode)
+                return (true, null);
+
+            var body = await response.Content.ReadAsStringAsync(ct);
+            return (false, string.IsNullOrWhiteSpace(body) ? $"Fejl ({(int)response.StatusCode})" : body);
+        }
+
+        public async Task<(bool Success, string? Error)> DeleteListingAsync(Guid id, CancellationToken ct)
+        {
+            var response = await _http.DeleteAsync($"api/Listing/{id}", ct);
+
+            if (response.IsSuccessStatusCode)
+                return (true, null);
+
+            var body = await response.Content.ReadAsStringAsync(ct);
+            return (false, string.IsNullOrWhiteSpace(body) ? $"Fejl ({(int)response.StatusCode})" : body);
+        }
+        public async Task<List<BrandDto>> GetBrandsAsync(CancellationToken ct) =>
+            await _http.GetFromJsonAsync<List<BrandDto>>("api/Brand", ct) ?? new();
+
+        public async Task<(bool Success, string? Error)> CreateWatchAsync(CreateWatchRequestDto request, CancellationToken ct)
+        {
+            var response = await _http.PostAsJsonAsync("api/Watches", request, ct);
+
+            if (response.IsSuccessStatusCode)
+                return (true, null);
+
+            var body = await response.Content.ReadAsStringAsync(ct);
+            return (false, string.IsNullOrWhiteSpace(body) ? $"Fejl ({(int)response.StatusCode})" : body);
+        }
+
+        public async Task<(bool Success, string? Error)> CreateBorrowAsync(CreateBorrowRequestDto request, CancellationToken ct)
+        {
+            var response = await _http.PostAsJsonAsync("api/Borrow", request, ct);
+
+            if (response.IsSuccessStatusCode)
+                return (true, null);
+
+            var body = await response.Content.ReadAsStringAsync(ct);
+            return (false, string.IsNullOrWhiteSpace(body) ? $"Fejl ({(int)response.StatusCode})" : body);
+        }
+    }
 }

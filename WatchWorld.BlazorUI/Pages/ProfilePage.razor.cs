@@ -1,9 +1,10 @@
-﻿
-using global::WatchWorld.BlazorUI.ResponseDTO.UserRatingDTO;
-using global::WatchWorld.BlazorUI.ResponseDTO.UserResponseDTO;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Radzen;
+using WatchWorld.BlazorUI.Dialogs;
+using WatchWorld.BlazorUI.ResponseDTO.IndividualWatchResponseDto;
+using WatchWorld.BlazorUI.ResponseDTO.UserRatingDTO;
 using WatchWorld.BlazorUI.ResponseDTO.UserRatingResponseDTO;
+using WatchWorld.BlazorUI.ResponseDTO.UserResponseDTO;
 
 namespace WatchWorld.BlazorUI.Pages
 {
@@ -15,6 +16,7 @@ namespace WatchWorld.BlazorUI.Pages
         private string? errorMessage;
         private UserDto? profileUser;
         private List<UserRatingDto> ratings = new();
+        private List<IndividualWatchDto> ownedWatches = new();
 
         private bool IsOwnProfile => CurrentUser.User is not null && CurrentUser.User.Id == Id;
 
@@ -64,6 +66,12 @@ namespace WatchWorld.BlazorUI.Pages
                     note = profileUser.Note;
 
                     ratings = await ApiClient.GetUserRatingsReceivedAsync(Id, CancellationToken.None);
+
+                    if (IsOwnProfile)
+                    {
+                        await Brands.EnsureLoadedAsync();
+                        ownedWatches = await ApiClient.GetIndividualWatchesByUserAsync(Id, CancellationToken.None);
+                    }
                 }
             }
             catch (Exception ex)
@@ -75,6 +83,16 @@ namespace WatchWorld.BlazorUI.Pages
             {
                 isLoading = false;
             }
+        }
+
+        private async Task OpenAddWatchDialog()
+        {
+            var result = await DialogService.OpenAsync<AddWatchDialog>(
+                "Tilføj ur",
+                options: new DialogOptions { Width = "460px", ShowClose = true });
+
+            if (result is true)
+                ownedWatches = await ApiClient.GetIndividualWatchesByUserAsync(Id, CancellationToken.None);
         }
 
         private static string Stars(int amount)
@@ -180,4 +198,3 @@ namespace WatchWorld.BlazorUI.Pages
         }
     }
 }
-

@@ -68,15 +68,21 @@ public static class DatabaseSetup
         // =======================================================
         // 1. WIPE LOCAL DATABASE (SAFE RE-SEEDING)
         // =======================================================
-        // Check which connection string is currently active
         var currentConnectionString = context.Database.GetConnectionString();
         var localConnectionString = configuration.GetConnectionString("Local");
 
-        // ONLY drop the database if we are running on the LOCAL instance!
-        if (currentConnectionString == localConnectionString)
+        // Parse both strings to ignore EF Core's runtime formatting changes
+        var currentBuilder = new SqlConnectionStringBuilder(currentConnectionString);
+        var localBuilder = new SqlConnectionStringBuilder(localConnectionString);
+
+        // Check if both the Server (DataSource) and Database (InitialCatalog) match
+        bool isLocal = currentBuilder.DataSource.Equals(localBuilder.DataSource, StringComparison.OrdinalIgnoreCase) &&
+                       currentBuilder.InitialCatalog.Equals(localBuilder.InitialCatalog, StringComparison.OrdinalIgnoreCase);
+
+        if (isLocal)
         {
             Console.WriteLine("[Database] Local DB detected. Wiping database for fresh seed...");
-            await context.Database.EnsureDeletedAsync(); // Use the Async version here!
+            await context.Database.EnsureDeletedAsync();
         }
         else
         {
@@ -91,6 +97,8 @@ public static class DatabaseSetup
 
         // Try to parse the SeedFullCatalog configuration flag
         _ = bool.TryParse(configuration["SeedFullCatalog"], out var useFullCatalog);
+
+        await SeedBrands.SeedBrandsAsync(context);
 
         // Seed the watches into the database
         Console.WriteLine("[Database] Seeding Watches...");

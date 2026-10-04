@@ -1,0 +1,143 @@
+﻿@page "/udlaan"
+@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+@using WatchWorld.BlazorUI.Dialogs
+@using WatchWorld.BlazorUI.Services
+@inject WatchWorldApiClient ApiClient
+@inject CurrentUserState CurrentUser
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+@inject ILogger<LoanPage> Logger
+@inject BrandCatalogHelper Brands
+
+<PageTitle>Udlån – WatchWorld</PageTitle>
+
+<div class="ww-wiki">
+    <div class="ww-wiki__header">
+        <h1>Udlån</h1>
+        <p>Lån et ur af en anden samler, eller sæt dit eget til udlån.</p>
+
+        <div class="ww-udlaan__toolbar">
+            <div class="ww-wiki__search">
+                <RadzenIcon Icon="search" class="ww-search__icon" />
+                <input type="text" value="@searchQuery" @oninput="OnSearchInput"
+                       placeholder="Søg på mærke, model eller modelnummer …" aria-label="Søg i udlån" />
+            </div>
+
+            <RadzenButton Text="Opret annonce" ButtonStyle="ButtonStyle.Primary" class="ww-btn-gold"
+                          Click="@OpenCreateListingDialog" Disabled="@(CurrentUser.User is null)" />
+        </div>
+
+        @if (CurrentUser.User is null)
+        {
+            <p class="ww-udlaan__hint">Log ind for at oprette en annonce eller se dine egne.</p>
+        }
+        else
+        {
+            <div class="ww-filter-tabs ww-udlaan__tabs" role="group" aria-label="Visning">
+                <button type="button" class="@(!showMyListings ? "active" : "")" @onclick="@(() => SetView(false))">Alle annoncer</button>
+                <button type="button" class="@(showMyListings ? "active" : "")" @onclick="@(() => SetView(true))">Mine annoncer</button>
+            </div>
+        }
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="ww-state">Indlæser udlån …</div>
+    }
+    else if (errorMessage is not null)
+    {
+        <div class="ww-state ww-state--error">@errorMessage</div>
+    }
+    else
+    {
+        <div class="ww-wiki__layout">
+            <aside class="ww-wiki__sidebar">
+                <Facetgroup Title="Mærke" Options="BrandFacet" Selected="selectedBrands" OnToggle="@(v => ToggleFacet(selectedBrands, v))" />
+                <Facetgroup Title="Slidgrad" Options="WearGradeFacet" Selected="selectedWearGrades" OnToggle="@(v => ToggleFacet(selectedWearGrades, v))" />
+                <Facetgroup Title="Værk" Options="MovementTypeFacet" Selected="selectedMovementTypes" OnToggle="@(v => ToggleFacet(selectedMovementTypes, v))" />
+
+                <div class="ww-facet-group">
+                    <h3>Pris per dag (kr.)</h3>
+                    <div class="ww-facet-range">
+                        <input type="number" placeholder="Min" @bind="minPrice" @bind:after="ResetPaging" />
+                        <span>–</span>
+                        <input type="number" placeholder="Max" @bind="maxPrice" @bind:after="ResetPaging" />
+                    </div>
+                </div>
+
+                @if (ActiveChips.Count > 0)
+                {
+                    <button type="button" class="ww-facet-clear" @onclick="ClearAllFilters">Ryd alle filtre</button>
+                }
+            </aside>
+
+            <div class="ww-wiki__results">
+                <div class="ww-wiki__results-head">
+                    <span>@SortedListings.Count annoncer</span>
+                </div>
+
+                @if (ActiveChips.Count > 0)
+                {
+                    <div class="ww-wiki__chips">
+                        @foreach (var chip in ActiveChips)
+                        {
+                            <button type="button" class="ww-chip" @onclick="chip.Remove">
+                                @chip.Label
+                                <RadzenIcon Icon="close" />
+                            </button>
+                        }
+                    </div>
+                }
+
+                @if (DisplayedListings.Count == 0)
+                {
+                    <p class="ww-empty">
+                        @(showMyListings ? "Du har ingen annoncer endnu." : "Ingen annoncer matcher dine filtre.")
+                    </p>
+                }
+                else
+                {
+                    <div class="ww-wiki__grid">
+                        @foreach (var listing in DisplayedListings)
+                        {
+                            var watch = listing.BorrowableWatch.SpecificWatch;
+                            <div class="ww-listing-card ww-udlaan-card">
+                                <button type="button" class="ww-udlaan-card__clickable" @onclick="@(() => OpenBorrowDialog(listing))">
+                                    <div class="ww-listing-card__image">
+                                        <img src="@ResolveListingImage(listing)" alt="@watch.Name" />
+                                        <RadzenBadge Text="@EnumDisplayConverter.WearGrade(listing.BorrowableWatch.WearGrade)" BadgeStyle="BadgeStyle.Dark" class="ww-listing-card__badge" />
+                                    </div>
+                                    <div class="ww-listing-card__body">
+                                        <div class="ww-listing-card__brand">@Brands.NameOf(watch.BrandId)</div>
+                                        <div class="ww-listing-card__name">@watch.Name</div>
+                                        <div class="ww-listing-card__detail">@OwnerLabel(listing)</div>
+                                        <div class="ww-listing-card__meta">
+                                            <span class="ww-listing-card__price">@listing.PricePerDay.ToString("C0", DanishCulture) / dag</span>
+                                            <span class="ww-listing-card__cta">Se mere</span>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                @if (showMyListings)
+                                {
+                                    <button type="button" class="ww-udlaan-card__delete" @onclick="@(() => DeleteListing(listing))">
+                                        Slet annonce
+                                    </button>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    @if (DisplayedListings.Count < SortedListings.Count)
+                    {
+                        <div class="ww-wiki__more">
+                            <RadzenButton Text="Vis flere" ButtonStyle="ButtonStyle.Base" Click="@(() => visibleCount += PageSize)" />
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+</div>

@@ -6,7 +6,7 @@ namespace WatchWorld.Application.Commands.WatchesCommands
     public record UpdateWatchCommand(
     Guid id,
     string name,
-    string brand,
+    Guid brandId,
     string modelNumber,
     int caseSize,
     CaseShapeEnum caseShapeEnum,

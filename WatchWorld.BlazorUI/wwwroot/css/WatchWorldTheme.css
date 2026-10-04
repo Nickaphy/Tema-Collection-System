@@ -46,15 +46,18 @@
         font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
     }
 
-    .ww-page a {
-        color: inherit;
-        text-decoration: none;
-    }
+/* :where() keeps this reset at zero specificity. Without it, `.ww-page a` (0,1,1) beat any
+   single-class link style (0,1,0) - e.g. .ww-substrip__link (gold) and .ww-user-icon (white
+   icon on navy) silently fell back to the inherited colour. */
+:where(.ww-page) a {
+    color: inherit;
+    text-decoration: none;
+}
 
-    .ww-page img {
-        max-width: 100%;
-        display: block;
-    }
+.ww-page img {
+    max-width: 100%;
+    display: block;
+}
 
 @media (prefers-reduced-motion: reduce) {
     .ww-page * {
@@ -699,6 +702,25 @@
     margin-top: 0.5rem;
 }
 
+.ww-dialog--wide {
+    max-width: 600px;
+}
+
+.ww-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.2rem;
+    border: 1px solid var(--ww-border);
+    border-radius: 4px;
+    padding: 0.75rem;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+    .ww-checkbox-grid .ww-facet-option {
+        font-size: 0.8rem;
+    }
+
 /* ---------------------------------------------------------------------- */
 /* Loading / error / empty states                                          */
 /* ---------------------------------------------------------------------- */
@@ -746,6 +768,14 @@
     margin-bottom: 1.25rem;
 }
 
+.ww-wiki__toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
 .ww-wiki__search {
     display: flex;
     align-items: center;
@@ -755,18 +785,23 @@
     border-radius: 6px;
     padding: 0.65rem 1rem;
     max-width: 480px;
-    margin-bottom: 2rem;
+    flex: 1;
+    min-width: 240px;
 }
 
-    .ww-wiki__search input {
-        border: none;
-        background: transparent;
-        outline: none;
-        width: 100%;
-        font-family: 'Source Serif 4', Georgia, serif;
-        font-size: 1rem;
-        color: var(--ww-text);
-    }
+.ww-wiki__toolbar .ww-wiki__search {
+    margin-bottom: 0;
+}
+
+.ww-wiki__search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1rem;
+    color: var(--ww-text);
+}
 
 .ww-wiki__layout {
     display: grid;
@@ -1210,6 +1245,469 @@
     color: var(--ww-text);
     font-size: 0.9rem;
 }
+
+/* ---------------------------------------------------------------------- */
+/* Shared: brand label on listing/wiki cards                               */
+/* ---------------------------------------------------------------------- */
+
+.ww-listing-card__brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ww-gold-600);
+    margin-bottom: 0.2rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Udlaan page                                                             */
+/* ---------------------------------------------------------------------- */
+
+.ww-udlaan__toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+    .ww-udlaan__toolbar .ww-wiki__search {
+        margin-bottom: 0;
+        flex: 1;
+        min-width: 240px;
+    }
+
+.ww-udlaan__hint {
+    color: var(--ww-text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.ww-udlaan__tabs {
+    display: inline-flex;
+    margin-bottom: 1.5rem;
+}
+
+.ww-udlaan-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.ww-udlaan-card__clickable {
+    display: block;
+    width: 100%;
+    border: none;
+    background: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+}
+
+.ww-udlaan-card__delete {
+    width: 100%;
+    border: none;
+    border-top: 1px solid var(--ww-border);
+    background: #FBEAEA;
+    color: #9B3B3B;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0.6rem;
+    cursor: pointer;
+}
+
+    .ww-udlaan-card__delete:hover {
+        background: #F5D5D5;
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Empty-state callout (e.g. "no watches yet" in Create Listing)           */
+/* ---------------------------------------------------------------------- */
+
+.ww-callout {
+    background: var(--ww-navy-100);
+    border-left: 4px solid var(--ww-gold-500);
+    border-radius: 4px;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: var(--ww-text);
+    margin-bottom: 1rem;
+}
+
+.ww-callout__link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--ww-gold-600);
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Borrow dialog                                                           */
+/* ---------------------------------------------------------------------- */
+
+.ww-borrow-dialog__image {
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    background: var(--ww-navy-900);
+}
+
+    .ww-borrow-dialog__image img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+.ww-borrow-dialog__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    margin-bottom: 0.1rem;
+}
+
+.ww-borrow-dialog__model {
+    color: var(--ww-text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+}
+
+.ww-borrow-dialog__facts {
+    padding: 0.75rem 0;
+    margin-bottom: 0.75rem;
+}
+
+.ww-borrow-dialog__note {
+    font-size: 0.85rem;
+    color: var(--ww-text);
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Profile card header row (e.g. "Mine ure" + Tilføj ur button)            */
+/* ---------------------------------------------------------------------- */
+
+.ww-profile__card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+    .ww-profile__card-head h2 {
+        margin-bottom: 0;
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Brands list (Mærker)                                                    */
+/* ---------------------------------------------------------------------- */
+
+.ww-az {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 2rem;
+}
+
+    .ww-az a {
+        min-width: 2rem;
+        height: 2rem;
+        padding: 0 0.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--ww-border);
+        border-radius: 4px;
+        background: var(--ww-surface);
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--ww-navy-900);
+    }
+
+        .ww-az a:hover,
+        .ww-az a:focus-visible {
+            background: var(--ww-navy-900);
+            border-color: var(--ww-navy-900);
+            color: var(--ww-surface);
+        }
+
+.ww-brands__group {
+    margin-bottom: 2rem;
+    scroll-margin-top: 1rem;
+}
+
+.ww-brands__letter {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    border-bottom: 2px solid var(--ww-gold-500);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.ww-brands__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.ww-brand-card {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.9rem;
+    border: 1px solid var(--ww-border);
+    border-radius: 6px;
+    background: var(--ww-surface);
+}
+
+    .ww-brand-card:hover,
+    .ww-brand-card:focus-visible {
+        border-color: var(--ww-gold-500);
+        box-shadow: 0 6px 16px rgba(10, 27, 48, 0.12);
+    }
+
+.ww-brand-card__logo,
+.ww-brand-mini__logo {
+    flex: 0 0 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border: 1px solid var(--ww-border);
+    border-radius: 6px;
+    background: var(--ww-surface);
+    overflow: hidden;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--ww-navy-800);
+}
+
+.ww-brand-mini__logo {
+    flex-basis: 44px;
+    height: 44px;
+    padding: 4px;
+    font-size: 0.8rem;
+}
+
+    .ww-brand-card__logo img,
+    .ww-brand-mini__logo img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+.ww-brand-card__name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    color: var(--ww-navy-900);
+}
+
+.ww-brand-card__meta {
+    font-size: 0.8rem;
+    color: var(--ww-text-muted);
+}
+
+.ww-brand-card__count {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ww-gold-600);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Brand page                                                              */
+/* ---------------------------------------------------------------------- */
+
+.ww-brand-hero {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--ww-border);
+    border-top: 3px solid var(--ww-gold-500);
+    border-radius: 8px;
+    background: var(--ww-surface);
+}
+
+.ww-brand-hero__logo {
+    flex: 0 0 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border: 1px solid var(--ww-border);
+    border-radius: 8px;
+    background: var(--ww-surface);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--ww-navy-800);
+}
+
+    .ww-brand-hero__logo img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+.ww-brand-hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    margin-bottom: 0.5rem;
+}
+
+.ww-brand-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+}
+
+    .ww-brand-hero__meta span {
+        background: var(--ww-navy-100);
+        color: var(--ww-navy-900);
+        border-radius: 999px;
+        padding: 0.2rem 0.7rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .ww-brand-hero__meta .ww-brand-hero__status {
+        background: var(--ww-navy-900);
+        color: var(--ww-surface);
+    }
+
+.ww-brand-hero__stats {
+    color: var(--ww-text);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    max-width: 62ch;
+}
+
+.ww-brand-hero__site {
+    font-weight: 600;
+    color: var(--ww-gold-600);
+    border-bottom: 1px solid var(--ww-gold-500);
+}
+
+@media (max-width: 600px) {
+    .ww-brand-hero {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.ww-brand-section {
+    margin-bottom: 2rem;
+}
+
+    .ww-brand-section h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--ww-navy-900);
+        margin-bottom: 0.6rem;
+        border-left: 4px solid var(--ww-gold-500);
+        padding-left: 0.75rem;
+    }
+
+    .ww-brand-section .ww-section-head h2 {
+        margin-bottom: 0;
+    }
+
+    .ww-brand-section p {
+        max-width: 70ch;
+        color: var(--ww-text);
+        margin-bottom: 0.75rem;
+    }
+
+        .ww-brand-section p.ww-brand-section__lead {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            color: var(--ww-navy-800);
+            margin-bottom: 0.25rem;
+        }
+
+.ww-brand-facts li {
+    gap: 1rem;
+}
+
+    .ww-brand-facts li strong {
+        text-align: right;
+    }
+
+/* Style filter chips - the watch equivalent of Fragrantica's per-brand "Collections". */
+.ww-collection-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+.ww-collection-chip {
+    border: 1px solid var(--ww-border);
+    background: var(--ww-surface);
+    color: var(--ww-navy-900);
+    border-radius: 999px;
+    padding: 0.3rem 0.85rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+    .ww-collection-chip:hover {
+        border-color: var(--ww-gold-500);
+    }
+
+    .ww-collection-chip.active {
+        background: var(--ww-navy-900);
+        border-color: var(--ww-navy-900);
+        color: var(--ww-surface);
+    }
+
+/* Brand logo + name on a watch page, linking to the brand page. */
+.ww-detail__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+    padding: 0.35rem 0.9rem 0.35rem 0.4rem;
+    border: 1px solid var(--ww-border);
+    border-radius: 999px;
+    background: var(--ww-surface);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--ww-navy-900);
+}
+
+    .ww-detail__brand img {
+        height: 28px;
+        width: auto;
+        max-width: 72px;
+        object-fit: contain;
+    }
+
+    .ww-detail__brand:hover,
+    .ww-detail__brand:focus-visible {
+        border-color: var(--ww-gold-500);
+    }
 
 /* ---------------------------------------------------------------------- */
 /* Focus states (accessibility)                                            */

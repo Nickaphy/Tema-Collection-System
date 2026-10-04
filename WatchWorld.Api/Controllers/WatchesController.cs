@@ -43,7 +43,7 @@ public class WatchesController : ControllerBase
     {
         var command = new CreateWatchCommand(
             name: request.name,
-            brand: request.brand,
+            brandId: request.brandId,
             modelNumber: request.modelNumber,
             caseSize: request.caseSize,
             caseShapeEnum: request.caseShapeEnum,
@@ -80,7 +80,7 @@ public class WatchesController : ControllerBase
         var command = new UpdateWatchCommand(
             id: id,
             name: request.name,
-            brand: request.brand,
+            brandId: request.brandId,
             modelNumber: request.modelNumber,
             caseSize: request.caseSize,
             caseShapeEnum: request.caseShapeEnum,
@@ -95,6 +95,22 @@ public class WatchesController : ControllerBase
             images: request.images
         );
         var watch = await _watchUseCase.UpdateWatchAsync(command, ct);
+        return Ok(watch);
+    }
+
+    [HttpPut("{id}")]
+    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
+    public async Task<ActionResult<Watches>> GetAllWatchesByBrand(Guid brandId, CancellationToken ct)
+    {
+        var watches = await _watchUseCase.GetAllWatchesByBrandIdAsync(brandId, ct);
+        return Ok(watches);
+    }
+
+    [HttpPut("{modelNumber}")]
+    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
+    public async Task<ActionResult<Watches>> GetWatchByModelNumber(string modelNumber, CancellationToken ct)
+    {
+        var watch = await _watchUseCase.GetWatchByModelNumberAsync(modelNumber, ct);
         return Ok(watch);
     }
 }

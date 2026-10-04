@@ -35,23 +35,39 @@ public static class WatchSeeder
             await context.Database.ExecuteSqlRawAsync("DELETE FROM Watchlist");
         }
 
+        // 2. Fetch all seeded brands from the database into memory
+        var allBrands = await context.Brands.ToListAsync();
+
+        if (!allBrands.Any())
+        {
+            throw new InvalidOperationException("Critical error, no brands found. Please ensure Brands are seeded before Watches.");
+        }
+
         var seedSet = useFullCatalog ? WatchSeedData.All : WatchSeedData.Basic;
 
         foreach (var seed in seedSet)
         {
-            // 2. Use exact model image if available; otherwise use OnTheWay.png
+            var matchedBrand = allBrands
+                .FirstOrDefault(b => b.Name.Equals(seed.Brand, StringComparison.OrdinalIgnoreCase));
+
+            if (matchedBrand == null)
+            {
+                Console.WriteLine($"[Warning] Could not identify a brand for watch: {seed.Name}. Skipping.");
+                continue;
+            }
+
             string imageUrl = LocalModelImages.Contains(seed.ModelNumber)
                 ? $"{BaseUrl}/{seed.ModelNumber}.jpg"
                 : PlaceholderImage;
 
             var watchImages = new List<HighResImage>
-            {
-                HighResImage.Create(imageUrl, 1000, 1000)
-            };
+        {
+            HighResImage.Create(imageUrl, 1000, 1000)
+        };
 
             var watch = Watches.Create(
                 seed.Name,
-                seed.Brand,
+                matchedBrand.Id, // Passing the relational ID required by the database
                 seed.ModelNumber,
                 seed.CaseSize,
                 seed.CaseShape,

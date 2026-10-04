@@ -1,6 +1,9 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using WatchWorld.BlazorUI.ResponseDTO;
+using WatchWorld.BlazorUI.ResponseDTO.BrandResponseDto;
+using WatchWorld.BlazorUI.ResponseDTO.ListingResponseDto;
+using WatchWorld.BlazorUI.ResponseDTO.WatchResponseDTO;
 
 namespace WatchWorld.BlazorUI.Pages.Wiki
 {
@@ -14,6 +17,7 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
         private bool isLoading = true;
         private string? errorMessage;
         private WatchDto? watch;
+        private BrandDto? brand;
         private List<ListingDto> relatedListings = new();
         private int selectedImageIndex;
 
@@ -21,14 +25,17 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
             watch is { Images.Count: > 0 } ? watch.Images[Math.Clamp(selectedImageIndex, 0, watch.Images.Count - 1)].Url : PlaceholderImage;
 
         private string BraceletTypesText =>
-            watch is null ? "" : string.Join(", ", watch.BraceletTypeEnum.Select(EnumDisplay.BraceletType));
+            watch is null ? "" : string.Join(", ", watch.BraceletTypeEnum.Select(EnumDisplayConverter.BraceletType));
 
-        // To-Do: There's no GET /api/Watches/by-model/{modelNumber} endpoint, so this resolves by fetching the full list and matching client-side.
+        // NOTE: there's no GET /api/Watches/by-model/{modelNumber} endpoint, so this
+        // resolves by fetching the full list and matching client-side. Fine at today's
+        // catalog size; worth a dedicated endpoint if the catalog grows a lot.
         protected override async Task OnParametersSetAsync()
         {
             isLoading = true;
             errorMessage = null;
             selectedImageIndex = 0;
+            brand = null;
 
             try
             {
@@ -37,6 +44,9 @@ namespace WatchWorld.BlazorUI.Pages.Wiki
 
                 if (watch is not null)
                 {
+                    await Brands.EnsureLoadedAsync();
+                    brand = Brands.Get(watch.BrandId);
+
                     var listings = await ApiClient.GetListingsAsync(CancellationToken.None);
                     relatedListings = listings
                         .Where(l => l.BorrowableWatch?.SpecificWatch is not null &&
