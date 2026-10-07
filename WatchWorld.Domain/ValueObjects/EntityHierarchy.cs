@@ -8,6 +8,11 @@ namespace WatchWorld.Domain.ValueObjects
     {
         public Guid Id { get; protected set; }
 
+        protected Entity()
+        {
+            Id = Guid.NewGuid();
+        }
+
         public override bool Equals(object? obj)
             => obj is Entity other && Id == other.Id;
 

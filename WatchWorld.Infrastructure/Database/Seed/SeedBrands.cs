@@ -4,13 +4,20 @@ using static System.Net.WebRequestMethods;
 
 namespace WatchWorld.Infrastructure.Database.Seed
 {
+    
+    
     public class SeedBrands
     {
-        public static readonly IList<Brand> brands = new List<Brand>
-        {
 
-        };
         public static async Task SeedBrandsAsync(AppDbContext context)
+        {
+            // Du kan nu gemme listen direkte i EF Core i stedet for at skrive alle 13 navne
+            await context.Brands.AddRangeAsync(brands);
+            await context.SaveChangesAsync();
+        }
+
+        public static readonly IList<Brand> brands = new List<Brand>{};
+        static SeedBrands()
         {
 
 
@@ -239,13 +246,6 @@ namespace WatchWorld.Infrastructure.Database.Seed
             brands.Add(brand11);
             brands.Add(brand12);
             brands.Add(brand13);
-
-            await context.Brands.AddRangeAsync(
-                brand1, brand2, brand3, brand4, brand5, brand6, brand7,
-                brand8, brand9, brand10, brand11, brand12, brand13
-
-            );
-            await context.SaveChangesAsync();
         }
     }
 }

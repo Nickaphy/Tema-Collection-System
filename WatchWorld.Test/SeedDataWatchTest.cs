@@ -31,7 +31,7 @@ public class SeedDataTests
             var matchedBrand = allBrand.FirstOrDefault(b => b.Name.Equals(seed.Brand, StringComparison.OrdinalIgnoreCase));
             if (matchedBrand == null || matchedBrand.Id == Guid.Empty)
             {
-                Assert.Fail($"Brand not found for {seed.ModelNumber}");
+                Assert.Fail($"Brand not found for {seed.ModelNumber} + {allBrand.Count}");
             }
 
             var ex = Record.Exception(() => Watches.Create(
