@@ -27,8 +27,15 @@ public class SeedDataTests
     {
         foreach (var seed in WatchSeedData.All)
         {
+            var allBrand = SeedBrands.brands;
+            var matchedBrand = allBrand.FirstOrDefault(b => b.Name.Equals(seed.Brand, StringComparison.OrdinalIgnoreCase));
+            if (matchedBrand == null || matchedBrand.Id == Guid.Empty)
+            {
+                Assert.Fail($"Brand not found for {seed.ModelNumber}");
+            }
+
             var ex = Record.Exception(() => Watches.Create(
-                seed.Name, seed.ModelNumber, seed.CaseSize, seed.CaseShape, seed.CaseMaterial,
+                seed.Name, matchedBrand.Id, seed.ModelNumber, seed.CaseSize, seed.CaseShape, seed.CaseMaterial,
                 seed.Movement, seed.Style, seed.OriginalPrice, seed.Gender,
                 new DateOnly(seed.ReleaseYear, 1, 1),
                 new List<BraceletTypeEnum> { seed.Bracelet },

@@ -6,8 +6,14 @@ namespace WatchWorld.Infrastructure.Database.Seed
 {
     public class SeedBrands
     {
+        public static readonly IList<Brand> brands = new List<Brand>
+        {
+
+        };
         public static async Task SeedBrandsAsync(AppDbContext context)
         {
+
+
             // ==========================================
             // SEED DATA: BRANDS
             // ==========================================
@@ -219,6 +225,20 @@ namespace WatchWorld.Infrastructure.Database.Seed
                 ["LogoUrl"] = "https://commons.wikimedia.org/wiki/Special:FilePath/Zenith_logo.svg",
                 ["WebsiteUrl"] = "https://www.zenith-watches.com"
             });
+
+            brands.Add(brand1);
+            brands.Add(brand2);
+            brands.Add(brand3);
+            brands.Add(brand4);
+            brands.Add(brand5);
+            brands.Add(brand6);
+            brands.Add(brand7);
+            brands.Add(brand8);
+            brands.Add(brand9);
+            brands.Add(brand10);
+            brands.Add(brand11);
+            brands.Add(brand12);
+            brands.Add(brand13);
 
             await context.Brands.AddRangeAsync(
                 brand1, brand2, brand3, brand4, brand5, brand6, brand7,
