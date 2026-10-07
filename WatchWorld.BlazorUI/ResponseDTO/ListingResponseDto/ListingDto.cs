@@ -1,4 +1,6 @@
-﻿namespace WatchWorld.BlazorUI.ResponseDTO
+﻿using WatchWorld.BlazorUI.ResponseDTO.IndividualWatchResponseDto;
+
+namespace WatchWorld.BlazorUI.ResponseDTO.ListingResponseDto
 {
     public class ListingDto
     {

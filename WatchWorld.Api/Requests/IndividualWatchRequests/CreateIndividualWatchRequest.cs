@@ -5,6 +5,7 @@ namespace WatchWorld.Api.Requests.IndividualWatchRequests
 {
     public record CreateIndividualWatchRequest(
     Guid specificWatchId,
+    Guid userId,
     WearGradeEnum wearGrade,
     int age,
     string note,

@@ -1,77 +1,65 @@
-.page {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+﻿:root {
+    --color-nav-bg: #2d6a4f;
+    --color-nav-border: rgba(255, 255, 255, 0.15);
+    --color-nav-text: rgba(255, 255, 255, 0.75);
+    --color-nav-text-active: #ffffff;
+    --color-nav-active-indicator: #ffffff;
+    --color-primary: #2d6a4f;
+    --color-primary-hover: #1f5239;
+    --color-page-bg: #f5f5f3;
+    --color-gold: #C6A15B;
+    --color-gold-hover: #AD8842;
+    --color-navy: #0A1B30;
+    --color-border: #E1E5EB;
 }
 
-main {
+.ww-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-page-bg);
+    color: #14202E;
+}
+
+.ww-substrip {
+    background-color: var(--color-navy);
+    color: #ffffff;
+}
+
+.ww-substrip__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.6rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.9rem;
+}
+
+.ww-substrip__badge.rz-badge {
+    background-color: var(--color-gold);
+    color: var(--color-navy);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.ww-substrip__text {
+    color: #C9D2DE;
     flex: 1;
 }
 
-.sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+.ww-substrip__link {
+    font-weight: 600;
+    color: var(--color-gold);
+    white-space: nowrap;
+    text-decoration: none;
 }
 
-.top-row {
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #d6d5d5;
-    justify-content: flex-end;
-    height: 3.5rem;
-    display: flex;
-    align-items: center;
-}
-
-    .top-row ::deep a, .top-row ::deep .btn-link {
-        white-space: nowrap;
-        margin-left: 1.5rem;
-        text-decoration: none;
-    }
-
-    .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
+    .ww-substrip__link:hover,
+    .ww-substrip__link:focus-visible {
         text-decoration: underline;
     }
 
-    .top-row ::deep a:first-child {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-@media (max-width: 640.98px) {
-    .top-row {
-        justify-content: space-between;
-    }
-
-    .top-row ::deep a, .top-row ::deep .btn-link {
-        margin-left: 0;
-    }
-}
-
-@media (min-width: 641px) {
-    .page {
-        flex-direction: row;
-    }
-
-    .sidebar {
-        width: 250px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
-
-    .top-row {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
-
-    .top-row.auth ::deep a:first-child {
-        flex: 1;
-        text-align: right;
-        width: 0;
-    }
-
-    .top-row, article {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
-    }
+.ww-content {
+    flex: 1;
 }

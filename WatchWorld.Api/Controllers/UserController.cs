@@ -47,11 +47,27 @@ public class UserController : ControllerBase
             isAdmin: request.isAdmin,
             rating: request.rating
         );
-       var result = await _userUseCase.CreateUserAsync(command, ct);
-       if (result.IsFailed)
-            return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+        var user = await _userUseCase.CreateUserAsync(command, ct);
+        return CreatedAtAction(nameof(GetAllUsers), new { id = user.Value.Id }, user);
+    }
 
-       return Created($"/api/User/{result.Value.Id}", result.Value);
+    [HttpPost("login")]
+    [AllowAnonymous]
+    public async Task<ActionResult<User>> LogIn([FromBody] LogInRequest request, CancellationToken ct)
+    {
+        var command = new LogInCommand(
+            firstName: request.firstName,
+            lastName: request.lastName,
+            email: request.email,
+            password: request.password
+        );
+
+        var result = await _userUseCase.LogInAsync(command, ct);
+
+        if (result.IsFailed)
+            return Unauthorized(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+        return Ok(result.Value);
     }
 
     [HttpDelete("{userId}")]
@@ -98,4 +114,6 @@ public class UserController : ControllerBase
         await _userUseCase.SetAdminRoleAsync(command, ct);
         return NoContent();
     }
+
+
 }

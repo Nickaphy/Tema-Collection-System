@@ -18,6 +18,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseStaticFiles();
+
 await app.Services.InitializeDatabaseAsync();
 
 app.UseCors("BlazorUI");

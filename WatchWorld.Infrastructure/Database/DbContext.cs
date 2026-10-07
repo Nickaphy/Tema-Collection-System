@@ -14,6 +14,7 @@ namespace WatchWorld.Infrastructure.Database
         // Aggregates and Entities
         public DbSet<Borrow> Borrows => Set<Borrow>();
         public DbSet<Listing> Listings => Set<Listing>();
+        public DbSet<Brand> Brands => Set<Brand>();
         public DbSet<HighResImage> HighResImages => Set<HighResImage>();
         public DbSet<IndividualWatch> IndividualWatches => Set<IndividualWatch>();
         public DbSet<User> Users => Set<User>();

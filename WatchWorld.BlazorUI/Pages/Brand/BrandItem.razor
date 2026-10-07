@@ -1,0 +1,221 @@
+﻿@page "/maerker/{Slug}"
+@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+@using WatchWorld.BlazorUI.Services
+@using WatchWorld.BlazorUI.Helpers.BrandHelpers
+@inject WatchWorldApiClient ApiClient
+@inject BrandCatalogHelper Brands
+@inject ILogger<BrandItem> Logger
+
+<PageTitle>@(brand?.Name ?? "Mærke") – WatchWorld</PageTitle>
+
+<div class="ww-main">
+
+    @if (isLoading)
+    {
+        <div class="ww-state">Indlæser mærke …</div>
+    }
+    else if (errorMessage is not null)
+    {
+        <div class="ww-state ww-state--error">@errorMessage</div>
+    }
+    else if (brand is null)
+    {
+        <div class="ww-state">
+            Mærket "@Slug" findes ikke i encyklopædien.
+            <a href="/maerker">Se alle mærker</a>
+        </div>
+    }
+    else
+    {
+        <nav class="ww-detail__breadcrumb" aria-label="Brødkrumme">
+            <a href="/maerker">Mærker</a> <span>/</span> <span>@brand.Name</span>
+        </nav>
+
+        <header class="ww-brand-hero">
+            <div class="ww-brand-hero__logo">
+                @if (!string.IsNullOrWhiteSpace(brand.LogoUrl))
+                {
+                    <img src="@brand.LogoUrl" alt="@($"{brand.Name} logo")" />
+                }
+                else
+                {
+                    <span>@BrandTextHelper.Initials(brand.Name)</span>
+                }
+            </div>
+
+            <div class="ww-brand-hero__text">
+                <h1>@brand.Name</h1>
+
+                <div class="ww-brand-hero__meta">
+                    <span>@brand.CountryOfOrigin</span>
+                    <span>Grundlagt @brand.FoundingYear</span>
+                    @if (!string.IsNullOrWhiteSpace(brand.ParentGroup))
+                    {
+                        <span>@brand.ParentGroup</span>
+                    }
+                    @if (!brand.IsActive)
+                    {
+                        <span class="ww-brand-hero__status">Ikke aktivt</span>
+                    }
+                </div>
+
+                @if (watches.Count > 0)
+                {
+                    <p class="ww-brand-hero__stats">
+                        @brand.Name har <strong>@watches.Count</strong> @(watches.Count == 1 ? "ur" : "ure") i encyklopædien.
+                        Det ældste er udgivet i <strong>@watches.Min(w => w.ReleaseYear.Year)</strong>
+                        og det nyeste i <strong>@watches.Max(w => w.ReleaseYear.Year)</strong>.
+                    </p>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(brand.WebsiteUrl))
+                {
+                    <a class="ww-brand-hero__site" href="@brand.WebsiteUrl" target="_blank" rel="noopener noreferrer">Besøg hjemmeside</a>
+                }
+            </div>
+        </header>
+
+        <div class="ww-grid">
+            <div class="ww-col-main">
+
+                <section class="ww-brand-section">
+                    <h2>Om @brand.Name</h2>
+                    <p>@brand.BrandDescriptionNote</p>
+                </section>
+
+                <section class="ww-brand-section">
+                    <h2>Grundlæggeren</h2>
+                    <p class="ww-brand-section__lead">@brand.FounderName</p>
+                    <p>@brand.FounderDescriptionNote</p>
+                </section>
+
+                @if (!string.IsNullOrWhiteSpace(brand.OriginDescriptionNote))
+                {
+                    <section class="ww-brand-section">
+                        <h2>Oprindelse</h2>
+                        <p>@brand.OriginDescriptionNote</p>
+                    </section>
+                }
+
+                <section class="ww-brand-section">
+                    <h2>Urstil</h2>
+                    <p>@brand.WatchStyleDescriptionNote</p>
+                </section>
+
+                <section class="ww-brand-section" aria-labelledby="brand-watches-heading">
+                    <div class="ww-section-head">
+                        <h2 id="brand-watches-heading">Ure fra @brand.Name (@FilteredWatches.Count)</h2>
+                        @if (watches.Count > 1)
+                        {
+                            <div class="ww-wiki__results-head">
+                                <select @bind="sortOption" aria-label="Sortér ure">
+                                    <option value="year-desc">Nyeste model</option>
+                                    <option value="name-asc">Navn A-Å</option>
+                                    <option value="price-asc">Pris: Lav til høj</option>
+                                    <option value="price-desc">Pris: Høj til lav</option>
+                                </select>
+                            </div>
+                        }
+                    </div>
+
+                    @if (StyleChips.Count > 1)
+                    {
+                        <div class="ww-collection-chips" role="group" aria-label="Stilarter">
+                            <button type="button" class="@("ww-collection-chip" + (selectedStyle is null ? " active" : ""))"
+                                    @onclick="@(() => SelectStyle(null))">
+                                Alle (@watches.Count)
+                            </button>
+                            @foreach (var chip in StyleChips)
+                            {
+                                <button type="button" class="@("ww-collection-chip" + (selectedStyle == chip.Style ? " active" : ""))"
+                                        @onclick="@(() => SelectStyle(chip.Style))">
+                                    @chip.Style (@chip.Count)
+                                </button>
+                            }
+                        </div>
+                    }
+
+                    @if (DisplayedWatches.Count == 0)
+                    {
+                        <p class="ww-empty">Der er endnu ingen ure fra dette mærke i encyklopædien.</p>
+                    }
+                    else
+                    {
+                        <div class="ww-wiki__grid">
+                            @foreach (var watch in DisplayedWatches)
+                            {
+                                <a class="ww-listing-card ww-wiki-card" href="@($"/wiki/{watch.ModelNumber}")">
+                                    <div class="ww-listing-card__image">
+                                        <img src="@(watch.Images.Count > 0 ? watch.Images[0].Url : PlaceholderImage)" alt="@watch.Name" />
+                                    </div>
+                                    <div class="ww-listing-card__body">
+                                        <div class="ww-listing-card__name">@watch.Name</div>
+                                        <div class="ww-listing-card__detail">
+                                            @EnumDisplayConverter.CaseShape(watch.CaseShapeEnum) · @EnumDisplayConverter.CaseMaterial(watch.CaseMaterialEnum)
+                                        </div>
+                                        <div class="ww-listing-card__meta">
+                                            <span class="ww-listing-card__price">@watch.ModelNumber</span>
+                                            <span class="ww-listing-card__cta">Se mere</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+
+                        @if (DisplayedWatches.Count < FilteredWatches.Count)
+                        {
+                            <div class="ww-wiki__more">
+                                <RadzenButton Text="Vis flere" ButtonStyle="ButtonStyle.Base" Click="@(() => visibleCount += PageSize)" />
+                            </div>
+                        }
+                    }
+                </section>
+            </div>
+
+            <aside class="ww-col-side">
+                <RadzenCard class="ww-stats-panel ww-brand-facts">
+                    <h3>Fakta</h3>
+                    <ul>
+                        <li><span>Grundlagt</span><strong>@brand.FoundingYear</strong></li>
+                        <li><span>Land</span><strong>@brand.CountryOfOrigin</strong></li>
+                        @if (!string.IsNullOrWhiteSpace(brand.ParentGroup))
+                        {
+                            <li><span>Moderselskab</span><strong>@brand.ParentGroup</strong></li>
+                        }
+                        <li><span>Grundlægger</span><strong>@brand.FounderName</strong></li>
+                        <li><span>Ure i encyklopædien</span><strong>@watches.Count</strong></li>
+                    </ul>
+                </RadzenCard>
+
+                @if (OtherBrands.Count > 0)
+                {
+                    <RadzenCard class="ww-recent-panel">
+                        <h3>Andre mærker</h3>
+                        @foreach (var other in OtherBrands)
+                        {
+                            <a class="ww-recent-item" href="@($"/maerker/{BrandTextHelper.Slug(other.Brand.Name)}")">
+                                <div class="ww-brand-mini__logo">
+                                    @if (!string.IsNullOrWhiteSpace(other.Brand.LogoUrl))
+                                    {
+                                        <img src="@other.Brand.LogoUrl" alt="@($"{other.Brand.Name} logo")" loading="lazy" />
+                                    }
+                                    else
+                                    {
+                                        <span>@BrandTextHelper.Initials(other.Brand.Name)</span>
+                                    }
+                                </div>
+                                <div>
+                                    <div class="ww-recent-item__name">@other.Brand.Name</div>
+                                    <div class="ww-recent-item__by">@(other.Count == 1 ? "1 ur" : $"{other.Count} ure")</div>
+                                </div>
+                            </a>
+                        }
+                    </RadzenCard>
+                }
+            </aside>
+        </div>
+    }
+</div>
+

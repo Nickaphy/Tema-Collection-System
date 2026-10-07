@@ -23,6 +23,12 @@ public class WatchesService : IWatchesUseCase
         return Result.Ok(watches.Value);
     }
 
+    public async Task<Result<IEnumerable<Watches?>>> GetAllWatchesByBrandIdAsync(Guid brandId, CancellationToken ct = default)
+    {
+        var watches = await _watchRepository.GetWatchesByBrandIdAsync(brandId, ct);
+        return Result.Ok(watches.Value);
+    }
+
     public async Task<Result<Watches>> CreateWatchAsync(CreateWatchCommand command, CancellationToken ct = default)
     {
         var existingWatches = await _watchRepository.GetAllWatchesAsync(ct);
@@ -35,6 +41,7 @@ public class WatchesService : IWatchesUseCase
 
             var watch = Watches.Create(
                 name: command.name,
+                brandId: command.brandId,
                 modelNumber: command.modelNumber,
                 caseSize: command.caseSize,
                 caseShapeEnum: command.caseShapeEnum,
@@ -87,6 +94,7 @@ public class WatchesService : IWatchesUseCase
 
                 var watch = Watches.Update(
                     name: command.name,
+                    brandId: command.brandId,
                     modelNumber: command.modelNumber,
                     caseSize: command.caseSize,
                     caseShapeEnum: command.caseShapeEnum,
@@ -142,4 +150,14 @@ public class WatchesService : IWatchesUseCase
         }
         return Result.Ok(existingWatch.Value);
     }
+
+    public async Task<Result<Watches>> GetWatchByModelNumberAsync(string modelNumber, CancellationToken ct = default)
+    {
+        var existingWatch = await _watchRepository.GetWatchByModelNumberAsync(modelNumber, ct);
+        if (existingWatch.IsFailed || existingWatch.Value == null)
+        {
+            return Result.Fail("Uret blev ikke fundet.");
+        }
+        return Result.Ok(existingWatch.Value);
+    } 
 }
