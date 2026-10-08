@@ -19,9 +19,9 @@ public class IndividualWatchService : IIndividualWatchUseCase
         _individualWatchRepository = individualWatchRepository;
     }
 
-    public async Task<Result<IEnumerable<IndividualWatch?>>> GetAllAsync(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<IndividualWatch>>> GetAllIndividualWatchesAsync(CancellationToken ct = default)
     {
-        var watches = await _individualWatchRepository.GetAllAsync(ct);
+        var watches = await _individualWatchRepository.GetAllIndividualWatchesAsync(ct);
         return Result.Ok(watches.Value);
     }
 
@@ -43,7 +43,7 @@ public class IndividualWatchService : IIndividualWatchUseCase
                     picture: command.picture
 
                 );
-                await _individualWatchRepository.CreateWatchAsync(watch, ct);
+                await _individualWatchRepository.CreateIndividualWatchAsync(watch, ct);
                 return Result.Ok(watch);
             }
             catch (DomainException ex)
@@ -73,10 +73,10 @@ public class IndividualWatchService : IIndividualWatchUseCase
         try
         {
             var existingWatch = await _watchRepository.GetWatchByIdAsync(command.specificWatchId, ct);
-            if (existingWatch.Value is null || existingWatch.IsFailed)
+            if (existingWatch.IsFailed || existingWatch.Value is null)
                 return Result.Fail("Urmodellen findes ikke");
-            var existingIndividualWatch = await _individualWatchRepository.GetWatchByIdAsync(command.individualWatchId, ct);
-            if (existingIndividualWatch.Value is null || existingIndividualWatch.IsFailed)
+            var existingIndividualWatch = await _individualWatchRepository.GetIndividualWatchByIdAsync(command.individualWatchId, ct);
+            if (existingIndividualWatch.IsFailed)
                 return Result.Fail("Kan ikke opdatere uret fordi uret findes ikke");
             try
             {
@@ -90,7 +90,7 @@ public class IndividualWatchService : IIndividualWatchUseCase
                     picture: command.picture
 
                 );
-                await _individualWatchRepository.UpdateWatchAsync(watch, ct);
+                await _individualWatchRepository.UpdateIndividualWatchAsync(watch, ct);
                 return Result.Ok(watch);
             }
             catch (DomainException ex)
@@ -116,7 +116,7 @@ public class IndividualWatchService : IIndividualWatchUseCase
 
     public async Task<Result<IndividualWatch>> GetIndividualWatchByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var existingIndividualWatch = await _individualWatchRepository.GetWatchByIdAsync(id, ct);
+        var existingIndividualWatch = await _individualWatchRepository.GetIndividualWatchByIdAsync(id, ct);
         if (existingIndividualWatch.IsFailed || existingIndividualWatch.Value == null)
         {
             return Result.Fail("Uret blev ikke fundet.");
@@ -126,12 +126,12 @@ public class IndividualWatchService : IIndividualWatchUseCase
 
     public async Task<Result> DeleteIndividualWatchAsync(DeleteIndividualWatchCommand deleteIndividualWatchCommand, CancellationToken ct = default)
     {
-        var existingIndividualWatch = await _individualWatchRepository.GetWatchByIdAsync(deleteIndividualWatchCommand.id, ct);
-        if (existingIndividualWatch == null)
+        var existingIndividualWatch = await _individualWatchRepository.GetIndividualWatchByIdAsync(deleteIndividualWatchCommand.id, ct);
+        if (existingIndividualWatch.IsFailed)
         {
             return Result.Fail("Uret blev ikke fundet og kan dermed ikke slettes");
         }
-        await _individualWatchRepository.DeleteWatchAsync(deleteIndividualWatchCommand.id, ct);
+        await _individualWatchRepository.DeleteIndividualWatchAsync(deleteIndividualWatchCommand.id, ct);
         return Result.Ok();
     }
 }

@@ -76,7 +76,7 @@ public class UserRatingService : IUserRatingUseCase
             _Lock.Release();
         }
     }
-    public async Task<Result<UserRating?>> GetUserRatingByIdAsync(Guid userRatingId, CancellationToken ct = default)
+    public async Task<Result<UserRating>> GetUserRatingByIdAsync(Guid userRatingId, CancellationToken ct = default)
     {
         var userRating = await _userRatingRepository.GetUserRatingByIdAsync(userRatingId, ct);
         if (userRating.IsFailed)
