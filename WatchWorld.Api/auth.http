@@ -1,0 +1,28 @@
+@api = http://localhost:8080
+
+### 1. Log in as Alice (normal user)
+POST {{api}}/api/User/login
+Content-Type: application/json
+
+{
+  "email": "alice.nielsen@watchworld.dk",
+  "password": "$2a$12$eImiTXuWVxfM37uY4JANjO5E/Qd/./v7YdZ2Y2q8.1M22.GfK1234"
+}
+
+### 2. Log in as Charlie (admin)
+POST {{api}}/api/User/login
+Content-Type: application/json
+
+{
+  "email": "admin@watchworld.dk",
+  "password": "LeAdminos123!"
+}
+
+### 3. Wrong password, should give 401
+POST {{api}}/api/User/login
+Content-Type: application/json
+
+{
+  "email": "alice.nielsen@watchworld.dk",
+  "password": "Wrong123!"
+}

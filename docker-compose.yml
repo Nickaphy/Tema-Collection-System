@@ -33,6 +33,7 @@ services:
       ConnectionStrings__Mother: "Server=${MOTHER_LAN_IP:-192.168.0.236},1433;Database=WatchWorld;User Id=sa;Password=${MOTHER_SA_PASSWORD:-};TrustServerCertificate=True;Connect Timeout=3;"
       ConnectionStrings__Local: "Server=sqlserver,1433;Database=WatchWorld;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;"
       SeedFullCatalog: "${SEED_FULL_CATALOG:-false}"
+      JwtSettings__Secret: "${JWT_SECRET}"
     ports:
       - "8080:8080"
 

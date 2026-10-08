@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.UserRequests;
 using WatchWorld.Application.Commands.UserCommands;
 using WatchWorld.Application.Ports.InBound;
+using WatchWorld.Application.Results;
 using WatchWorld.Domain.Entities;
 
 namespace WatchWorld.Api.Controllers;
@@ -53,7 +54,7 @@ public class UserController : ControllerBase
 
     [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<ActionResult<User>> LogIn([FromBody] LogInRequest request, CancellationToken ct)
+    public async Task<ActionResult<LogInResult>> LogIn([FromBody] LogInRequest request, CancellationToken ct)
     {
         var command = new LogInCommand(
             firstName: request.firstName,
