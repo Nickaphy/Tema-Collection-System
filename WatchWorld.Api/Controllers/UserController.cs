@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.UserRequests;
+using WatchWorld.Api.Extensions;
+using WatchWorld.Api.Responses;
 using WatchWorld.Application.Commands.UserCommands;
 using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Application.Results;
@@ -29,7 +31,15 @@ public class UserController : ControllerBase
         if (result.IsFailed)
             return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
 
-        return Ok(result.Value);
+        return Ok(result.Value.Select(UserResponse.FromUser));
+    }
+
+    [HttpGet("me")]
+    [Authorize]
+    public IActionResult Me()
+    {
+        // Shows exactly what the API knows about the caller, read from their token
+        return Ok(User.Claims.Select(c => new { c.Type, c.Value }));
     }
 
     [HttpPost("register")]
@@ -75,19 +85,31 @@ public class UserController : ControllerBase
     [Authorize(Roles = "User,Admin")]
     public async Task<ActionResult> DeleteUser(Guid userId, CancellationToken ct)
     {
+        // Only the user themself, or an admin, may delete this account
+        if (User.GetUserId() != userId && !User.IsAdmin())
+            return Forbid();
+
         var command = new DeleteUserCommand(
             userId: userId
         );
-        await _userUseCase.DeleteUserAsync(command, ct);
+        var result = await _userUseCase.DeleteUserAsync(command, ct);
+
+        if (result.IsFailed)
+            return NotFound(string.Join("; ", result.Errors.Select(e => e.Message)));
+
         return NoContent();
     }
 
     [HttpPut("{userId}")]
     [Authorize(Roles = "User,Admin")]
-    public async Task<ActionResult<User>> UpdateUser(Guid userId, UpdateUserRequest request, CancellationToken ct)
+    public async Task<ActionResult<UserResponse>> UpdateUser(Guid userId, UpdateUserRequest request, CancellationToken ct)
     {
+        // Only the user themself, or an admin, may change this account
+        if (User.GetUserId() != userId && !User.IsAdmin())
+            return Forbid();
+
         var command = new UpdateUserCommand(
-            id: request.id,
+            id: userId,                 // CHANGED: from the URL, not from the body
             firstName: request.firstName,
             lastName: request.lastName,
             phoneNumber: request.phoneNumber,
@@ -99,8 +121,12 @@ public class UserController : ControllerBase
             isAdmin: false,
             rating: request.rating
         );
-        var user = await _userUseCase.UpdateUserAsync(command, ct);
-        return Ok(user);
+        var result = await _userUseCase.UpdateUserAsync(command, ct);
+
+        if (result.IsFailed)
+            return BadRequest(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+        return Ok(UserResponse.FromUser(result.Value));
     }
     
     [HttpPatch("{userId}/role")]

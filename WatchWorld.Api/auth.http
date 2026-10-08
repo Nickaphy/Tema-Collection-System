@@ -1,4 +1,5 @@
 @api = http://localhost:8080
+@bobId = 9063079a-8507-485f-9742-d0c3276c4bf0
 
 ### 1. Log in as Alice (normal user)
 # @name loginAlice
@@ -46,3 +47,48 @@ Authorization: Bearer {{loginAlice.response.body.$.token}}x
 ### 8. Admin-only endpoint, Alice's token -> 403
 DELETE {{api}}/api/Watches/00000000-0000-0000-0000-000000000000
 Authorization: Bearer {{loginAlice.response.body.$.token}}
+
+### 9. All users, no token -> look for "password" in the answer!
+GET {{api}}/api/User
+
+### 11. Create a throwaway test user (anyone may register)
+# @name registerTest
+POST {{api}}/api/User/register
+Content-Type: application/json
+
+{
+  "firstName": "Test",
+  "lastName": "Testesen",
+  "phoneNumber": "12345678",
+  "email": "test.testesen@example.com",
+  "address": "Testvej 1",
+  "city": "Odense",
+  "note": null,
+  "password": "Ur!Sikker2026",
+  "isAdmin": false,
+  "rating": []
+}
+
+### 12. Alice deletes the test user's account
+DELETE {{api}}/api/User/{{registerTest.response.body.$.value.id}}
+Authorization: Bearer {{loginAlice.response.body.$.token}}
+
+### 10. Who am I? -> Alice's claims
+GET {{api}}/api/User/me
+Authorization: Bearer {{loginAlice.response.body.$.token}}
+
+### 13. Charlie (admin) deletes the test user
+DELETE {{api}}/api/User/{{registerTest.response.body.$.value.id}}
+Authorization: Bearer {{loginCharlie.response.body.$.token}}
+
+### 14. Alice tries to borrow "as Bob"
+POST {{api}}/api/Borrow
+Authorization: Bearer {{loginAlice.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "borrowedByUserId": "{{bobId}}",
+  "borrowedFromUserId": "{{bobId}}",
+  "borrowTimeSlot": { "from": "2026-12-01T10:00:00+01:00", "to": "2026-12-03T10:00:00+01:00" },
+  "status": 0
+}

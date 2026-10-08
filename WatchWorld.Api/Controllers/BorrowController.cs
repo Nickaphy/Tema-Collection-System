@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.BorrowRequests;
+using WatchWorld.Api.Extensions;
 using WatchWorld.Application.Commands.BorrowCommands;
 using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Domain.Entities;
@@ -41,7 +42,7 @@ namespace WatchWorld.Api.Controllers
         public async Task<ActionResult<Borrow>> Create([FromBody] CreateBorrowRequest request, CancellationToken ct)
         {
             var command = new CreateBorrowCommand(
-                borrowedByUserId: request.borrowedByUserId,
+                borrowedByUserId: User.GetUserId(),
                 borrowedFromUserId: request.borrowedFromUserId,
                 borrowTimeSlot: request.borrowTimeSlot,
                 status: request.status
