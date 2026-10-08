@@ -38,7 +38,7 @@ public class WatchesController : ControllerBase
     }
 
     [HttpPost]
-    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Watches>> Create([FromBody] CreateWatchRequest request, CancellationToken ct)
     {
         var command = new CreateWatchCommand(
@@ -66,7 +66,7 @@ public class WatchesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeleteWatch(Guid id, CancellationToken ct)
     {
         await _watchUseCase.DeleteWatchAsync(new DeleteWatchCommand(id), ct);
@@ -74,7 +74,7 @@ public class WatchesController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Watches>> UpdateWatch(Guid id, UpdateWatchRequest request, CancellationToken ct)
     {
         var command = new UpdateWatchCommand(
@@ -99,7 +99,7 @@ public class WatchesController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Watches>> GetAllWatchesByBrand(Guid brandId, CancellationToken ct)
     {
         var watches = await _watchUseCase.GetAllWatchesByBrandIdAsync(brandId, ct);
@@ -107,7 +107,7 @@ public class WatchesController : ControllerBase
     }
 
     [HttpPut("{modelNumber}")]
-    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Watches>> GetWatchByModelNumber(string modelNumber, CancellationToken ct)
     {
         var watch = await _watchUseCase.GetWatchByModelNumberAsync(modelNumber, ct);

@@ -47,7 +47,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<IndividualWatch>> Create([FromBody] CreateIndividualWatchRequest request, CancellationToken ct)
         {
             var command = new CreateIndividualWatchCommand(
@@ -68,7 +68,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize(Roles = "User,Admin")]  // Commented out because Auth hasn't been enabled yet
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<IndividualWatch>> UpdateWatch(
             Guid id,
             [FromBody] UpdateIndividualWatchRequest request,
@@ -89,7 +89,7 @@ namespace WatchWorld.Api.Controllers
 
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> Delete(Guid id, CancellationToken ct)
         {
             await _individualWatchUseCase.DeleteIndividualWatchAsync(new DeleteIndividualWatchCommand(id), ct);

@@ -12,7 +12,8 @@ namespace WatchWorld.BlazorUI
             services.AddRadzenComponents();
             services.AddScoped<LogInContext>();
             services.AddScoped<NotificationHelper>();
-            services.AddScoped<CurrentUserState>();
+            services.AddSingleton<CurrentUserState>();
+            services.AddTransient<AuthHeaderHandler>();
             services.AddScoped<BrandCatalogHelper>();
             return services;
         }

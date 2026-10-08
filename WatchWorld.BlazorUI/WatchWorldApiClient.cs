@@ -38,7 +38,7 @@ namespace WatchWorld.BlazorUI
             return (false, string.IsNullOrWhiteSpace(body) ? $"Fejl ({(int)response.StatusCode})" : body);
         }
 
-        public async Task<(bool Success, UserDto? User, string? Error)> LogInAsync(LogInRequestDto request, CancellationToken ct)
+        public async Task<(bool Success, LogInResponseDto? User, string? Error)> LogInAsync(LogInRequestDto request, CancellationToken ct)
         {
             var response = await _http.PostAsJsonAsync("api/User/login", request, ct);
 
@@ -49,7 +49,7 @@ namespace WatchWorld.BlazorUI
                 return (false, null, message);
             }
 
-            var user = await response.Content.ReadFromJsonAsync<UserDto>(cancellationToken: ct);
+            var user = await response.Content.ReadFromJsonAsync<LogInResponseDto>(cancellationToken: ct);
             return (true, user, null);
         }
 

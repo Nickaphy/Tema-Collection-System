@@ -39,7 +39,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Brand>> CreateBrandAsync([FromBody] CreateBrandRequest request, CancellationToken ct)
         {
             var command = new CreateBrandCommand(
@@ -65,7 +65,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> Delete(Guid id, CancellationToken ct)
         {
             await _brandUseCase.DeleteBrandAsync(id, ct);
