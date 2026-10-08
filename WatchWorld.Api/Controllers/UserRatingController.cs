@@ -57,7 +57,7 @@ namespace WatchWorld.Api.Controllers;
 
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> DeleteUserRating(Guid id, CancellationToken ct)
         {
             var command = new DeleteUserRatingCommand(
@@ -70,7 +70,7 @@ namespace WatchWorld.Api.Controllers;
 
 
         [HttpPost]
-        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> CreateUserRating(CreateUserRatingRequest request, CancellationToken ct)
         {
             var command = new CreateUserRatingCommand(
@@ -93,7 +93,7 @@ namespace WatchWorld.Api.Controllers;
 
 
         [HttpPut("{id}")]
-    //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+    [Authorize(Roles = "User,Admin")]
     public async Task<ActionResult> UpdateUserRating(Guid id, UpdateUserRatingRequest request, CancellationToken ct)
     {
         var command = new UpdateUserRatingCommand(

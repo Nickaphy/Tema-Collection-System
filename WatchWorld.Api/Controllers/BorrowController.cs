@@ -19,7 +19,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<IEnumerable<Borrow>>> Get(CancellationToken ct)
         {
             var result = await _borrowUseCase.GetAllBorrowAsync(ct);
@@ -29,7 +29,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> GetById(Guid id, CancellationToken ct)
         {
             var borrow = await _borrowUseCase.GetBorrowByIdAsync(id, ct);
@@ -37,7 +37,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> Create([FromBody] CreateBorrowRequest request, CancellationToken ct)
         {
             var command = new CreateBorrowCommand(
@@ -55,7 +55,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> Delete(Guid id, CancellationToken ct)
         {
             await _borrowUseCase.DeleteBorrowAsync(new DeleteBorrowCommand(id), ct);
@@ -63,7 +63,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPut("{id}/timeslot")]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> UpdateTimeSlot(
         Guid id,
         [FromBody] UpdateBorrowTimeSlotRequest request,
@@ -78,7 +78,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPut("{id}/status")]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> UpdateStatus(Guid id, [FromBody] UpdateBorrowStatusRequest request, CancellationToken ct)
         {
             var command = new UpdateBorrowStatusCommand(

@@ -72,7 +72,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{userId}")]
-    //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+    [Authorize(Roles = "User,Admin")]
     public async Task<ActionResult> DeleteUser(Guid userId, CancellationToken ct)
     {
         var command = new DeleteUserCommand(
@@ -83,7 +83,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{userId}")]
-    //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+    [Authorize(Roles = "User,Admin")]
     public async Task<ActionResult<User>> UpdateUser(Guid userId, UpdateUserRequest request, CancellationToken ct)
     {
         var command = new UpdateUserCommand(
@@ -104,7 +104,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPatch("{userId}/role")]
-    //[Authorize(Roles = "Admin")] // Commented out because Auth hasn't been enabled yet
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> SetAdminStatus(Guid userId, [FromBody] SetAdminRoleRequest request, CancellationToken ct)
     {
         var command = new SetAdminRoleCommand(

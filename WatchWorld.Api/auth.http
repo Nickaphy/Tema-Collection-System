@@ -1,6 +1,7 @@
 @api = http://localhost:8080
 
 ### 1. Log in as Alice (normal user)
+# @name loginAlice
 POST {{api}}/api/User/login
 Content-Type: application/json
 
@@ -10,6 +11,7 @@ Content-Type: application/json
 }
 
 ### 2. Log in as Charlie (admin)
+# @name loginCharlie
 POST {{api}}/api/User/login
 Content-Type: application/json
 
@@ -26,3 +28,21 @@ Content-Type: application/json
   "email": "alice.nielsen@watchworld.dk",
   "password": "Wrong123!"
 }
+
+### 4. Public endpoint, no token -> 200
+GET {{api}}/api/Watches
+
+### 5. Locked endpoint, no token -> 401
+GET {{api}}/api/Borrow
+
+### 6. Locked endpoint, Alice's token -> 200
+GET {{api}}/api/Borrow
+Authorization: Bearer {{loginAlice.response.body.$.token}}
+
+### 7. Tampered token (one extra letter at the end) -> 401
+GET {{api}}/api/Borrow
+Authorization: Bearer {{loginAlice.response.body.$.token}}x
+
+### 8. Admin-only endpoint, Alice's token -> 403
+DELETE {{api}}/api/Watches/00000000-0000-0000-0000-000000000000
+Authorization: Bearer {{loginAlice.response.body.$.token}}
