@@ -17,7 +17,7 @@ public class UserService : IUserUseCase
         _userRepository = userRepository;
     }
 
-    public async Task<Result<IEnumerable<User?>>> GetAllUsersAsync(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<User>>> GetAllUsersAsync(CancellationToken ct = default)
     {
         var user = await _userRepository.GetAllUsersAsync(ct);
         return Result.Ok(user.Value);

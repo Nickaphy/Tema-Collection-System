@@ -18,9 +18,9 @@ public class BorrowService : IBorrowUseCase
         _borrowRepository = borrowRepository;
     }
 
-    public async Task<Result<IEnumerable<Borrow?>>> GetAllAsync(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<Borrow>>> GetAllBorrowAsync(CancellationToken ct = default)
     {
-        var borrows = await _borrowRepository.GetAllAsync(ct);
+        var borrows = await _borrowRepository.GetAllBorrowAsync(ct);
         return Result.Ok(borrows.Value);
     }
 
@@ -100,7 +100,7 @@ public class BorrowService : IBorrowUseCase
         try
         {
             var existingBorrow = await _borrowRepository.GetBorrowByIdAsync(command.id, ct);
-            if (existingBorrow.Value == null || existingBorrow.IsFailed)
+            if (existingBorrow.IsFailed)
             {
                 throw new BorrowNotFoundException($"Udlån med ID {command.id} blev ikke fundet.");
             }
@@ -157,7 +157,7 @@ public class BorrowService : IBorrowUseCase
         try
         {
             var existingBorrow = await _borrowRepository.GetBorrowByIdAsync(command.borrowId, ct);
-            if (existingBorrow.Value == null || existingBorrow.IsFailed)
+            if (existingBorrow.IsFailed)
             {
                 throw new BorrowNotFoundException($"Udlån med ID {command.borrowId} blev ikke fundet.");
             }
@@ -206,7 +206,7 @@ public class BorrowService : IBorrowUseCase
     public async Task<Result> DeleteBorrowAsync(DeleteBorrowCommand command, CancellationToken ct = default)
     {
         var existingBorrow = await _borrowRepository.GetBorrowByIdAsync(command.id, ct);
-        if (existingBorrow.Value == null || existingBorrow.IsFailed)
+        if (existingBorrow.IsFailed)
         {
             return Result.Fail("Udlån blev ikke fundet.");
         }

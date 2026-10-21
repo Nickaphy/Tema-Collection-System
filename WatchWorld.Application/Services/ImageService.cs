@@ -17,9 +17,9 @@ public class ImageService : IImagesUseCase
         _repository = repository;
     }
 
-    public async Task<Result<IEnumerable<HighResImage?>>> GetAllAsync(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<HighResImage>>> GetAllImagesAsync(CancellationToken ct = default)
     {
-        var images = await _repository.GetAllAsync(ct);
+        var images = await _repository.GetAllImagesAsync(ct);
         return Result.Ok(images.Value);
     }
 
@@ -35,7 +35,7 @@ public class ImageService : IImagesUseCase
 
     public async Task<Result<HighResImage>> CreateImageAsync(CreateImageCommand command, CancellationToken ct = default)
     {
-        var existingImages = await _repository.GetAllAsync(ct);
+        var existingImages = await _repository.GetAllImagesAsync(ct);
 
         await _Lock.WaitAsync();
         try
@@ -75,7 +75,7 @@ public class ImageService : IImagesUseCase
     public async Task<Result> DeleteImageAsync(Guid id, CancellationToken ct = default)
     {
         var existingImage = await _repository.GetImageByIdAsync(id, ct);
-        if (existingImage == null)
+        if (existingImage.IsFailed)
         {
             return Result.Fail("Billedet blev ikke fundet.");
         }

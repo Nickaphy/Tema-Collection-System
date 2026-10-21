@@ -18,10 +18,6 @@ namespace WatchWorld.Infrastructure.Adapters
         public async Task<Result<IEnumerable<User>>> GetAllUsersAsync(CancellationToken ct = default)
         {
             var users = await _context.Users.ToListAsync(ct);
-            if (users == null || !users.Any())
-            {
-                return Result.Fail<IEnumerable<User>>("No users found.");
-            }
             return Result.Ok(users.AsEnumerable());
         }
 

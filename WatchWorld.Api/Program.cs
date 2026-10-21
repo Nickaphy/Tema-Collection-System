@@ -9,7 +9,9 @@ builder.Services.AddApplicationService();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("BlazorUI", policy =>
-        policy.WithOrigins("https://localhost:7163")
+        policy.WithOrigins(
+            "https://localhost:7163",
+            "http://localhost:5275") //I need another port :C
               .AllowAnyHeader()
               .AllowAnyMethod());
 });

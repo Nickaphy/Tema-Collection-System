@@ -7,7 +7,7 @@ namespace WatchWorld.Application.Ports.InBound;
 public interface IWatchesUseCase
 {
     Task<Result<Watches>> CreateWatchAsync(CreateWatchCommand command, CancellationToken cancellationToken = default);
-    Task<Result<IEnumerable<Watches?>>> GetAllAsync(CancellationToken ct = default);
+    Task<Result<IEnumerable<Watches?>>> GetAllWatchesAsync(CancellationToken ct = default);
     Task<Result<Watches>> GetWatchByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Result> DeleteWatchAsync(DeleteWatchCommand command, CancellationToken ct = default);
     Task<Result<Watches>> UpdateWatchAsync(UpdateWatchCommand command, CancellationToken ct = default);

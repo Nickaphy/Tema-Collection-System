@@ -15,24 +15,31 @@ public class SqlServerWatchRepository : IWatchesRepository
         _context = context;
     }
 
-    public async Task<Result<IEnumerable<Watches>>> GetAllAsync(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<Watches>>> GetAllWatchesAsync(CancellationToken ct = default)
     {
         var watches = await _context.Watchlist
             .Include(w => w.Images)
             .AsNoTracking()
             .ToListAsync(ct);
-
-        return Result.Ok<IEnumerable<Watches>>(watches);
+        return Result.Ok(watches.AsEnumerable());
     }
 
-    public async Task<Result<Watches?>> GetWatchByIdAsync(Guid id, CancellationToken ct = default)
+    public async Task<Result<Watches>> GetWatchByIdAsync(Guid id, CancellationToken ct = default)
     {
         var watch = await _context.Watchlist.FindAsync(new object[] { id }, ct);
+        if (watch == null)
+            {
+                return Result.Fail<Watches>("Watch not found.");
+            }
         return Result.Ok(watch);
     }
     public async Task<Result<Watches>> CreateWatchAsync(Watches watch, CancellationToken ct = default)
     {
-        await _context.Watchlist.AddAsync(watch, ct);
+        var result = await _context.Watchlist.AddAsync(watch, ct);
+        if (result == null)
+            {
+                return Result.Fail<Watches>("Failed to create watch.");
+            }
         await _context.SaveChangesAsync(ct);
         return Result.Ok(watch);
     }
@@ -49,7 +56,7 @@ public class SqlServerWatchRepository : IWatchesRepository
         var watch = await _context.Watchlist.FindAsync(new object[] { watchId }, ct);
         if (watch == null)
         {
-            return Result.Fail($"Uret kunne ikke findes.");
+            return Result.Fail("Watch not found.");
         }
         _context.Watchlist.Remove(watch);
         await _context.SaveChangesAsync(ct);

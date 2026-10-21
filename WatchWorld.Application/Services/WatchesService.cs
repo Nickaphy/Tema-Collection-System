@@ -17,15 +17,15 @@ public class WatchesService : IWatchesUseCase
         _watchRepository = repository;
     }
 
-    public async Task<Result<IEnumerable<Watches?>>> GetAllAsync(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<Watches?>>> GetAllWatchesAsync(CancellationToken ct = default)
     {
-        var watches = await _watchRepository.GetAllAsync(ct);
+        var watches = await _watchRepository.GetAllWatchesAsync(ct);
         return Result.Ok(watches.Value);
     }
 
     public async Task<Result<Watches>> CreateWatchAsync(CreateWatchCommand command, CancellationToken ct = default)
     {
-        var existingWatches = await _watchRepository.GetAllAsync(ct);
+        var existingWatches = await _watchRepository.GetAllWatchesAsync(ct);
 
         await _Lock.WaitAsync();
         try
@@ -74,13 +74,13 @@ public class WatchesService : IWatchesUseCase
 
     public async Task<Result<Watches>> UpdateWatchAsync(UpdateWatchCommand command, CancellationToken ct = default)
     {
-        var existingWatches = await _watchRepository.GetAllAsync(ct);
+        var existingWatches = await _watchRepository.GetAllWatchesAsync(ct);
 
         await _Lock.WaitAsync();
         try
         {
             var existingWatch = await _watchRepository.GetWatchByIdAsync(command.id, ct);
-            if (existingWatch.Value == null || existingWatch.IsFailed)
+            if (existingWatch.IsFailed || existingWatch.Value == null)
                 return Result.Fail("Kan ikke opdatere et ur som ikke eksistere i databasen");
             try
             {
