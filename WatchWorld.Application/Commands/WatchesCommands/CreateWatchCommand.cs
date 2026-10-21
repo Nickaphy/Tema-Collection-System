@@ -17,9 +17,11 @@ namespace WatchWorld.Application.Commands.WatchesCommands
     DateOnly releaseYear,
     List<BraceletTypeEnum> braceletTypeEnum,
     string description,
-    List<HighResImage> images
+    List<CreateImageCommandItem> images
     )
     {
 
     }
+
+    public record CreateImageCommandItem(string Url, int Width, int Height);
 }
