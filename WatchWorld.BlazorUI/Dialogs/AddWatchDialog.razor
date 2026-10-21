@@ -1,0 +1,177 @@
+﻿@using System.Text.Json
+@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+@using WatchWorld.BlazorUI.ResponseDTO.IndividualWatchResponseDto
+@using WatchWorld.BlazorUI.ResponseDTO.WatchResponseDTO
+@using WatchWorld.BlazorUI.Services
+
+<div class="ww-dialog">
+    @if (isLoadingCatalog)
+    {
+        <div class="ww-state">Indlæser urmodeller …</div>
+    }
+    else
+    {
+        <div class="ww-dialog__field">
+            <label for="addwatch-model">Urmodel</label>
+            <select id="addwatch-model" @bind="selectedWatchId">
+                @foreach (var watch in catalog)
+                {
+                    <option value="@watch.Id">@Brands.FullName(watch) - @watch.ModelNumber</option>
+                }
+            </select>
+        </div>
+
+        <div class="ww-dialog__row">
+            <div class="ww-dialog__field">
+                <label for="addwatch-weargrade">Slidgrad</label>
+                <select id="addwatch-weargrade" @bind="wearGrade">
+                    <option value="0">Som nyt</option>
+                    <option value="1">Minimal slitage</option>
+                    <option value="2">Brugt</option>
+                    <option value="3">Velbrugt</option>
+                    <option value="4">Hårdt brugt</option>
+                </select>
+            </div>
+            <div class="ww-dialog__field">
+                <label for="addwatch-age">Alder (år)</label>
+                <input id="addwatch-age" type="number" min="0" @bind="age" />
+            </div>
+        </div>
+
+        <div class="ww-dialog__field">
+            <label for="addwatch-value">Estimeret værdi (kr.)</label>
+            <input id="addwatch-value" type="number" min="0" @bind="estimatedValue" />
+        </div>
+
+        <div class="ww-dialog__field">
+            <label for="addwatch-note">Note</label>
+            <textarea id="addwatch-note" rows="3" @bind="note" placeholder="Tilstand, medfølgende tilbehør, osv."></textarea>
+        </div>
+
+        <div class="ww-dialog__field">
+            <label for="addwatch-image">Billede-URL</label>
+            <input id="addwatch-image" type="url" @bind="imageUrl" placeholder="https://…" />
+        </div>
+
+        @if (errorMessage is not null)
+        {
+            <div class="ww-dialog__notice ww-dialog__notice--error">@errorMessage</div>
+        }
+
+        <div class="ww-dialog__actions">
+            <RadzenButton Text="Annuller" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
+                          Click="@(() => DialogService.Close(null))" Disabled="@isSubmitting" />
+            <RadzenButton Text="@(isSubmitting ? "Tilføjer..." : "Tilføj ur")" ButtonStyle="ButtonStyle.Primary"
+                          class="ww-btn-gold" Click="@Submit" Disabled="@isSubmitting" />
+        </div>
+    }
+</div>
+
+@code {
+    [Inject] private DialogService DialogService { get; set; } = default!;
+    [Inject] private WatchWorldApiClient ApiClient { get; set; } = default!;
+    [Inject] private CurrentUserState CurrentUser { get; set; } = default!;
+    [Inject] private BrandCatalogHelper Brands { get; set; } = default!;
+
+    private bool isLoadingCatalog = true;
+    private List<WatchDto> catalog = new();
+    private Guid selectedWatchId;
+    private int wearGradeNumber = 0;
+    private JsonElement wearGrade;
+    private int age;
+    private decimal estimatedValue;
+    private string note = string.Empty;
+    private string imageUrl = string.Empty;
+    private bool isSubmitting;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Brands.EnsureLoadedAsync();
+        catalog = await ApiClient.GetWatchesAsync(CancellationToken.None);
+        selectedWatchId = catalog.FirstOrDefault()?.Id ?? Guid.Empty;
+        isLoadingCatalog = false;
+    }
+
+    private async Task Submit()
+    {
+        errorMessage = null;
+
+        if (CurrentUser.User is null)
+        {
+            errorMessage = "Du skal være logget ind.";
+            return;
+        }
+
+        if (selectedWatchId == Guid.Empty)
+        {
+            errorMessage = "Vælg venligst en urmodel.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(imageUrl))
+        {
+            errorMessage = "Tilføj venligst en billede-URL.";
+            return;
+        }
+
+        isSubmitting = true;
+
+        var request = new CreateIndividualWatchRequestDto
+        {
+            UserId = CurrentUser.User.Id,
+            SpecificWatchId = selectedWatchId,
+            WearGrade = wearGrade,
+            Age = age,
+            Note = note,
+            EstimatedValue = estimatedValue,
+            // Fixed 1200x1200 placeholder dimensions pending the planned image
+            // rework - HighResImage.Validate just needs values over 500px.
+            Picture = new List<CreateImageRequestDto>
+                {
+                    new() { Url = imageUrl, Width = 1200, Height = 1200 }
+                }
+        };
+
+        var (success, error) = await ApiClient.CreateIndividualWatchAsync(request, CancellationToken.None);
+
+        isSubmitting = false;
+
+        if (!success)
+        {
+            errorMessage = error ?? "Kunne ikke tilføje uret. Prøv igen.";
+            return;
+        }
+
+        DialogService.Close(true);
+    }
+
+
+    private void OnWearGradeChanged(JsonElement wearGrade)
+    {
+		var wearGradeString = wearGrade.GetString();
+        switch (wearGradeString)
+        {
+            case "Som nyt":
+                wearGradeNumber = 0;
+                break;
+            case "Minimal slitage":
+				wearGradeNumber = 1;
+                break;
+			case "Brugt":
+				wearGradeNumber = 2;
+				break;
+			case "Velbrugt":    
+                wearGradeNumber = 3;
+				break;
+			case "Hårdt brugt":
+				wearGradeNumber = 4;
+				break;
+			default:
+				wearGradeNumber = 0;
+				break;
+        }
+	}
+}

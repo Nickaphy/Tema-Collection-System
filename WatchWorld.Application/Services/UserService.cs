@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using System.Diagnostics;
+using FluentResults;
 using WatchWorld.Application.Commands.UserCommands;
 using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Application.Ports.OutBound;
@@ -41,6 +42,41 @@ public class UserService : IUserUseCase
         }
     }
 
+    public async Task<Result<User>> LogInAsync(LogInCommand command, CancellationToken ct = default)
+    {
+        try
+        {
+            if (command.password.IsWhiteSpace() || command.password == null)
+                return Result.Fail("Forkert adgangskode");
+
+            var name = $"{command.firstName} {command.lastName}";
+            
+            // Validate the password against the policy before attempting to log in to prevent injections
+            var validator = new PasswordValidatorService();
+            validator.ValidateAndThrow(command.password, command.email, name);
+            var user = await _userRepository.GetUserByLoginCredentialsAsync(command.email, name, command.password, ct);
+            if (user.IsFailed)
+            {
+                return Result.Fail("Denne bruger er ikke oprettet endnu, hvis du allerede er oprettet -- kontakt support");
+            }
+            return Result.Ok(user.Value);
+        }
+        catch (DomainException ex)
+        {
+            return ex switch
+            {
+                UserInvalidInputException => Result.Fail("Et input var ikke korrekt. " + ex.Message),
+                ValidationException => Result.Fail("Der er sket en valideringsfejl. " + ex.Message),
+                _ => Result.Fail("Der er sket en uforventet fejl " + ex.Message) // Fallback catch-all for base DomainException
+            };
+        }
+        catch (Exception ex) // Catch-all for any other unexpected exceptions (typically SQL or Infrastructure exceptions)
+        {
+            Debug.WriteLine($"Infrastructure Failure: {ex.Message}");
+            return Result.Fail("An unexpected system error occurred." + ex.Message);
+        }
+    }
+
     public async Task<Result<User>> CreateUserAsync(CreateUserCommand command, CancellationToken ct = default)
     {
         var existingUser = await _userRepository.GetAllUsersAsync(ct);
@@ -75,7 +111,7 @@ public class UserService : IUserUseCase
             }
             catch (Exception ex) // Catch-all for any other unexpected exceptions (typically SQL or Infrastructure exceptions)
             {
-                System.Diagnostics.Debug.WriteLine($"Infrastructure Failure: {ex.Message}");
+                Debug.WriteLine($"Infrastructure Failure: {ex.Message}");
                 return Result.Fail("An unexpected system error occurred." + ex.Message);
             }
         }
@@ -125,7 +161,7 @@ public class UserService : IUserUseCase
             }
             catch (Exception ex) // Catch-all for any other unexpected exceptions (typically SQL or Infrastructure exceptions)
             {
-                System.Diagnostics.Debug.WriteLine($"Infrastructure Failure: {ex.Message}");
+                Debug.WriteLine($"Infrastructure Failure: {ex.Message}");
                 return Result.Fail("An unexpected system error occurred." + ex.Message);
             }
         }
@@ -176,7 +212,7 @@ public class UserService : IUserUseCase
         }
         catch (Exception ex) // Catch-all for any other unexpected exceptions (typically SQL or Infrastructure exceptions)
         {
-            System.Diagnostics.Debug.WriteLine($"Infrastructure Failure: {ex.Message}");
+            Debug.WriteLine($"Infrastructure Failure: {ex.Message}");
             return Result.Fail("An unexpected system error occurred." + ex.Message);
         }
 

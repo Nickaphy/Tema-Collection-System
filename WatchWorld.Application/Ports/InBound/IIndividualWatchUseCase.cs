@@ -8,6 +8,7 @@ namespace WatchWorld.Application.Ports.InBound
     {
         Task<Result<IndividualWatch>> CreateIndividualWatchAsync(CreateIndividualWatchCommand command, CancellationToken cancellationToken = default);
         Task<Result<IEnumerable<IndividualWatch>>> GetAllIndividualWatchesAsync(CancellationToken ct = default);
+        Task<Result<IEnumerable<IndividualWatch>>> GetIndividualWatchesByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
         Task<Result<IndividualWatch>> GetIndividualWatchByIdAsync(Guid id, CancellationToken cancellationToken = default);
         Task<Result> DeleteIndividualWatchAsync(DeleteIndividualWatchCommand command, CancellationToken cancellationToken = default);
         Task<Result<IndividualWatch>> UpdateIndividualWatchAsync(UpdateIndividualWatchCommand command, CancellationToken cancellationToken = default);

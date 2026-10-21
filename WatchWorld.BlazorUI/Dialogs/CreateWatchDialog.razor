@@ -1,0 +1,234 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+@using WatchWorld.BlazorUI.ResponseDTO.WatchResponseDTO
+@using WatchWorld.BlazorUI.Services
+
+<div class="ww-dialog ww-dialog--wide">
+    @if (CurrentUser.User is null || !CurrentUser.User.IsAdmin)
+    {
+        <p class="ww-empty">Kun administratorer kan oprette urmodeller.</p>
+        <div class="ww-dialog__actions">
+            <RadzenButton Text="Luk" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text" Click="@(() => DialogService.Close(null))" />
+        </div>
+    }
+    else
+    {
+        <div class="ww-dialog__row">
+            <div class="ww-dialog__field">
+                <label for="watch-brand">Mærke</label>
+                <select id="watch-brand" @bind="brandId">
+                    <option value="@Guid.Empty">Vælg mærke …</option>
+                    @foreach (var b in Brands.All)
+                    {
+                        <option value="@b.Id">@b.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="ww-dialog__field">
+                <label for="watch-name">Navn</label>
+                <input id="watch-name" type="text" @bind="name" />
+            </div>
+        </div>
+
+        <div class="ww-dialog__row">
+            <div class="ww-dialog__field">
+                <label for="watch-model">Modelnummer</label>
+                <input id="watch-model" type="text" @bind="modelNumber" />
+            </div>
+            <div class="ww-dialog__field">
+                <label for="watch-style">Stil</label>
+                <input id="watch-style" type="text" @bind="style" placeholder="f.eks. Dykkerur, Pilotur …" />
+            </div>
+        </div>
+
+        <div class="ww-dialog__row">
+            <div class="ww-dialog__field">
+                <label for="watch-casesize">Kassestørrelse (mm)</label>
+                <input id="watch-casesize" type="number" min="0" @bind="caseSize" />
+            </div>
+            <div class="ww-dialog__field">
+                <label for="watch-price">Nypris (kr.)</label>
+                <input id="watch-price" type="number" min="0" @bind="originalPrice" />
+            </div>
+            <div class="ww-dialog__field">
+                <label for="watch-year">Udgivelsesår</label>
+                <input id="watch-year" type="date" @bind="releaseYear" />
+            </div>
+        </div>
+
+        <div class="ww-dialog__row">
+            <div class="ww-dialog__field">
+                <label for="watch-caseshape">Kassefacon</label>
+                <select id="watch-caseshape" @bind="caseShape">
+                    @foreach (var option in EnumDisplayConverter.CaseShapeOptions)
+                    {
+                        <option value="@option.Value">@option.Label</option>
+                    }
+                </select>
+            </div>
+            <div class="ww-dialog__field">
+                <label for="watch-casematerial">Kassemateriale</label>
+                <select id="watch-casematerial" @bind="caseMaterial">
+                    @foreach (var option in EnumDisplayConverter.CaseMaterialOptions)
+                    {
+                        <option value="@option.Value">@option.Label</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="ww-dialog__row">
+            <div class="ww-dialog__field">
+                <label for="watch-movement">Værk</label>
+                <select id="watch-movement" @bind="movementType">
+                    @foreach (var option in EnumDisplayConverter.MovementTypeOptions)
+                    {
+                        <option value="@option.Value">@option.Label</option>
+                    }
+                </select>
+            </div>
+            <div class="ww-dialog__field">
+                <label for="watch-gender">Køn</label>
+                <select id="watch-gender" @bind="gender">
+                    @foreach (var option in EnumDisplayConverter.GenderOptions)
+                    {
+                        <option value="@option.Value">@option.Label</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="ww-dialog__field">
+            <label>Remtype (vælg én eller flere)</label>
+            <div class="ww-checkbox-grid">
+                @foreach (var option in EnumDisplayConverter.BraceletTypeOptions)
+                {
+                    <label class="ww-facet-option">
+                        <input type="checkbox" checked="@selectedBraceletTypes.Contains(option.Value)"
+                               @onchange="@(() => ToggleBraceletType(option.Value))" />
+                        <span>@option.Label</span>
+                    </label>
+                }
+            </div>
+        </div>
+
+        <div class="ww-dialog__field">
+            <label for="watch-description">Beskrivelse</label>
+            <textarea id="watch-description" rows="4" @bind="description"></textarea>
+        </div>
+
+        <div class="ww-dialog__field">
+            <label for="watch-images">Billede-URLs (én pr. linje)</label>
+            <textarea id="watch-images" rows="2" @bind="imageUrlsText" placeholder="https://…"></textarea>
+        </div>
+
+        @if (errorMessage is not null)
+        {
+            <div class="ww-dialog__notice ww-dialog__notice--error">@errorMessage</div>
+        }
+
+        <div class="ww-dialog__actions">
+            <RadzenButton Text="Annuller" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
+                          Click="@(() => DialogService.Close(null))" Disabled="@isSubmitting" />
+            <RadzenButton Text="@(isSubmitting ? "Opretter..." : "Opret urmodel")" ButtonStyle="ButtonStyle.Primary"
+                          class="ww-btn-gold" Click="@Submit" Disabled="@isSubmitting" />
+        </div>
+    }
+</div>
+
+
+
+@code {
+    [Inject] private DialogService DialogService { get; set; } = default!;
+    [Inject] private WatchWorldApiClient ApiClient { get; set; } = default!;
+    [Inject] private CurrentUserState CurrentUser { get; set; } = default!;
+    [Inject] private BrandCatalogHelper Brands { get; set; } = default!;
+
+    private Guid brandId;
+    private string name = string.Empty;
+    private string modelNumber = string.Empty;
+    private string style = string.Empty;
+    private int caseSize;
+    private decimal originalPrice;
+    private DateTime? releaseYear = DateTime.Today;
+    private int caseShape;
+    private int caseMaterial;
+    private int movementType;
+    private int gender;
+    private readonly HashSet<int> selectedBraceletTypes = new();
+    private string description = string.Empty;
+    private string imageUrlsText = string.Empty;
+
+    private bool isSubmitting;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync() => await Brands.EnsureLoadedAsync();
+
+    private void ToggleBraceletType(int value)
+    {
+        if (!selectedBraceletTypes.Add(value))
+            selectedBraceletTypes.Remove(value);
+    }
+
+    private async Task Submit()
+    {
+        errorMessage = null;
+
+        if (brandId == Guid.Empty || string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(modelNumber))
+        {
+            errorMessage = "Udfyld venligst mærke, navn og modelnummer.";
+            return;
+        }
+
+        if (releaseYear is null)
+        {
+            errorMessage = "Vælg venligst et udgivelsesår.";
+            return;
+        }
+
+        var imageUrls = imageUrlsText
+                        .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                        .ToList();
+
+        if (imageUrls.Count == 0)
+        {
+            errorMessage = "Tilføj venligst mindst ét billede.";
+            return;
+        }
+
+        isSubmitting = true;
+
+        var request = new CreateWatchRequestDto
+        {
+            BrandId = brandId,
+            Name = name,
+            ModelNumber = modelNumber,
+            CaseSize = caseSize,
+            CaseShapeEnum = caseShape,
+            CaseMaterialEnum = caseMaterial,
+            MovementTypeEnum = movementType,
+            Style = style,
+            OriginalPrice = originalPrice,
+            GenderEnum = gender,
+            ReleaseYear = DateOnly.FromDateTime(releaseYear.Value),
+            BraceletTypeEnum = selectedBraceletTypes.ToList(),
+            Description = description,
+            // Fixed 1200x1200 placeholder dimensions pending the planned image
+            // rework, same as AddWatchDialog.
+            Images = imageUrls.Select(url => new CreateImageRequestDto { Url = url, Width = 1200, Height = 1200 }).ToList()
+        };
+
+        var (success, error) = await ApiClient.CreateWatchAsync(request, CancellationToken.None);
+
+        isSubmitting = false;
+
+        if (!success)
+        {
+            errorMessage = error ?? "Kunne ikke oprette urmodellen. Prøv igen.";
+            return;
+        }
+
+        DialogService.Close(true);
+    }
+}

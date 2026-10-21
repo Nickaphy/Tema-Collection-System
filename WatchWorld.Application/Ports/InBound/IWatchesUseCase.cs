@@ -8,6 +8,8 @@ public interface IWatchesUseCase
 {
     Task<Result<Watches>> CreateWatchAsync(CreateWatchCommand command, CancellationToken cancellationToken = default);
     Task<Result<IEnumerable<Watches?>>> GetAllWatchesAsync(CancellationToken ct = default);
+    Task<Result<IEnumerable<Watches?>>> GetAllWatchesByBrandIdAsync(Guid brandId, CancellationToken ct = default);
+    Task<Result<Watches>> GetWatchByModelNumberAsync(string modelNumber, CancellationToken ct = default);
     Task<Result<Watches>> GetWatchByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Result> DeleteWatchAsync(DeleteWatchCommand command, CancellationToken ct = default);
     Task<Result<Watches>> UpdateWatchAsync(UpdateWatchCommand command, CancellationToken ct = default);

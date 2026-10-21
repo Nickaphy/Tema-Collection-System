@@ -32,19 +32,29 @@ public class SqlServerIndividualWatchRepository : IIndividualWatchRepository
             .FirstOrDefaultAsync(w => w.Id == id, ct);
         if (watch == null)
             {
-                return Result.Fail<IndividualWatch>("No individual watch found.");
+                return Result.Fail("No individual watch found.");
             }
         await _context.SaveChangesAsync(ct);
         return Result.Ok(watch);
     }
-    
+
+    public async Task<Result<IEnumerable<IndividualWatch>>> GetIndividualWatchesByUserIdAsync(Guid userId, CancellationToken ct = default)
+    {
+        var watches = await _context.IndividualWatches
+            .Where(w => w.UserId == userId)
+            .Include(w => w.SpecificWatch)
+            .Include(w => w.Picture)
+            .ToListAsync(ct);
+        return Result.Ok(watches.AsEnumerable());
+    }
+
 
     public async Task<Result<IndividualWatch>> CreateIndividualWatchAsync(IndividualWatch watch, CancellationToken ct = default)
     {
         var result = await _context.IndividualWatches.AddAsync(watch, ct);
         if (result == null)
         {
-            return Result.Fail<IndividualWatch>("Failed to create watch.");
+            return Result.Fail("Failed to create watch.");
         }
         await _context.SaveChangesAsync(ct);
         return Result.Ok(watch);

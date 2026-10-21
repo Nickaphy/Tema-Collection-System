@@ -1,0 +1,73 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.Dialogs
+@inject DialogService DialogService
+@inject NavigationManager Navigation
+@implements IDisposable
+
+<header class="ww-header">
+    <div class="ww-header__inner">
+        <a href="/" class="ww-logo" aria-label="WatchWorld forside">
+            <span class="ww-logo__mark">W</span>
+            <span class="ww-logo__word">WatchWorld</span>
+        </a>
+
+        <nav class="ww-nav" aria-label="Hovedmenu">
+            <a href="/wiki">Wiki</a>
+            <a href="/maerker">Mærker</a>
+            <a href="/udlaan">Udlån</a>
+            <a href="/forum">Forum</a>
+            <a href="/om">Om</a>
+        </nav>
+
+        <div class="ww-search">
+            <RadzenIcon Icon="search" class="ww-search__icon" />
+            <input type="text"
+                   value="@searchQuery"
+                   @oninput="OnSearchInput"
+                   @onfocusin="@(() => showResults = !string.IsNullOrWhiteSpace(searchQuery))"
+                   @onfocusout="OnSearchFocusOut"
+                   placeholder="Søg efter ure, mærker, modeller …"
+                   aria-label="Søg"
+                   autocomplete="off" />
+
+            @if (showResults)
+            {
+                <div class="ww-search__results">
+                    @if (searchResults.Count > 0)
+                    {
+                        @foreach (var result in searchResults)
+                        {
+                            <a class="ww-search__result" href="@($"/wiki/{result.ModelNumber}")">
+                                <span class="ww-search__result-name">@result.Name</span>
+                                <span class="ww-search__result-model">@result.ModelNumber</span>
+                            </a>
+                        }
+                    }
+                    else if (!string.IsNullOrWhiteSpace(searchQuery))
+                    {
+                        <div class="ww-search__empty">Ingen ure matcher "@searchQuery"</div>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="ww-header__actions">
+            @if (CurrentUser.User is null)
+            {
+                <RadzenButton Text="Log ind" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
+                              Click="@OpenLoginDialog" class="ww-btn-text" />
+                <RadzenButton Text="Opret bruger" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Filled"
+                              Click="@OpenRegisterDialog" class="ww-btn-gold" />
+            }
+            else
+            {
+                <RadzenButton Text="Log ud" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
+                              Click="@LogOut" class="ww-btn-text" />
+                <a href="@($"/bruger/{CurrentUser.User.Id}")" class="ww-user-icon" aria-label="Min profil" title="Min profil">
+                    <RadzenIcon Icon="person" />
+                </a>
+            }
+        </div>
+    </div>
+</header>

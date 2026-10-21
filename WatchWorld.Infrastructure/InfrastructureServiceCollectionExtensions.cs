@@ -20,6 +20,7 @@ namespace WatchWorld.Infrastructure
             services.AddScoped<IBorrowRepository, SqlServerBorrowRepository>();
             services.AddScoped<IUserRatingRepository, SqlServerUserRatingRepository>();
             services.AddScoped<IImageRepository, SqlServerHighResImageRepository>();
+            services.AddScoped<IBrandRepository, SqlServerBrandRepository>();
 
             return services;
         }

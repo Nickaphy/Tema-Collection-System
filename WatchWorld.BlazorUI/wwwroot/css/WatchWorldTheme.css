@@ -1,7 +1,14 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap');
+﻿/* ==========================================================================
+   WatchWorld theme
+   Load AFTER Radzen's base theme stylesheet, so these overrides win.
+   Also add a Radzen icon font link (Material Symbols Outlined or Material
+   Icons, depending on your Radzen version - inspect a broken RadzenIcon's
+   class in dev tools to tell which) to index.html's <head>.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap');
 
 :root {
-    /* core colours */
     --ww-navy-900: #0A1B30;
     --ww-navy-800: #0F2540;
     --ww-navy-100: #E7ECF3;
@@ -11,9 +18,7 @@
     --ww-surface: #FFFFFF;
     --ww-text: #14202E;
     --ww-text-muted: #5B6B7D;
-    --ww-border: #E1E5EB;
-
-    /*Radzen theme variable overrides*/ 
+    --ww-border: #D6DCE4;
     --rz-primary: var(--ww-navy-800);
     --rz-primary-light: var(--ww-navy-100);
     --rz-primary-dark: var(--ww-navy-900);
@@ -41,15 +46,18 @@
         font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
     }
 
-    .ww-page a {
-        color: inherit;
-        text-decoration: none;
-    }
+/* :where() keeps this reset at zero specificity. Without it, `.ww-page a` (0,1,1) beat any
+   single-class link style (0,1,0) - e.g. .ww-substrip__link (gold) and .ww-user-icon (white
+   icon on navy) silently fell back to the inherited colour. */
+:where(.ww-page) a {
+    color: inherit;
+    text-decoration: none;
+}
 
-    .ww-page img {
-        max-width: 100%;
-        display: block;
-    }
+.ww-page img {
+    max-width: 100%;
+    display: block;
+}
 
 @media (prefers-reduced-motion: reduce) {
     .ww-page * {
@@ -57,6 +65,10 @@
         animation: none !important;
     }
 }
+
+/* ---------------------------------------------------------------------- */
+/* Header                                                                  */
+/* ---------------------------------------------------------------------- */
 
 .ww-header {
     background: var(--ww-surface);
@@ -104,18 +116,27 @@
     flex-shrink: 0;
 }
 
-    .ww-nav a {
-        font-weight: 500;
-        font-size: 0.95rem;
-        color: var(--ww-text-muted);
+.ww-header .ww-nav a {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--ww-text-muted);
+}
+
+    /* !important here specifically because something with higher specificity -
+   almost certainly Radzen's base theme's own a:hover rule - was overriding
+   this with white text on the white header, making nav links disappear on
+   hover. Raising our own specificity (.ww-header .ww-nav a) wasn't enough on
+   its own, so this forces our color to win regardless of load order. */
+    .ww-header .ww-nav a:hover,
+    .ww-header .ww-nav a:focus-visible {
+        color: var(--ww-navy-900) !important;
     }
 
-        .ww-nav a:hover,
-        .ww-nav a:focus-visible {
-            color: var(--ww-navy-900);
-        }
-
+/* position: relative is required here - it's what anchors the absolutely
+   positioned .ww-search__results dropdown below, instead of the dropdown
+   floating relative to the whole page. */
 .ww-search {
+    position: relative;
     flex: 1;
     display: flex;
     align-items: center;
@@ -141,6 +162,54 @@
     color: var(--ww-text);
 }
 
+.ww-search__results {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: var(--ww-surface);
+    border: 1px solid var(--ww-border);
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(10, 27, 48, 0.12);
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 30;
+}
+
+.ww-search__result {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.6rem 0.85rem;
+    border-bottom: 1px solid var(--ww-border);
+}
+
+    .ww-search__result:last-child {
+        border-bottom: none;
+    }
+
+    .ww-search__result:hover,
+    .ww-search__result:focus-visible {
+        background: var(--ww-navy-100);
+    }
+
+.ww-search__result-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ww-navy-900);
+}
+
+.ww-search__result-model {
+    font-size: 0.75rem;
+    color: var(--ww-text-muted);
+}
+
+.ww-search__empty {
+    padding: 0.6rem 0.85rem;
+    font-size: 0.8rem;
+    color: var(--ww-text-muted);
+}
+
 .ww-header__actions {
     display: flex;
     align-items: center;
@@ -164,6 +233,42 @@
     color: var(--ww-text);
     font-weight: 500;
 }
+
+.ww-header__greeting {
+    font-size: 0.85rem;
+    color: var(--ww-text-muted);
+    margin-right: 0.25rem;
+}
+
+.ww-login-toggle {
+    display: flex;
+    gap: 0.25rem;
+    background: var(--ww-navy-100);
+    border-radius: 999px;
+    padding: 0.2rem;
+    align-self: flex-start;
+}
+
+    .ww-login-toggle button {
+        border: none;
+        background: transparent;
+        padding: 0.35rem 1rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 500;
+        color: var(--ww-text-muted);
+        cursor: pointer;
+    }
+
+        .ww-login-toggle button.active {
+            background: var(--ww-navy-900);
+            color: #fff;
+        }
+
+/* ---------------------------------------------------------------------- */
+/* Wiki strip                                                              */
+/* ---------------------------------------------------------------------- */
 
 .ww-substrip {
     background: var(--ww-navy-900);
@@ -203,6 +308,10 @@
         text-decoration: underline;
     }
 
+/* ---------------------------------------------------------------------- */
+/* Layout grid                                                             */
+/* ---------------------------------------------------------------------- */
+
 .ww-main {
     max-width: 1280px;
     margin: 0 auto;
@@ -231,6 +340,10 @@
         flex-basis: 100%;
     }
 }
+
+/* ---------------------------------------------------------------------- */
+/* Hero                                                                     */
+/* ---------------------------------------------------------------------- */
 
 .ww-hero.rz-card {
     border: 1px solid var(--ww-border);
@@ -282,24 +395,33 @@
     max-width: 62ch;
 }
 
-.ww-hero__byline {
+/* Each fact is its own flex item (side by side); span/strong stack inside
+   each one (label above value). The markup also has a literal space between
+   </span> and <strong> as a fallback in case this rule doesn't load. */
+.ww-hero__facts {
     display: flex;
-    align-items: center;
-    gap: 0.65rem;
+    gap: 2rem;
     margin: 0 1.5rem 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--ww-border);
 }
 
-.ww-byline__name {
-    font-weight: 600;
-    font-size: 0.9rem;
-}
+    .ww-hero__facts span {
+        display: block;
+        font-size: 0.75rem;
+        color: var(--ww-text-muted);
+        margin-bottom: 0.15rem;
+    }
 
-.ww-byline__time {
-    font-size: 0.8rem;
-    color: var(--ww-text-muted);
-}
+    .ww-hero__facts strong {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.9rem;
+        color: var(--ww-navy-900);
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Listings                                                                 */
+/* ---------------------------------------------------------------------- */
 
 .ww-section-head {
     display: flex;
@@ -396,10 +518,7 @@
     line-height: 1.3;
 }
 
-.ww-listing-card__lender {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
+.ww-listing-card__detail {
     font-size: 0.8rem;
     color: var(--ww-text-muted);
     margin-bottom: 0.6rem;
@@ -417,7 +536,8 @@
     color: var(--ww-navy-900);
 }
 
-.ww-listing-card__rating {
+.ww-listing-card__cta {
+    font-weight: 600;
     color: var(--ww-gold-600);
 }
 
@@ -429,6 +549,10 @@
     color: var(--ww-navy-900);
     border-bottom: 1px solid var(--ww-gold-500);
 }
+
+/* ---------------------------------------------------------------------- */
+/* Sidebar                                                                  */
+/* ---------------------------------------------------------------------- */
 
 .ww-stats-panel.rz-card,
 .ww-recent-panel.rz-card {
@@ -506,19 +630,1088 @@
     color: var(--ww-text-muted);
 }
 
-.ww-avatar.rz-avatar {
-    background: var(--ww-navy-800);
-    color: #fff;
+/* ---------------------------------------------------------------------- */
+/* Dialogs (Login / Register)                                              */
+/* ---------------------------------------------------------------------- */
+
+.rz-dialog {
+    border-top: 3px solid var(--ww-gold-500);
+    font-family: 'Source Serif 4', Georgia, serif;
+}
+
+.ww-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.25rem 0.25rem 0.5rem;
+}
+
+.ww-dialog__row {
+    display: flex;
+    gap: 1rem;
+}
+
+    .ww-dialog__row .ww-dialog__field {
+        flex: 1;
+    }
+
+.ww-dialog__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+    .ww-dialog__field label {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--ww-navy-900);
+    }
+
+    .ww-dialog__field input {
+        border: 1px solid var(--ww-border);
+        border-radius: 4px;
+        padding: 0.5rem 0.65rem;
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 0.9rem;
+        color: var(--ww-text);
+    }
+
+        .ww-dialog__field input:focus-visible {
+            outline: 2px solid var(--ww-navy-800);
+            outline-offset: 1px;
+        }
+
+.ww-dialog__notice {
+    font-size: 0.85rem;
+    color: var(--ww-text-muted);
+    background: var(--ww-navy-100);
+    border-radius: 4px;
+    padding: 0.6rem 0.75rem;
+}
+
+.ww-dialog__notice--error {
+    color: #9B3B3B;
+    background: #FBEAEA;
+}
+
+.ww-dialog__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.ww-dialog--wide {
+    max-width: 600px;
+}
+
+.ww-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.2rem;
+    border: 1px solid var(--ww-border);
+    border-radius: 4px;
+    padding: 0.75rem;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+    .ww-checkbox-grid .ww-facet-option {
+        font-size: 0.8rem;
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Loading / error / empty states                                          */
+/* ---------------------------------------------------------------------- */
+
+.ww-state {
+    padding: 4rem 1rem;
+    text-align: center;
+    color: var(--ww-text-muted);
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.ww-state--error {
+    color: #9B3B3B;
+}
+
+.ww-empty {
+    color: var(--ww-text-muted);
+    font-size: 0.9rem;
+    padding: 1rem 0;
+}
+
+.ww-empty--tight {
+    padding: 0.25rem 0;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Wiki list page                                                           */
+/* ---------------------------------------------------------------------- */
+
+.ww-wiki {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+.ww-wiki__header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    margin-bottom: 0.3rem;
+}
+
+.ww-wiki__header p {
+    color: var(--ww-text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.ww-wiki__toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.ww-wiki__search {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--ww-surface);
+    border: 1px solid var(--ww-border);
+    border-radius: 6px;
+    padding: 0.65rem 1rem;
+    max-width: 480px;
+    flex: 1;
+    min-width: 240px;
+}
+
+.ww-wiki__toolbar .ww-wiki__search {
+    margin-bottom: 0;
+}
+
+.ww-wiki__search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1rem;
+    color: var(--ww-text);
+}
+
+.ww-wiki__layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .ww-wiki__layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ww-wiki__sidebar {
+    border: 1px solid var(--ww-border);
+    border-top: 3px solid var(--ww-gold-500);
+    border-radius: 6px;
+    padding: 1.25rem;
+    background: var(--ww-surface);
+}
+
+.ww-facet-group {
+    margin-bottom: 1.25rem;
+}
+
+    .ww-facet-group:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .ww-facet-group h3 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--ww-navy-900);
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--ww-gold-500);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+.ww-facet-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--ww-text);
+    padding: 0.25rem 0.4rem;
+    margin: 0 -0.4rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    .ww-facet-option.checked {
+        background: var(--ww-navy-100);
+        color: var(--ww-navy-900);
+        font-weight: 600;
+    }
+
+    .ww-facet-option input[type="checkbox"] {
+        accent-color: var(--ww-navy-800);
+    }
+
+    .ww-facet-option span:first-of-type {
+        flex: 1;
+    }
+
+.ww-facet-count {
+    color: var(--ww-text-muted);
+    font-size: 0.75rem;
+}
+
+.ww-facet-empty {
+    font-size: 0.8rem;
+    color: var(--ww-text-muted);
+}
+
+.ww-facet-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .ww-facet-range input {
+        width: 0;
+        flex: 1;
+        border: 1px solid var(--ww-border);
+        border-radius: 4px;
+        padding: 0.35rem 0.5rem;
+        font-size: 0.85rem;
+        font-family: 'Source Serif 4', Georgia, serif;
+    }
+
+    .ww-facet-range span {
+        color: var(--ww-text-muted);
+    }
+
+.ww-facet-clear {
+    width: 100%;
+    border: 1px solid var(--ww-navy-900);
+    background: transparent;
+    color: var(--ww-navy-900);
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: 0.8rem;
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: pointer;
 }
 
-.ww-avatar--sm.rz-avatar {
-    width: 22px;
-    height: 22px;
-    font-size: 0.65rem;
+.ww-wiki__results-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--ww-text-muted);
 }
+
+    .ww-wiki__results-head select {
+        border: 1px solid var(--ww-border);
+        border-radius: 4px;
+        padding: 0.4rem 0.6rem;
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 0.85rem;
+        color: var(--ww-text);
+        background: var(--ww-surface);
+    }
+
+.ww-wiki__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+.ww-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--ww-navy-100);
+    color: var(--ww-navy-900);
+    border: none;
+    border-radius: 999px;
+    padding: 0.3rem 0.4rem 0.3rem 0.75rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+    .ww-chip .rzi {
+        font-size: 0.9rem;
+    }
+
+.ww-wiki__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.ww-wiki-card .ww-listing-card__image {
+    height: 180px;
+}
+
+.ww-wiki__more {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Wiki detail page                                                         */
+/* ---------------------------------------------------------------------- */
+
+.ww-detail {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+.ww-detail__breadcrumb {
+    font-size: 0.85rem;
+    color: var(--ww-text-muted);
+    margin-bottom: 1.25rem;
+}
+
+    .ww-detail__breadcrumb a {
+        color: var(--ww-navy-900);
+        font-weight: 600;
+    }
+
+    .ww-detail__breadcrumb span:first-of-type {
+        margin: 0 0.4rem;
+    }
+
+.ww-detail__main-image {
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--ww-navy-900);
+    margin-bottom: 0.75rem;
+}
+
+    .ww-detail__main-image img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+    }
+
+.ww-detail__thumbs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+}
+
+.ww-detail__thumb {
+    flex: 0 0 72px;
+    height: 72px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 0;
+    cursor: pointer;
+    background: none;
+}
+
+    .ww-detail__thumb.active {
+        border-color: var(--ww-gold-500);
+    }
+
+    .ww-detail__thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.ww-detail__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    margin-bottom: 0.2rem;
+}
+
+.ww-detail__subtitle {
+    color: var(--ww-text-muted);
+    font-family: 'Space Grotesk', sans-serif;
+    margin-bottom: 1.25rem;
+}
+
+.ww-detail__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--ww-border);
+    border-bottom: 1px solid var(--ww-border);
+    margin-bottom: 1.5rem;
+}
+
+    .ww-detail__facts span {
+        display: block;
+        font-size: 0.75rem;
+        color: var(--ww-text-muted);
+        margin-bottom: 0.15rem;
+    }
+
+    .ww-detail__facts strong {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.9rem;
+        color: var(--ww-navy-900);
+    }
+
+.ww-detail__description {
+    color: var(--ww-text);
+    max-width: 70ch;
+    margin-bottom: 2rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Navbar user icon (logged in state)                                      */
+/* ---------------------------------------------------------------------- */
+
+.ww-user-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--ww-navy-900);
+    color: #fff;
+}
+
+    .ww-user-icon:hover,
+    .ww-user-icon:focus-visible {
+        background: var(--ww-gold-500);
+        color: var(--ww-navy-900);
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Om os                                                                    */
+/* ---------------------------------------------------------------------- */
+
+.ww-about {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+    .ww-about h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--ww-navy-900);
+        margin-bottom: 1.25rem;
+        border-bottom: 3px solid var(--ww-gold-500);
+        padding-bottom: 0.75rem;
+    }
+
+    .ww-about h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--ww-navy-900);
+        margin: 2rem 0 0.75rem;
+    }
+
+    .ww-about p {
+        color: var(--ww-text);
+        margin-bottom: 1rem;
+    }
+
+    .ww-about a {
+        color: var(--ww-gold-600);
+        font-weight: 600;
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Profile                                                                  */
+/* ---------------------------------------------------------------------- */
+
+.ww-profile {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+.ww-profile__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.ww-profile__avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--ww-navy-900);
+    border: 3px solid var(--ww-gold-500);
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ww-profile__header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+}
+
+.ww-profile__city {
+    color: var(--ww-text-muted);
+    font-size: 0.9rem;
+}
+
+.ww-profile__note {
+    color: var(--ww-text);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    padding: 0.85rem 1rem;
+    background: var(--ww-navy-100);
+    border-radius: 6px;
+}
+
+.ww-profile__card {
+    border: 1px solid var(--ww-border);
+    border-top: 3px solid var(--ww-gold-500);
+    border-radius: 6px;
+    padding: 1.5rem;
+    background: var(--ww-surface);
+    margin-bottom: 1.5rem;
+}
+
+    .ww-profile__card h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--ww-navy-900);
+        margin-bottom: 1rem;
+    }
+
+    .ww-profile__card select,
+    .ww-profile__card textarea {
+        border: 1px solid var(--ww-border);
+        border-radius: 4px;
+        padding: 0.5rem 0.65rem;
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 0.9rem;
+        color: var(--ww-text);
+        width: 100%;
+        resize: vertical;
+    }
+
+.ww-profile__ratings h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    margin-bottom: 1rem;
+}
+
+.ww-rating-card {
+    border: 1px solid var(--ww-border);
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: var(--ww-surface);
+}
+
+.ww-rating-card__stars {
+    color: var(--ww-gold-600);
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.ww-rating-card p {
+    color: var(--ww-text);
+    font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Shared: brand label on listing/wiki cards                               */
+/* ---------------------------------------------------------------------- */
+
+.ww-listing-card__brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ww-gold-600);
+    margin-bottom: 0.2rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Udlaan page                                                             */
+/* ---------------------------------------------------------------------- */
+
+.ww-udlaan__toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+    .ww-udlaan__toolbar .ww-wiki__search {
+        margin-bottom: 0;
+        flex: 1;
+        min-width: 240px;
+    }
+
+.ww-udlaan__hint {
+    color: var(--ww-text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.ww-udlaan__tabs {
+    display: inline-flex;
+    margin-bottom: 1.5rem;
+}
+
+.ww-udlaan-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.ww-udlaan-card__clickable {
+    display: block;
+    width: 100%;
+    border: none;
+    background: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+}
+
+.ww-udlaan-card__delete {
+    width: 100%;
+    border: none;
+    border-top: 1px solid var(--ww-border);
+    background: #FBEAEA;
+    color: #9B3B3B;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0.6rem;
+    cursor: pointer;
+}
+
+    .ww-udlaan-card__delete:hover {
+        background: #F5D5D5;
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Empty-state callout (e.g. "no watches yet" in Create Listing)           */
+/* ---------------------------------------------------------------------- */
+
+.ww-callout {
+    background: var(--ww-navy-100);
+    border-left: 4px solid var(--ww-gold-500);
+    border-radius: 4px;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: var(--ww-text);
+    margin-bottom: 1rem;
+}
+
+.ww-callout__link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--ww-gold-600);
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Borrow dialog                                                           */
+/* ---------------------------------------------------------------------- */
+
+.ww-borrow-dialog__image {
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    background: var(--ww-navy-900);
+}
+
+    .ww-borrow-dialog__image img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+.ww-borrow-dialog__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    margin-bottom: 0.1rem;
+}
+
+.ww-borrow-dialog__model {
+    color: var(--ww-text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+}
+
+.ww-borrow-dialog__facts {
+    padding: 0.75rem 0;
+    margin-bottom: 0.75rem;
+}
+
+.ww-borrow-dialog__note {
+    font-size: 0.85rem;
+    color: var(--ww-text);
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Profile card header row (e.g. "Mine ure" + Tilføj ur button)            */
+/* ---------------------------------------------------------------------- */
+
+.ww-profile__card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+    .ww-profile__card-head h2 {
+        margin-bottom: 0;
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Brands list (Mærker)                                                    */
+/* ---------------------------------------------------------------------- */
+
+.ww-az {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 2rem;
+}
+
+    .ww-az a {
+        min-width: 2rem;
+        height: 2rem;
+        padding: 0 0.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--ww-border);
+        border-radius: 4px;
+        background: var(--ww-surface);
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--ww-navy-900);
+    }
+
+        .ww-az a:hover,
+        .ww-az a:focus-visible {
+            background: var(--ww-navy-900);
+            border-color: var(--ww-navy-900);
+            color: var(--ww-surface);
+        }
+
+.ww-brands__group {
+    margin-bottom: 2rem;
+    scroll-margin-top: 1rem;
+}
+
+.ww-brands__letter {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    border-bottom: 2px solid var(--ww-gold-500);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.ww-brands__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.ww-brand-card {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.9rem;
+    border: 1px solid var(--ww-border);
+    border-radius: 6px;
+    background: var(--ww-surface);
+}
+
+    .ww-brand-card:hover,
+    .ww-brand-card:focus-visible {
+        border-color: var(--ww-gold-500);
+        box-shadow: 0 6px 16px rgba(10, 27, 48, 0.12);
+    }
+
+.ww-brand-card__logo,
+.ww-brand-mini__logo {
+    flex: 0 0 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border: 1px solid var(--ww-border);
+    border-radius: 6px;
+    background: var(--ww-surface);
+    overflow: hidden;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--ww-navy-800);
+}
+
+.ww-brand-mini__logo {
+    flex-basis: 44px;
+    height: 44px;
+    padding: 4px;
+    font-size: 0.8rem;
+}
+
+    .ww-brand-card__logo img,
+    .ww-brand-mini__logo img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+.ww-brand-card__name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    color: var(--ww-navy-900);
+}
+
+.ww-brand-card__meta {
+    font-size: 0.8rem;
+    color: var(--ww-text-muted);
+}
+
+.ww-brand-card__count {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ww-gold-600);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Brand page                                                              */
+/* ---------------------------------------------------------------------- */
+
+.ww-brand-hero {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--ww-border);
+    border-top: 3px solid var(--ww-gold-500);
+    border-radius: 8px;
+    background: var(--ww-surface);
+}
+
+.ww-brand-hero__logo {
+    flex: 0 0 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border: 1px solid var(--ww-border);
+    border-radius: 8px;
+    background: var(--ww-surface);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--ww-navy-800);
+}
+
+    .ww-brand-hero__logo img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+.ww-brand-hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ww-navy-900);
+    margin-bottom: 0.5rem;
+}
+
+.ww-brand-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+}
+
+    .ww-brand-hero__meta span {
+        background: var(--ww-navy-100);
+        color: var(--ww-navy-900);
+        border-radius: 999px;
+        padding: 0.2rem 0.7rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .ww-brand-hero__meta .ww-brand-hero__status {
+        background: var(--ww-navy-900);
+        color: var(--ww-surface);
+    }
+
+.ww-brand-hero__stats {
+    color: var(--ww-text);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    max-width: 62ch;
+}
+
+.ww-brand-hero__site {
+    font-weight: 600;
+    color: var(--ww-gold-600);
+    border-bottom: 1px solid var(--ww-gold-500);
+}
+
+@media (max-width: 600px) {
+    .ww-brand-hero {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.ww-brand-section {
+    margin-bottom: 2rem;
+}
+
+    .ww-brand-section h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--ww-navy-900);
+        margin-bottom: 0.6rem;
+        border-left: 4px solid var(--ww-gold-500);
+        padding-left: 0.75rem;
+    }
+
+    .ww-brand-section .ww-section-head h2 {
+        margin-bottom: 0;
+    }
+
+    .ww-brand-section p {
+        max-width: 70ch;
+        color: var(--ww-text);
+        margin-bottom: 0.75rem;
+    }
+
+        .ww-brand-section p.ww-brand-section__lead {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            color: var(--ww-navy-800);
+            margin-bottom: 0.25rem;
+        }
+
+.ww-brand-facts li {
+    gap: 1rem;
+}
+
+    .ww-brand-facts li strong {
+        text-align: right;
+    }
+
+/* Style filter chips - the watch equivalent of Fragrantica's per-brand "Collections". */
+.ww-collection-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+.ww-collection-chip {
+    border: 1px solid var(--ww-border);
+    background: var(--ww-surface);
+    color: var(--ww-navy-900);
+    border-radius: 999px;
+    padding: 0.3rem 0.85rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+    .ww-collection-chip:hover {
+        border-color: var(--ww-gold-500);
+    }
+
+    .ww-collection-chip.active {
+        background: var(--ww-navy-900);
+        border-color: var(--ww-navy-900);
+        color: var(--ww-surface);
+    }
+
+/* Brand logo + name on a watch page, linking to the brand page. */
+.ww-detail__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+    padding: 0.35rem 0.9rem 0.35rem 0.4rem;
+    border: 1px solid var(--ww-border);
+    border-radius: 999px;
+    background: var(--ww-surface);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--ww-navy-900);
+}
+
+    .ww-detail__brand img {
+        height: 28px;
+        width: auto;
+        max-width: 72px;
+        object-fit: contain;
+    }
+
+    .ww-detail__brand:hover,
+    .ww-detail__brand:focus-visible {
+        border-color: var(--ww-gold-500);
+    }
+
+/* ---------------------------------------------------------------------- */
+/* Focus states (accessibility)                                            */
+/* ---------------------------------------------------------------------- */
 
 .ww-page a:focus-visible,
 .ww-page button:focus-visible,

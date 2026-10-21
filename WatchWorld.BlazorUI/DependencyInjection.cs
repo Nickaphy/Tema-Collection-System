@@ -1,4 +1,6 @@
-﻿using WatchWorld.BlazorUI.Helpers;
+﻿using Radzen;
+using WatchWorld.BlazorUI.Helpers;
+using WatchWorld.BlazorUI.Services;
 
 namespace WatchWorld.BlazorUI
 {
@@ -7,8 +9,11 @@ namespace WatchWorld.BlazorUI
         public static IServiceCollection AddUIServices(
             this IServiceCollection services, IConfiguration config)
         {
+            services.AddRadzenComponents();
             services.AddScoped<LogInContext>();
             services.AddScoped<NotificationHelper>();
+            services.AddScoped<CurrentUserState>();
+            services.AddScoped<BrandCatalogHelper>();
             return services;
         }
     }

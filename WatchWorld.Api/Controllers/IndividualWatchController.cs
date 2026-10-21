@@ -38,12 +38,21 @@ namespace WatchWorld.Api.Controllers
             return Ok(individualWatch);
         }
 
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IndividualWatch>> GetByUserId(Guid id, CancellationToken ct)
+        {
+            var individualWatch = await _individualWatchUseCase.GetIndividualWatchesByUserIdAsync(id, ct);
+            return Ok(individualWatch);
+        }
+
         [HttpPost]
         //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
         public async Task<ActionResult<IndividualWatch>> Create([FromBody] CreateIndividualWatchRequest request, CancellationToken ct)
         {
             var command = new CreateIndividualWatchCommand(
                 specificWatchId: request.specificWatchId,
+                userId: request.userId,
                 wearGrade: request.wearGrade,
                 age: request.age,
                 note: request.note,

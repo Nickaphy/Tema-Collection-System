@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using WatchWorld.BlazorUI.ResponseDTO;
+using WatchWorld.BlazorUI.ResponseDTO.WatchResponseDTO;
 
 namespace WatchWorld.BlazorUI.Pages
 {
@@ -13,8 +14,6 @@ namespace WatchWorld.BlazorUI.Pages
 
         private bool isLoading = true;
         private string? errorMessage;
-
-        private string searchQuery = string.Empty;
 
         private readonly string[] filters = { "Nyeste", "Pris", "Højest vurderet" };
         private string selectedFilter = "Nyeste";
@@ -67,7 +66,7 @@ namespace WatchWorld.BlazorUI.Pages
 
                 RecentAdditions = watches
                     .Take(6)
-                    .Select(w => new RecentAdditionModel(w.Name, w.ModelNumber, ResolveImage(w.Images), $"/ure/{w.Id}"))
+                    .Select(w => new RecentAdditionModel(w.Name, w.ModelNumber, ResolveImage(w.Images), $"/wiki/{w.ModelNumber}"))
                     .ToList();
 
                 FeaturedListings = listings
@@ -113,5 +112,4 @@ namespace WatchWorld.BlazorUI.Pages
             cts.Dispose();
         }
     }
-
 }

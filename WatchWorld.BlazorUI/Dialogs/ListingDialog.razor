@@ -1,0 +1,129 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO.IndividualWatchResponseDto
+@using WatchWorld.BlazorUI.ResponseDTO.ListingResponseDto
+@using WatchWorld.BlazorUI.Services
+
+<div class="ww-dialog">
+    @if (isLoading)
+    {
+        <div class="ww-state">Indlæser dine ure …</div>
+    }
+    else if (ownedWatches.Count == 0)
+    {
+        <div class="ww-callout">
+            <p>Du har ingen registrerede ure endnu.</p>
+            <button type="button" class="ww-callout__link" @onclick="GoToProfile">
+                Tilføj et ur på din profil
+            </button>
+            <span> for at oprette en annonce.</span>
+        </div>
+        <div class="ww-dialog__actions">
+            <RadzenButton Text="Luk" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text" Click="@(() => DialogService.Close(null))" />
+        </div>
+    }
+    else
+    {
+        <div class="ww-dialog__field">
+            <label for="listing-watch">Vælg ur</label>
+            <select id="listing-watch" @bind="selectedWatchId">
+                @foreach (var watch in ownedWatches)
+                {
+                    <option value="@watch.Id">@Brands.FullName(watch.SpecificWatch) - @watch.SpecificWatch.ModelNumber</option>
+                }
+            </select>
+        </div>
+
+        <div class="ww-dialog__field">
+            <label for="listing-price">Pris per dag (kr.)</label>
+            <input id="listing-price" type="number" min="0" @bind="pricePerDay" />
+        </div>
+
+        @if (errorMessage is not null)
+        {
+            <div class="ww-dialog__notice ww-dialog__notice--error">@errorMessage</div>
+        }
+
+        <div class="ww-dialog__actions">
+            <RadzenButton Text="Annuller" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
+                          Click="@(() => DialogService.Close(null))" Disabled="@isSubmitting" />
+            <RadzenButton Text="@(isSubmitting ? "Opretter..." : "Opret annonce")" ButtonStyle="ButtonStyle.Primary"
+                          class="ww-btn-gold" Click="@Submit" Disabled="@isSubmitting" />
+        </div>
+    }
+</div>
+
+
+
+@code {
+    [Inject] private DialogService DialogService { get; set; } = default!;
+    [Inject] private NavigationManager Navigation { get; set; } = default!;
+    [Inject] private WatchWorldApiClient ApiClient { get; set; } = default!;
+    [Inject] private CurrentUserState CurrentUser { get; set; } = default!;
+    [Inject] private BrandCatalogHelper Brands { get; set; } = default!;
+
+    private bool isLoading = true;
+    private List<IndividualWatchDto> ownedWatches = new();
+    private Guid selectedWatchId;
+    private decimal pricePerDay;
+    private bool isSubmitting;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (CurrentUser.User is null)
+        {
+            isLoading = false;
+            return;
+        }
+
+        await Brands.EnsureLoadedAsync();
+        ownedWatches = await ApiClient.GetIndividualWatchesByUserAsync(CurrentUser.User.Id, CancellationToken.None);
+        selectedWatchId = ownedWatches.FirstOrDefault()?.Id ?? Guid.Empty;
+        isLoading = false;
+    }
+
+    private void GoToProfile()
+    {
+        if (CurrentUser.User is null) return;
+        DialogService.Close(null);
+        Navigation.NavigateTo($"/bruger/{CurrentUser.User.Id}");
+    }
+
+    private async Task Submit()
+    {
+        errorMessage = null;
+
+        if (selectedWatchId == Guid.Empty)
+        {
+            errorMessage = "Vælg venligst et ur.";
+            return;
+        }
+
+        if (pricePerDay <= 0)
+        {
+            errorMessage = "Prisen skal være over 0 kr.";
+            return;
+        }
+
+        isSubmitting = true;
+
+        var request = new CreateListingRequestDto
+        {
+            BorrowableWatchId = selectedWatchId,
+            PricePerDay = pricePerDay
+        };
+
+        var (success, error) = await ApiClient.CreateListingAsync(request, CancellationToken.None);
+
+        isSubmitting = false;
+
+        if (!success)
+        {
+            errorMessage = error ?? "Kunne ikke oprette annoncen. Prøv igen.";
+            return;
+        }
+
+        DialogService.Close(true);
+    }
+}

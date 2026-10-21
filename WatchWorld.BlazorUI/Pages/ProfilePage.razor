@@ -1,0 +1,193 @@
+﻿@page "/bruger/{Id:guid}"
+@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+@using WatchWorld.BlazorUI.Services
+@using WatchWorld.BlazorUI.Dialogs
+@inject WatchWorldApiClient ApiClient
+@inject BrandCatalogHelper Brands
+@inject CurrentUserState CurrentUser
+@inject NotificationService NotificationService
+@inject DialogService DialogService
+@inject ILogger<ProfilePage> Logger
+
+<PageTitle>@(profileUser is not null ? $"{profileUser.FirstName} {profileUser.LastName}" : "Profil") – WatchWorld</PageTitle>
+
+<div class="ww-profile">
+
+    @if (isLoading)
+    {
+        <div class="ww-state">Indlæser profil …</div>
+    }
+    else if (errorMessage is not null)
+    {
+        <div class="ww-state ww-state--error">@errorMessage</div>
+    }
+    else if (profileUser is null)
+    {
+        <div class="ww-state">Denne bruger findes ikke.</div>
+    }
+    else
+    {
+        <div class="ww-profile__header">
+            <div class="ww-profile__avatar">@Initials</div>
+            <div>
+                <h1>@profileUser.FirstName @profileUser.LastName</h1>
+                <p class="ww-profile__city">@profileUser.City</p>
+            </div>
+        </div>
+
+        @if (IsOwnProfile)
+        {
+            <div class="ww-profile__card">
+                <h2>Rediger dine oplysninger</h2>
+
+                <div class="ww-dialog__row">
+                    <div class="ww-dialog__field">
+                        <label>Fornavn</label>
+                        <input type="text" @bind="firstName" />
+                    </div>
+                    <div class="ww-dialog__field">
+                        <label>Efternavn</label>
+                        <input type="text" @bind="lastName" />
+                    </div>
+                </div>
+
+                <div class="ww-dialog__field">
+                    <label>Email</label>
+                    <input type="email" @bind="email" />
+                </div>
+
+                <div class="ww-dialog__field">
+                    <label>Telefonnummer</label>
+                    <input type="tel" @bind="phoneNumber" />
+                </div>
+
+                <div class="ww-dialog__row">
+                    <div class="ww-dialog__field">
+                        <label>Adresse</label>
+                        <input type="text" @bind="address" />
+                    </div>
+                    <div class="ww-dialog__field">
+                        <label>By</label>
+                        <input type="text" @bind="city" />
+                    </div>
+                </div>
+
+                <div class="ww-dialog__field">
+                    <label>Note (synlig for andre)</label>
+                    <textarea @bind="note" rows="3"></textarea>
+                </div>
+
+                <div class="ww-dialog__field">
+                    <label>Adgangskode (skal udfyldes for at gemme)</label>
+                    <input type="password" @bind="password" />
+                </div>
+
+                @if (saveError is not null)
+                {
+                    <div class="ww-dialog__notice ww-dialog__notice--error">@saveError</div>
+                }
+
+                <div class="ww-dialog__actions">
+                    <RadzenButton Text="@(isSaving ? "Gemmer..." : "Gem ændringer")" ButtonStyle="ButtonStyle.Primary"
+                                  class="ww-btn-gold" Click="@SaveChanges" Disabled="@isSaving" />
+                </div>
+            </div>
+
+            <div class="ww-profile__card">
+                <div class="ww-profile__card-head">
+                    <h2>Mine ure (@ownedWatches.Count)</h2>
+                    <RadzenButton Text="Tilføj ur" ButtonStyle="ButtonStyle.Base" Variant="Variant.Outlined"
+                                  Click="@OpenAddWatchDialog" />
+                </div>
+
+                @if (ownedWatches.Count == 0)
+                {
+                    <p class="ww-empty">Du har ikke registreret nogen ure endnu.</p>
+                }
+                else
+                {
+                    <div class="ww-wiki__grid">
+                        @foreach (var watch in ownedWatches)
+                        {
+                            <div class="ww-listing-card">
+                                <div class="ww-listing-card__image">
+                                    <img src="@(watch.Picture.Count > 0 ? watch.Picture[0].Url : "/images/seed/OnTheWay.png")" alt="@watch.SpecificWatch.Name" />
+                                </div>
+                                <div class="ww-listing-card__body">
+                                    <div class="ww-listing-card__brand">@Brands.NameOf(watch.SpecificWatch.BrandId)</div>
+                                    <div class="ww-listing-card__name">@watch.SpecificWatch.Name</div>
+                                    <div class="ww-listing-card__detail">@EnumDisplayConverter.WearGrade(watch.WearGrade) · @watch.Age år</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            @if (!string.IsNullOrWhiteSpace(profileUser.Note))
+            {
+                <p class="ww-profile__note">@profileUser.Note</p>
+            }
+
+            @if (CurrentUser.User is not null)
+            {
+                <div class="ww-profile__card">
+                    <h2>Skriv en anmeldelse</h2>
+
+                    <div class="ww-dialog__field">
+                        <label>Vurdering</label>
+                        <select @bind="newRatingAmount">
+                            <option value="5">5 - Fremragende</option>
+                            <option value="4">4 - God</option>
+                            <option value="3">3 - OK</option>
+                            <option value="2">2 - Under middel</option>
+                            <option value="1">1 - Dårlig</option>
+                        </select>
+                    </div>
+
+                    <div class="ww-dialog__field">
+                        <label>Beskrivelse</label>
+                        <textarea @bind="newRatingDescription" rows="3"
+                                  placeholder="Hvordan var din oplevelse med denne bruger?"></textarea>
+                    </div>
+
+                    @if (ratingError is not null)
+                    {
+                        <div class="ww-dialog__notice ww-dialog__notice--error">@ratingError</div>
+                    }
+
+                    <div class="ww-dialog__actions">
+                        <RadzenButton Text="@(isSubmittingRating ? "Sender..." : "Send anmeldelse")" ButtonStyle="ButtonStyle.Primary"
+                                      class="ww-btn-gold" Click="@SubmitRating" Disabled="@isSubmittingRating" />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p class="ww-empty">Log ind for at skrive en anmeldelse af denne bruger.</p>
+            }
+        }
+
+        <div class="ww-profile__ratings">
+            <h2>Anmeldelser (@ratings.Count)</h2>
+            @if (ratings.Count == 0)
+            {
+                <p class="ww-empty">Ingen anmeldelser endnu.</p>
+            }
+            else
+            {
+                @foreach (var rating in ratings)
+                {
+                    <div class="ww-rating-card">
+                        <div class="ww-rating-card__stars">@Stars(rating.RatingAmount)</div>
+                        <p>@rating.Description</p>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

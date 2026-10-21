@@ -98,6 +98,16 @@ namespace WatchWorld.Domain.Entities
                 return;
         }
 
+        public bool LogIn(string? email, string password, string? firstName, string? lastName)
+        {
+            var result = false;
+            if (Email != email || Password != password)
+                throw new UserInvalidInputException($"Forkert email eller adgangskode.");
+            var validator = new PasswordValidatorService();
+            validator.ValidateAndThrow(Password, Email, $"{firstName} {lastName}");
+            return result;
+        }
+
         public bool IsUserAdmin()
         {
             return IsAdmin;

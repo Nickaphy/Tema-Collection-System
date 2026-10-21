@@ -13,6 +13,7 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<IUserRatingUseCase, UserRatingService>();
         services.AddScoped<IUserUseCase, UserService>();
         services.AddScoped<IWatchesUseCase, WatchesService>();
+        services.AddScoped<IBrandUseCase, BrandService>();
 
         return services;
     }

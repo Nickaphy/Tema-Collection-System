@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WatchWorld.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class UpdateModels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,6 +35,29 @@ namespace WatchWorld.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Borrows", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Brands",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FoundingYear = table.Column<int>(type: "int", nullable: false),
+                    CountryOfOrigin = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentGroup = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LogoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WebsiteUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FounderName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FounderDescriptionNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OriginDescriptionNote = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BrandDescriptionNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WatchStyleDescriptionNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Brands", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,6 +110,7 @@ namespace WatchWorld.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BrandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModelNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CaseSize = table.Column<int>(type: "int", nullable: false),
                     CaseShapeEnum = table.Column<int>(type: "int", nullable: false),
@@ -139,6 +163,7 @@ namespace WatchWorld.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WatchesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WearGrade = table.Column<int>(type: "int", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -240,6 +265,9 @@ namespace WatchWorld.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Borrows");
+
+            migrationBuilder.DropTable(
+                name: "Brands");
 
             migrationBuilder.DropTable(
                 name: "HighResImages");

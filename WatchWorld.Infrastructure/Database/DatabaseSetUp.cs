@@ -65,14 +65,46 @@ public static class DatabaseSetup
         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
+        // =======================================================
+        // 1. WIPE LOCAL DATABASE (SAFE RE-SEEDING)
+        // =======================================================
+        var currentConnectionString = context.Database.GetConnectionString();
+        var localConnectionString = configuration.GetConnectionString("Local");
+
+        // Parse both strings to ignore EF Core's runtime formatting changes
+        var currentBuilder = new SqlConnectionStringBuilder(currentConnectionString);
+        var localBuilder = new SqlConnectionStringBuilder(localConnectionString);
+
+        // Check if both the Server (DataSource) and Database (InitialCatalog) match
+        bool isLocal = currentBuilder.DataSource.Equals(localBuilder.DataSource, StringComparison.OrdinalIgnoreCase) &&
+                       currentBuilder.InitialCatalog.Equals(localBuilder.InitialCatalog, StringComparison.OrdinalIgnoreCase);
+
+        if (isLocal)
+        {
+            Console.WriteLine("[Database] Local DB detected. Wiping database for fresh seed...");
+            await context.Database.EnsureDeletedAsync();
+        }
+        else
+        {
+            Console.WriteLine("[Database] Mother DB detected. Skipping wipe to protect team data.");
+        }
+
+        // =======================================================
+        // 2. MIGRATE & SEED
+        // =======================================================
+        Console.WriteLine("[Database] Applying migrations...");
         await context.Database.MigrateAsync();
 
-       // Try to parse the SeedFullCatalog configuration flag
-       // If it fails, use false
+        // Try to parse the SeedFullCatalog configuration flag
         _ = bool.TryParse(configuration["SeedFullCatalog"], out var useFullCatalog);
 
-       // Seed the watches into the database
+        await SeedBrands.SeedBrandsAsync(context);
+
+        // Seed the watches into the database
+        Console.WriteLine("[Database] Seeding Watches...");
         await WatchSeeder.SeedWatchesAsync(context, useFullCatalog);
+
+        Console.WriteLine("[Database] Seeding remaining data...");
         await DbSeeder.SeedAsync(context);
     }
 }

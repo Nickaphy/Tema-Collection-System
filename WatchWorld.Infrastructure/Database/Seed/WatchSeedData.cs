@@ -17,7 +17,8 @@ public static class WatchSeedData
     public static readonly IReadOnlyList<SeedWatch> All = new List<SeedWatch>
     {
             new SeedWatch(
-                Name: "Audemars Piguet CODE 11.59 Chronograph Selfwinding Pink Gold / Green",
+                Name: "CODE 11.59 Chronograph Selfwinding Pink Gold / Green",
+                Brand: "Audemars Piguet",
                 ModelNumber: "26393OR.OO.A056KB.01",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -30,7 +31,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Audemars Piguet CODE 11.59 Chronograph 26393OR.OO.A056KB.01 debuted in 2025. This CODE 11.59 has a pink gold case and a Green dial."),
             new SeedWatch(
-                Name: "Audemars Piguet CODE 11.59 Minute Repeater Supersonnerie Ceramic - Pink Gold / Sapphire",
+                Name: "CODE 11.59 Minute Repeater Supersonnerie Ceramic - Pink Gold / Sapphire",
+                Brand: "Audemars Piguet",
                 ModelNumber: "26395NR.OO.D002KB.01",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -43,7 +45,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Audemars Piguet CODE 11:59 26395NR.OO.D002KB.01 made its debut in 2019. This watch has a black ceramic case with pink gold bezel, case back and lugs. Inside ticks the caliber AP 2953 with 'Super Sonnerie' minute repeater. The dial is made of sapphire crystal."),
             new SeedWatch(
-                Name: "Audemars Piguet CODE 11.59 Perpetual Calendar 38 Red Gold / Green",
+                Name: "CODE 11.59 Perpetual Calendar 38 Red Gold / Green",
+                Brand: "Audemars Piguet",
                 ModelNumber: "26441OR.OO.D405CR.01",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -56,7 +59,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RedGold,
                 Description: "The Audemars Piguet Code 11.59 Perpetual Calendar 26441OR.OO.D405CR.01 debuted in 2025. The 18k pink gold case measures 38 mm in diameter and 10 mm in thickness. Both front and back are fitted with glareproof sapphire crystals, and water resistance is rated at 30 meters. The watch is delivered on a green alligator strap secured by an 18k pink gold AP folding clasp. The dial is green with an embossed motif, paired with tone-on-tone subdials. The applied hour markers and hands are in 18k pink gold with luminescent coating, framed by a matching green inner bezel. This model is powered by the self"),
             new SeedWatch(
-                Name: "Audemars Piguet CODE 11.59 Chronograph Selfwinding Pink Gold / Green",
+                Name: "CODE 11.59 Chronograph Selfwinding Pink Gold / Green",
+                Brand: "Audemars Piguet",
                 ModelNumber: "6393OR.OO.A056KB.01",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -69,7 +73,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Audemars Piguet CODE 11.59 Chronograph 6393OR.OO.A056KB.01 debuted in 2024. This CODE 11.59 has a pink gold case and a Green dial."),
             new SeedWatch(
-                Name: "Audemars Piguet CODE 11.59 Automatic 38 Pink Gold / Prune",
+                Name: " CODE 11.59 Automatic 38 Pink Gold / Prune",
+                Brand: "Audemars Piguet",
                 ModelNumber: "77410OR.OO.A623CR.01",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -82,7 +87,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Audemars Piguet CODE 11.59 77410OR.OO.A623CR.01 made its debut in 2023. This CODE 11.59 has a case of 38.00, which houses the self-winding caliber AP 5900. The dial is Purple."),
             new SeedWatch(
-                Name: "Audemars Piguet CODE 11.59 Automatic 38 Pink Gold - Diamond / Diamond - Sapphire",
+                Name: "CODE 11.59 Automatic 38 Pink Gold - Diamond / Diamond - Sapphire",
+                Brand: "Audemars Piguet",
                 ModelNumber: "77410OR.ZZ.D343CR.01",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -95,7 +101,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Audemars Piguet CODE 11.59 77410OR.ZZ.D343CR.01 made its debut in 2024. This CODE 11.59 has a case of 38.00, which houses the self-winding caliber AP 5900. The dial is set over 500 diamonds and sapphires."),
             new SeedWatch(
-                Name: "Breitling Avenger Automatic 42 Stainless Steel / Black / Strap",
+                Name: "Avenger Automatic 42 Stainless Steel / Black / Strap",
+                Brand: "Breitling",
                 ModelNumber: "A17328101B1X1",
                 CaseSize: 42,
                 CaseShape: CaseShapeEnum.Round,
@@ -108,7 +115,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Breitling Avenger Automatic 42 A17328101B1X1 debuted in 2023. This watch has a stainless steel case water resistant up to 300 meters, which houses the self-winding caliber Caliber 17. For this version, the dial is Black."),
             new SeedWatch(
-                Name: "Breitling Avenger Automatic 42 Stainless Steel / Yellow / China",
+                Name: "Avenger Automatic 42 Stainless Steel / Yellow / China",
+                Brand: "Breitling",
                 ModelNumber: "A173283A1I1X1",
                 CaseSize: 42,
                 CaseShape: CaseShapeEnum.Round,
@@ -121,7 +129,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Breitling Avenger Automatic 42 A173283A1I1X1 debuted in 2025 as a limited edition of 300 pieces for the Chinese market. This watch has a stainless steel case water resistant up to 300 meters, which houses the self-winding caliber Caliber 17. For this version, the dial is Blue."),
             new SeedWatch(
-                Name: "Breitling Avenger Chronograph GMT 45 Stainless Steel / Blue / Strap - Folding",
+                Name: "Avenger Chronograph GMT 45 Stainless Steel / Blue / Strap - Folding",
+                Brand: "Breitling",
                 ModelNumber: "A24315101C1X2",
                 CaseSize: 45,
                 CaseShape: CaseShapeEnum.Round,
@@ -134,7 +143,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Breitling Avenger Chronograph GMT A24315101C1X2 debuted in 2022. This Avenger has a case of 45.00mm, which houses a self-winding movement with chronograph and GMT functions. The dial is Blue."),
             new SeedWatch(
-                Name: "Breitling Avenger B01 Chronograph 44 Stainless Steel / Green / Bracelet",
+                Name: "Avenger B01 Chronograph 44 Stainless Steel / Green / Bracelet",
+                Brand: "Breitling",
                 ModelNumber: "AB0147101L1A1",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Round,
@@ -147,7 +157,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Breitling Avenger B01 Chronograph 44 AB0147101L1A1 debuted in 2023. This watch has a stainless steel case water resistant up to 300 meters, which houses the brand's in-house caliber Caliber B01. For this version, the dial is Green."),
             new SeedWatch(
-                Name: "Breitling Avenger Automatic GMT 44 Night Mission",
+                Name: "Avenger Automatic GMT 44 Night Mission",
+                Brand: "Breitling",
                 ModelNumber: "S32320101B1X1",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Round,
@@ -160,7 +171,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Unknown,
                 Description: "The Breitling Avenger Automatic 44 GMT S32320101B1X1 debuted in 2024. This watch has a black ceramic case with revolving bezel calibrated for 24 hours, which is water resistant up to 300 meters. It houses the self-winding caliber Caliber 32. For this version, the dial is Black carbon fibre."),
             new SeedWatch(
-                Name: "Breitling Super Avenger B01 Chronograph 46 Night Mission / Black / Strap",
+                Name: "Super Avenger B01 Chronograph 46 Night Mission / Black / Strap",
+                Brand: "Breitling",
                 ModelNumber: "SB0148101B1X1",
                 CaseSize: 46,
                 CaseShape: CaseShapeEnum.Round,
@@ -173,7 +185,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Unknown,
                 Description: "The Breitling Avenger B01 Chronograph 44 SB0148101B1X1 debuted in 2023. This watch has a ceramic case with titanium case back, pushers and crown, water resistant up to 300 meters, which houses the brand's in-house caliber Caliber B01. For this version, the dial is Black and crafted from carbon composite."),
             new SeedWatch(
-                Name: "Breitling Chronomat B01 42 Stainless Steel / Green / Rouleaux",
+                Name: "Chronomat B01 42 Stainless Steel / Green / Rouleaux",
+                Brand: "Breitling",
                 ModelNumber: "AB0134101L1A1",
                 CaseSize: 42,
                 CaseShape: CaseShapeEnum.Round,
@@ -186,7 +199,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Breitling Chronomat B01 42 was introduced in 2020. A complete revamp of Breitling's evergreen, this new version sports a sleeker case with more clearly defined angles, a redesigned bezel, and the option of a brand-new 'Rouleaux' style bracelet. Inside ticks Breitling's in-house B01 movement. Reference AB0134101L1A1 has a stainless steel case and a Green dial. This debuted in 2023 as a replacement of the earlier green-dialed Bentley-branded version."),
             new SeedWatch(
-                Name: "Breitling Chronomat B01 42 Red Gold / Erling Haaland / Rouleaux",
+                Name: "Chronomat B01 42 Red Gold / Erling Haaland / Rouleaux",
+                Brand: "Breitling",
                 ModelNumber: "RB01347A1F1R1",
                 CaseSize: 42,
                 CaseShape: CaseShapeEnum.Round,
@@ -199,7 +213,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RedGold,
                 Description: "The Breitling Chronomat B01 42 RB01347A1F1R1 debuted in 2025 as part of the limited Erling Haaland Signature Series. This edition is limited to 250 pieces and features a 42mm case in 18k red gold with a unidirectional bezel engraved with rider tabs, numerals, and markers. It is fitted with a domed sapphire crystal with anti-reflective treatment on both sides and a sapphire case back engraved �ONE OF 250� and �ERLING HAALAND 9.� Water resistance is rated at 100 meters. The dial is made from Muonionalusta meteorite, revealing the natural Widmanst�tten pattern. Red gold hands and applied markers "),
             new SeedWatch(
-                Name: "Breitling Chronomat B01 42 Red Gold / Erling Haaland / Rubber",
+                Name: "Chronomat B01 42 Red Gold / Erling Haaland / Rubber",
+                Brand: "Breitling",
                 ModelNumber: "RB01347A1F1S1",
                 CaseSize: 42,
                 CaseShape: CaseShapeEnum.Round,
@@ -212,7 +227,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RedGold,
                 Description: "The Breitling Chronomat B01 42 RB01347A1F1S1 debuted in 2025 as part of the limited Erling Haaland Signature Series. This reference is limited to 250 pieces and features a 42mm case in 18k red gold, fitted with a unidirectional bezel engraved with rider tabs, numerals, and markers. A domed sapphire crystal with anti-reflective treatment on both sides covers the dial, while a sapphire case back offers a view of the movement. Water resistance is rated at 100 meters. The dial is cut from Muonionalusta meteorite, revealing a natural Widmanst�tten pattern. It is accented by black subdials, red gold"),
             new SeedWatch(
-                Name: "Breitling Navitimer GMT 41 Automatic Stainless Steel / Ice Blue",
+                Name: "Navitimer GMT 41 Automatic Stainless Steel / Ice Blue",
+                Brand: "Breitling",
                 ModelNumber: "A32310171C1P1",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -225,7 +241,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Breitling Navitimer GMT A32310171C1P1 debuted in 2024. This Navitimer has a Stainless Steel case of 41.00mm, and an 'Ice' blue dial. This watch is powered by Caliber 32, a self-winding movement with additional 24-hour hand and date function."),
             new SeedWatch(
-                Name: "Breitling Navitimer GMT 41 Automatic Stainless Steel / Silver",
+                Name: "Navitimer GMT 41 Automatic Stainless Steel / Silver",
+                Brand: "Breitling",
                 ModelNumber: "A32310211G1P1",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -238,7 +255,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Breitling Navitimer GMT A32310211G1P1 debuted in 2024. This Navitimer has a Stainless Steel case of 41.00mm, and a Silver dial. This watch is powered by Caliber 32, a self-winding movement with additional 24-hour hand and date function."),
             new SeedWatch(
-                Name: "Breitling Navitimer Quartz 32 Stainless Steel / Blue MOP / Alligator",
+                Name: "Navitimer Quartz 32 Stainless Steel / Blue MOP / Alligator",
+                Brand: "Breitling",
                 ModelNumber: "A77320171C1P1",
                 CaseSize: 32,
                 CaseShape: CaseShapeEnum.Round,
@@ -251,7 +269,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Breitling Navitimer Quartz 32 A77320171C1P1 debuted in 2023. This Navitimer has a stainless steel case of 32.00mm, which houses a quartz movement in the form of Caliber 77. The dial is Blue mother-of-pearl with diamond-set hour markers."),
             new SeedWatch(
-                Name: "Breitling Navitimer Automatic 36 Red Gold / MOP / Alligator",
+                Name: "Navitimer Automatic 36 Red Gold / MOP / Alligator",
+                Brand: "Breitling",
                 ModelNumber: "R17327211A1P1",
                 CaseSize: 36,
                 CaseShape: CaseShapeEnum.Round,
@@ -264,7 +283,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RedGold,
                 Description: "The Breitling Navitimer Automatic 36 R17327211A1P1 debuted in 2023. This Navitimer has a red gold case of 36.00mm, which houses the self-winding caliber Caliber 17 ND. The dial is White mother-of-pearl with diamond-set hour markers."),
             new SeedWatch(
-                Name: "Breitling Navitimer Automatic 36 Red Gold / MOP / Bracelet",
+                Name: "Navitimer Automatic 36 Red Gold / MOP / Bracelet",
+                Brand: "Breitling",
                 ModelNumber: "R17327211A1R1",
                 CaseSize: 36,
                 CaseShape: CaseShapeEnum.Round,
@@ -277,7 +297,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RedGold,
                 Description: "The Breitling Navitimer Automatic 36 R17327211A1R1 debuted in 2023. This Navitimer has a red gold case of 36.00mm, which houses the self-winding caliber Caliber 17 ND. The dial is White mother-of-pearl with diamond-set hour markers."),
             new SeedWatch(
-                Name: "Breitling Navitimer B01 Chronograph 41 Red Gold / Black MOP / Japan",
+                Name: "Navitimer B01 Chronograph 41 Red Gold / Black MOP / Japan",
+                Brand: "Breitling",
                 ModelNumber: "RB01395A1B1P1",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -290,7 +311,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RedGold,
                 Description: "The Breitling Navitimer B01 Chronograph 41 RB01395A1B1P1 debuted in 2025 as a limited edition of 50 pieces for the Japanese market. It is housed in a 41mm case made of 18k red gold and paired with a black alligator leather strap secured by a matching red gold pin buckle. The dial is made of black mother-of-pearl and features three recessed sub-dials, a date window at 6 o'clock, and the collection�s signature slide rule bezel. Power comes from the in-house Caliber B01, a self-winding chronograph movement with column wheel and vertical clutch architecture. It offers a power reserve of approximat"),
             new SeedWatch(
-                Name: "Breitling Superocean 44 Stainless Steel / UK Edition / Bracelet",
+                Name: "Superocean 44 Stainless Steel / UK Edition / Bracelet",
+                Brand: "Breitling",
                 ModelNumber: "A173678A1B1A1",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Round,
@@ -303,7 +325,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Breitling Superocean 44 A173678A1B1A1 debuted in 2022. This SuperOcean pairs a blue bezel insert with a black dial."),
             new SeedWatch(
-                Name: "Breitling Superocean 44 Stainless Steel / UK Edition / Rubber / Pin",
+                Name: "Superocean 44 Stainless Steel / UK Edition / Rubber / Pin",
+                Brand: "Breitling",
                 ModelNumber: "A173678A1B1S1",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Round,
@@ -316,7 +339,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Breitling Superocean 44 A173678A1B1S1 debuted in 2022. This SuperOcean pairs a blue bezel insert with a black dial."),
             new SeedWatch(
-                Name: "Breitling Superocean Heritage II B01 Chronograph 44 Stainless Steel / Green / Rubber",
+                Name: "Superocean Heritage II B01 Chronograph 44 Stainless Steel / Green / Rubber",
+                Brand: "Breitling",
                 ModelNumber: "AB01621A1L1S1",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Round,
@@ -329,7 +353,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "Breitling's second generation of the Superocean Heritage was introduced at BaselWorld 2017, being a gently refined version of the original 2007 version. The most notable change is the bezel insert which is now done in ceramic, while the hands and case are subtly refined. The Superocean Heritage II B01 Chronograph 44 was added to the collection in 2018. It is powered by Breitling's in-house caliber B01 chronograph movement - which had not been used in any Superocean Heritage other than the elusive Chronoworks version. Reference AB01621A1L1S1, a limited edition of 500 pieces, made its debut in 2"),
             new SeedWatch(
-                Name: "Hamilton Khaki Pilot Pioneer 38 Stainless Steel / White",
+                Name: "Khaki Pilot Pioneer 38 Stainless Steel / White",
+                Brand: "Hamilton",
                 ModelNumber: "H76255810",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -342,7 +367,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Aviation Pilot Pioneer 38mm H76255810 debuted in 2025. This watch has a stainless steel case of 38mm with a thickness of 11.4mm, which houses the automatic caliber H-10. The dial is eggshell white, featuring luminous hands and indexes, combined with a moss green rotating bezel. The H-10 movement is based on the ETA 2824 architecture. It features automatic winding, a frequency of 21,600 vph, and a power reserve of 80 hours. Functions are limited to hours, minutes, central seconds, and date. The case is fitted with a sapphire crystal, see-through back, and is water resistant t"),
             new SeedWatch(
-                Name: "Hamilton Khaki Pilot Pioneer 38 Stainless Steel / White",
+                Name: "Khaki Pilot Pioneer 38 Stainless Steel / White",
+                Brand: "Hamilton",
                 ModelNumber: "H76265810",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -355,7 +381,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Aviation Pilot Pioneer Auto 38mm H76265810 debuted in 2025. This watch has a stainless steel case of 38mm with a thickness of 11.4mm, which houses the automatic caliber H-10. The dial is eggshell white, featuring applied markers, luminous hands, and a burgundy rotating bezel. The H-10 movement is based on the ETA 2824 architecture. It features automatic winding, a frequency of 21,600 vph, and a power reserve of 80 hours. Functions are limited to hours, minutes, central seconds, and date. The case is fitted with a sapphire crystal, see-through back, and is water resistant to "),
             new SeedWatch(
-                Name: "Hamilton Khaki Aviation Pilot Pioneer Mechanical Chronograph Stainless Steel / Blue",
+                Name: "Khaki Aviation Pilot Pioneer Mechanical Chronograph Stainless Steel / Blue",
+                Brand: "Hamilton",
                 ModelNumber: "H76409540",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -368,7 +395,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Aviation Pilot Pioneer Mechanical Chronograph H76409540 debuted in 2025. This watch has a stainless steel case of 40mm, which houses the hand-wound caliber H-51-Si. The dial is Aviation Blue with a sunburst finish, paired with two counters and Super-LumiNova coated hands and indexes. The H-51-Si movement is based on the Valjoux 7753 architecture, adapted for manual winding and upgraded with a silicon balance spring. It beats at a frequency of 21,600 vph and offers a power reserve of 60 hours. The case is fitted with a sapphire crystal and is water resistant up to 100 meters."),
             new SeedWatch(
-                Name: "Hamilton Khaki Aviation X-Wind Stainless Steel / Blue",
+                Name: "Khaki Aviation X-Wind Stainless Steel / Blue",
+                Brand: "Hamilton",
                 ModelNumber: "H77506540",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Round,
@@ -381,7 +409,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Aviation X-Wind Autochrono H77506540 debuted in 2025. This watch has a stainless steel case of 44mm with a thickness of 15.6mm, which houses the automatic caliber H-21. The dial is blue, featuring an internal rotating bezel, day-date indication, and chronograph counters. The H-21 movement is based on the ETA 7750 architecture. It features automatic winding, a frequency of 28,800 vph, and a power reserve of 60 hours. Functions include hours, minutes, small seconds, chronograph, day, and date. The case is fitted with a sapphire crystal, see-through back, and screw-down crown. "),
             new SeedWatch(
-                Name: "Hamilton Khaki Aviation X Wind Day Date Auto Stainless Steel / Green",
+                Name: "Khaki Aviation X Wind Day Date Auto Stainless Steel / Green",
+                Brand: "Hamilton",
                 ModelNumber: "H77735560",
                 CaseSize: 45,
                 CaseShape: CaseShapeEnum.Round,
@@ -394,7 +423,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Aviation X-Wind Day Date H77735560 debuted in 2025. This watch has a stainless steel case of 45mm with a thickness of 12.8mm, which houses the automatic caliber H-30. The dial is green, featuring an internal rotating bezel and a day-date display. The H-30 movement is based on the ETA 2834 architecture. It features automatic winding, a frequency of 21,600 vph, and a power reserve of 80 hours. Functions include hours, minutes, central seconds, day, and date. The case is fitted with a sapphire crystal, see-through back, and screw-down crown. Water resistance is specified at 100"),
             new SeedWatch(
-                Name: "Hamilton Khaki Field Quartz 33 Stainless Steel / White / Bracelet",
+                Name: "Khaki Field Quartz 33 Stainless Steel / White / Bracelet",
+                Brand: "Hamilton",
                 ModelNumber: "H69301110",
                 CaseSize: 33,
                 CaseShape: CaseShapeEnum.Round,
@@ -407,7 +437,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Field Quartz 33 H69301110 debuted in 2025. This watch, inspired by the brand's past military field watches, has a stainless steel case of 33.00mm, and a White dial. It is powered by caliber F06.105, a quartz movement with central seconds."),
             new SeedWatch(
-                Name: "Hamilton Khaki Field Quartz 33 Stainless Steel / Black",
+                Name: "Khaki Field Quartz 33 Stainless Steel / Black",
+                Brand: "Hamilton",
                 ModelNumber: "H69301430",
                 CaseSize: 33,
                 CaseShape: CaseShapeEnum.Round,
@@ -420,7 +451,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Field Quartz 33 H69301430 debuted in 2024. This watch, inspired by the brand's past military field watches, has a stainless steel case of 33.00mm, and a Blue dial. It is powered by caliber F06.105, a quartz movement with central seconds."),
             new SeedWatch(
-                Name: "Hamilton Khaki Field Quartz 38 Stainless Steel / Black / Bracelet",
+                Name: "Khaki Field Quartz 38 Stainless Steel / Black / Bracelet",
+                Brand: "Hamilton",
                 ModelNumber: "H69401130",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -433,7 +465,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Field Quartz 38 H69401130 debuted in 2025. This watch, inspired by the brand's past military field watches, has a stainless steel case of 38.00mm, and a Black dial. It is powered by caliber F06.105, a quartz movement with central seconds."),
             new SeedWatch(
-                Name: "Hamilton Khaki Field Quartz 38 Stainless Steel / Black / Bracelet",
+                Name: "Khaki Field Quartz 38 Stainless Steel / Black / Bracelet",
+                Brand: "Hamilton",
                 ModelNumber: "H69401131",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -446,7 +479,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Field Quartz 38 H69401131 debuted in 2025. This watch, inspired by the brand's past military field watches, has a stainless steel case of 38.00mm, and a Black dial. It is powered by caliber F06.105, a quartz movement with central seconds."),
             new SeedWatch(
-                Name: "Hamilton Khaki Field Quartz 38 Stainless Steel / Black",
+                Name: "Khaki Field Quartz 38 Stainless Steel / Black",
+                Brand: "Hamilton",
                 ModelNumber: "H69401430",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -459,7 +493,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Field Quartz 38 H69401430 debuted in 2024. This watch, inspired by the brand's past military field watches, has a stainless steel case of 38.00mm, and a Black dial. It is powered by caliber F06.105, a quartz movement with central seconds."),
             new SeedWatch(
-                Name: "Hamilton Khaki Field Auto 42 Stainless Steel / Blue",
+                Name: "Khaki Field Auto 42 Stainless Steel / Blue",
+                Brand: "Hamilton",
                 ModelNumber: "H70605540",
                 CaseSize: 42,
                 CaseShape: CaseShapeEnum.Round,
@@ -472,7 +507,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Hamilton Khaki Field Automatic H70605540 debuted in 2025 as part of an expanded lineup featuring nine new references. This version of the brand�s iconic field watch features a 42.00 stainless steel case and a Blue dial, combining military heritage with refined finishing. The dial blends a central sunray effect with a snailing pattern on the hour ring, adding visual depth to the 24-hour scale. A date window is positioned at 3 o�clock, and both the hour and minute hands are coated with Super-LumiNova for enhanced legibility. The watch is powered by the H-10, a three-hand automatic movement w"),
             new SeedWatch(
-                Name: "IWC Pilot's Watch Automatic Spitfire Stainless Steel / Black",
+                Name: "Pilot's Watch Automatic Spitfire Stainless Steel / Black",
+                Brand: "IWC",
                 ModelNumber: "IW3268-05 (aka: IW326805)",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -485,7 +521,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The IWC Pilot's Watch Spitfire IW3268-05 debuted in 2023; it features a different strap than the earlier . This watch is powered by IWC's in-house caliber 32110 with hacking seconds and a power reserve of 72 hours. The stainless steel case measures a sensible 39mm across at a a height of 10.8mm."),
             new SeedWatch(
-                Name: "IWC Pilot's Watch Mark XX Patrouille Suisse",
+                Name: "Pilot's Watch Mark XX Patrouille Suisse",
+                Brand: "IWC",
                 ModelNumber: "IW3282-09 (aka: IW328209)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -498,7 +535,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Titanium,
                 Description: "The IWC Pilot's Watch Mark XX Patrouille Suisse IW3282-09 debuted in 2024. This Mark XX has a titanium case and a slate grey dial with sunburst finish. The back features an engraving that reads ' Tribute to Patrouille Suisse'."),
             new SeedWatch(
-                Name: "IWC Pilot's Watch Chronograph 41 Bronze / Blue",
+                Name: "Pilot's Watch Chronograph 41 Bronze / Blue",
+                Brand: "IWC",
                 ModelNumber: "IW3881-09 (aka: IW388109)",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -511,7 +549,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Unknown,
                 Description: "The IWC Pilot's Watch Chronograph IW3881-09 debuted in 2022. This watch has a bronze case with titanium case back, paired with a Blue dial. Power comes from the self-winding caliber 69385."),
             new SeedWatch(
-                Name: "IWC Pilot's Watch Chronograph 41 Top Gun Miramar Stainless Steel",
+                Name: "Pilot's Watch Chronograph 41 Top Gun Miramar Stainless Steel",
+                Brand: "IWC",
                 ModelNumber: "IW3881-17 (aka: IW388117)",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -524,7 +563,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The IWC Pilot�s Watch Chronograph 41 TOP GUN Miramar IW3881-17 debuted in 2025. This reference marks the first time IWC applies a Pantone�-certified ceramic color to a stainless steel case. The watch features a 41mm stainless steel case paired with a rubber strap and dial in �TOP GUN Miramar� blue�a color inspired by the light blue t-shirts worn by elite TOPGUN instructors. This model is not limited. The IW3881-17 is powered by IWC�s caliber 69385, a self-winding column-wheel chronograph movement with a power reserve of 46 hours. The movement architecture places the 30-minute totalizer at 12 o"),
             new SeedWatch(
-                Name: "IWC Portofino Complete Calendar 41 Stainless Steel / Silver",
+                Name: "Portofino Complete Calendar 41 Stainless Steel / Silver",
+                Brand: "IWC",
                 ModelNumber: "IW3590-01 (aka: IW359001)",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -537,7 +577,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The IWC Portofino Pointer Date IW3590-01 debuted in 2023. This IWC Portofino is powered by caliber 32150, a self-winding movement with 'pointer' date indication at 6:00. The Stainless Steel case measures 41.00mm across. The dial is Silver."),
             new SeedWatch(
-                Name: "IWC Portofino Complete Calendar 41 Rose Gold / Silver",
+                Name: "Portofino Complete Calendar 41 Rose Gold / Silver",
+                Brand: "IWC",
                 ModelNumber: "IW3590-02 (aka: IW359002)",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -550,7 +591,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The IWC Portofino Pointer Date IW3590-02 debuted in 2023. This IWC Portofino is powered by caliber 32150, a self-winding movement with 'pointer' date indication at 6:00. The Rose Gold case measures 41.00mm across. The dial is Silver."),
             new SeedWatch(
-                Name: "IWC Portofino Pointer Date 39 Stainless Steel / Silver",
+                Name: "Portofino Pointer Date 39 Stainless Steel / Silver",
+                Brand: "IWC",
                 ModelNumber: "IW3592-01 (aka: IW359201)",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -563,7 +605,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The IWC Portofino Pointer Date IW3592-01 debuted in 2023. This IWC Portofino is powered by caliber 35160, a self-winding movement with 'pointer' date indication at 6:00. The Stainless Steel case measures 39.00mm across. The dial is Silver."),
             new SeedWatch(
-                Name: "IWC Portofino Pointer Date 39 Laureus Sport for Good",
+                Name: "Portofino Pointer Date 39 Laureus Sport for Good",
+                Brand: "IWC",
                 ModelNumber: "IW3592-02 (aka: IW359202)",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -576,7 +619,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The IWC Portofino Pointer Date IW3592-02 debuted in 2025 as a limited edition of 500 pieces. This IWC Portofino is powered by caliber 35160, a self-winding movement with 'pointer' date indication at 6:00. The Stainless Steel case measures 39.00mm across. The dial is Blue, the signature color for the brand's Laureus watches."),
             new SeedWatch(
-                Name: "IWC Portofino Automatic Moonphase Red Gold / Silver",
+                Name: "Portofino Automatic Moonphase Red Gold / Silver",
+                Brand: "IWC",
                 ModelNumber: "IW4594-03 (aka: IW459403)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -589,7 +633,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RedGold,
                 Description: "The IWC Portofino Automatic Moon Phase IW4594-03 debuted in 2025. This model features a 40 mm case in 18k red gold, fitted with a sapphire crystal and a solid caseback. Water resistance is 30 meters. It is delivered on a black alligator leather strap. The dial is silver-plated, paired with gold-plated feuille hands and gold-tone applied markers. The moon phase display is positioned at 12 o�clock. Power comes from the self-winding caliber 35800, which has a diameter of 25.6 mm, thickness of 4.8 mm, and a power reserve of 42 hours. The movement beats at 28,800 vph (4 Hz) and contains 25 jewels. "),
             new SeedWatch(
-                Name: "IWC Portugieser Perpetual Calendar 44 White Gold / Ice Blue",
+                Name: "Portugieser Perpetual Calendar 44 White Gold / Ice Blue",
+                Brand: "IWC",
                 ModelNumber: "IW5037-03 (aka: IW503703)",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Round,
@@ -602,7 +647,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The IWC Portugieser Perpetual Calendar 44 IW5037-03 (aka: IW503703) debuted in 2024. This Portugieser sports a White Gold case and a Blue dial. It is powered by caliber 52616, a self-winding movement with perpetual calendar and 168-hour power reserve."),
             new SeedWatch(
-                Name: "IWC Portugieser Perpetual Calendar 44 White Gold / Dune",
+                Name: "Portugieser Perpetual Calendar 44 White Gold / Dune",
+                Brand: "IWC",
                 ModelNumber: "IW5037-04 (aka: IW503704)",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Round,
@@ -615,7 +661,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The IWC Portugieser Perpetual Calendar 44 IW5037-04 (aka: IW503704) debuted in 2024. This Portugieser sports a White Gold case and a Blue dial. It is powered by caliber 52616, a self-winding movement with perpetual calendar and 168-hour power reserve."),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Control Date Stainless Steel / Silver",
+                Name: "Master Control Date Stainless Steel / Silver",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q4018421 (aka: 4018421)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -628,7 +675,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Master Control Date Q4018421 debuted in 2025. A refined take on the classic three-hand dress watch, this 40 mm stainless steel model reflects the Master Control collection�s mid-century inspiration with subtle updates for the modern wrist. The silvered grey dial features dauphine hands, applied markers, and a neatly framed date window at 3 o�clock. The slim case measures just 8.78 mm thick and features both polished and satin-brushed surfaces. Inside ticks the automatic calibre 899, offering a 70-hour power reserve and operating at 28,800 vibrations per hour. The Q4018421 "),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Control Memovox Stainless Steel / Silver / Calf",
+                Name: "Master Control Memovox Stainless Steel / Silver / Calf",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q411843J (aka: 411843J)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -641,7 +689,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Master Control Memovox Q411843J debuted in 2025. This stainless steel wristwatch features a 40mm case and a silvered dial with applied markers and dauphine hands. It incorporates both a central alarm indicator and a date window at 3 o'clock. The classic round case, paired with a leather strap, is part of the Master Control collection�a line recognized for its understated design and high-performance calibres. Inside ticks 956AA, an automatic movement offering alarm, hours, minutes, central seconds, and date functions. It is equipped with a single barrel and delivers a 44-ho"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Control Geographic Stainless Steel / Silver",
+                Name: "Master Control Geographic Stainless Steel / Silver",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q4128421 (aka: 4128421)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -654,7 +703,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Master Control Geographic Q4128421 debuted in 2025. This stainless steel wristwatch features a 40mm case with a silvered grey sunray-brushed dial. The layout includes a second time zone display at 6 o�clock, accompanied by a city disc for global time zone selection, as well as a power reserve indicator and date sub-dial. It is powered by the automatic 939AA, which offers hours, minutes, small seconds, date, second time zone, power reserve, and world city indicator functions. The movement is visible through a sapphire crystal case back and delivers a power reserve of approx"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Control Chronograph Calendar Stainless Steel / Silver",
+                Name: "Master Control Chronograph Calendar Stainless Steel / Silver",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q4138431 (aka: 4138431)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -667,7 +717,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Master Control Chronograph Calendar Q4138431 debuted in 2025. This watch pairs a triple calendar with chronograph functionality in a stainless steel case measuring 40 mm in diameter and approximately 12.05 mm in height. The silvered sunray-brushed dial displays the date via a pointer, with apertures for the day and month below 12 o�clock, and a moon phase at 6. A pulsometer scale encircles the dial periphery. Inside ticks the automatic caliber 759, which is visible through the sapphire case back. This in-house movement features a column-wheel chronograph mechanism, calenda"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Control Chronograph Calendar Stainless Steel / Blue",
+                Name: "Master Control Chronograph Calendar Stainless Steel / Blue",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q4138480 (aka: 4138480)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -680,7 +731,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Master Control Chronograph Calendar Q4138480 debuted in 2023. This version of the Master Control Chronograph Calendar features a stainless steel case of 40 mm in diameter and 12.05 mm in height, paired with a blue sunray-brushed dial. The layout includes a chronograph with 30-minute counter at 3, a date pointer with moonphase at 6, and a day and month aperture at 12. A pulsometric scale is printed on the dial�s outer flange. This watch is powered by the automatic caliber 759, an in-house movement with integrated column wheel chronograph, vertical clutch, triple calendar, a"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Control Calendar Stainless Steel / Silver",
+                Name: "Master Control Calendar Stainless Steel / Silver",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q4148421 (aka: 4148421)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -693,7 +745,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Master Control Calendar Q4148421 debuted in 2025. It features a stainless steel case measuring 40mm in diameter and 10.95mm in height, paired with a silvered grey sunray dial and dauphine-style hands. The calendar layout includes day and month apertures below 12 o�clock, a central date hand with a jumping mechanism that skips the 16th to avoid obscuring the moon phase aperture at 6 o�clock. This watch is powered by the automatic 866AA, which offers hours, minutes, moon phase, full calendar, and central date with jumping hand. It has a power reserve of 70 hours and beats at"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Ultra Thin Perpetual Pink Gold / Eggshell",
+                Name: "Master Ultra Thin Perpetual Pink Gold / Eggshell",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q1142510 (aka: 1142510)",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -706,7 +759,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Jaeger-LeCoultre Master Ultra Thin Perpetual Calendar Q1142510 debuted in 2024. This version is housed in a pink gold case measuring 39 mm across and 9.2 mm in height. The dial is rendered in a classical eggshell tone with applied markers, dauphine hands, and subdials for the day, date, month, year, and moon phase. Inside ticks the automatic 868/1, a slim in-house movement with a power reserve of 70 hours. It offers hours, minutes, central seconds, perpetual calendar with full four-year indication, moon phase, and a red zone warning to prevent setting errors. The movement measures 4.72 mm "),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Ultra Thin Perpetual Pink Gold / Gradient Blue",
+                Name: "Master Ultra Thin Perpetual Pink Gold / Gradient Blue",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q114258J (aka: 114258J)",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -719,7 +773,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Jaeger-LeCoultre Master Ultra Thin Perpetual Calendar Q114258J debuted in 2024. This model features a pink gold case measuring 39 mm in diameter and 9.2 mm in thickness. The midnight blue sunray-brushed dial displays a full perpetual calendar layout, including subdials for day, date, month, year, and moon phase, arranged with a focus on balance and legibility. Inside ticks the automatic 868/1, a slim in-house movement offering a 70-hour power reserve. It displays hours, minutes, central seconds, perpetual calendar with day, date, month, year, moon phase, and a red zone warning indicator fo"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Ultra Thin Perpetual Stainless Steel / Silver",
+                Name: "Master Ultra Thin Perpetual Stainless Steel / Silver",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q114842J (aka: 114842J)",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -732,7 +787,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Master Ultra Thin Perpetual Calendar Q114842J debuted in 2024. It features a stainless steel case measuring 39.0 mm in diameter and 9.2 mm in height, housing a silvered sunray-brushed dial with Dauphine hands and elongated applied hour markers. This model displays hours, minutes, central seconds, day, date, month, moon phase at 12 o�clock, year, and a red security zone. All calendar functions are synchronized and adjusted via a single corrector. It is powered by the automatic 868/1, which offers a 70-hour power reserve and remains accurate until the year 2100 without manua"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Ultra Thin Moon Stainless Steel / Silver / Alligator",
+                Name: "Master Ultra Thin Moon Stainless Steel / Silver / Alligator",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q1368430 (aka: 1368430)",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -745,7 +801,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Master Ultra Thin Moon Q1368430 debuted in 2024 as part of the brand�s refined Master Ultra Thin collection. Housed in a stainless steel case of 39mm in diameter and just 9.3mm thick, this reference features a sunray-brushed silver dial with polished dauphine hands and applied hour markers. The moon phase display at 6 o�clock is combined with a date pointer encircling the subdial. This watch is powered by the self-winding 925AA, a slim in-house movement with a 38-hour power reserve. Like all models in the Master Ultra Thin line, the Q1368430 undergoes Jaeger-LeCoultre�s pr"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Ultra Thin R�serve de Marche Pink Gold / Gradient Blue / Alligator",
+                Name: "Master Ultra Thin Rserve de Marche Pink Gold / Gradient Blue / Alligator",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q137258J (aka: 137258J)",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -758,7 +815,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Jaeger-LeCoultre Master Ultra Thin Power Reserve Q137258J debuted in 2024. This model features a pink gold case measuring 39.0 mm in diameter and 8.95 mm in thickness. It has a blue sunray-brushed dial with applied hour markers and dauphine-style hands. Subdials display the date, power reserve, and small seconds. Inside ticks the automatic caliber 938/1, which delivers a power reserve of 70 hours. The movement is visible through the sapphire crystal case back. The Q137258J is fitted with a blue alligator leather strap secured by a pink gold pin buckle."),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Master Ultra Thin Tourbillon Pink Gold / Eggshell",
+                Name: "Master Ultra Thin Tourbillon Pink Gold / Eggshell",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q1682411 (aka: 1682411)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -771,7 +829,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Jaeger-LeCoultre Master Ultra Thin Tourbillon Q1682411 debuted in 2023. This reference features a pink gold case measuring 40 mm in diameter and 10.77 mm in height, with water resistance rated at 5 bar. The eggshell beige dial is fitted with dauphine-style hands and applied hour markers, and features a visible tourbillon at 6 o�clock. Power comes from the automatic 978G, which beats at a frequency of 28,800 vibrations per hour and delivers a power reserve of 45 hours. The movement is visible through the sapphire case back and includes a pink gold oscillating weight. This version is deliver"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Polaris Chronograph Stainless Steel / Ocean Grey",
+                Name: "Polaris Chronograph Stainless Steel / Ocean Grey",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q9028651 (aka: 9028651)",
                 CaseSize: 42,
                 CaseShape: CaseShapeEnum.Round,
@@ -784,7 +843,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Polaris Chronograph Q9028651 debuted in 2025. This stainless steel chronograph features a 42mm case with a thickness of 13.39mm and a water resistance rating of 100 meters. The lacquered dial is finished in gradient ocean grey, with baton-style hands and luminescent Arabic numerals and hour markers. Sub-dials at 3 and 9 o�clock display a 30-minute chronograph counter and running seconds, respectively. Inside ticks 761, a self-winding movement with a column wheel and vertical clutch, offering chronograph, hours, minutes, central chronograph seconds, small seconds, and tachy"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Polaris Automatic Date Stainless Steel / Green Double Gradient / Rubber",
+                Name: "Polaris Automatic Date Stainless Steel / Green Double Gradient / Rubber",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q906863J (aka: 906863J)",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -797,7 +857,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Polaris Date Q906863J debuted in 2022. This reference is part of the contemporary Polaris collection, which draws inspiration from the original 1968 Memovox Polaris. It features a 42mm stainless steel case with a thickness of 13.92mm, combining polished and brushed surfaces. Water resistance is rated at 200 meters, aided by a screw-down crown and sapphire crystal with box-type profile. The gradient green dial is constructed in three distinct finishing zones: an opaline inner bezel, a grained middle track for the hour markers, and a sunray-brushed center. Super-LumiNova is "),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Polaris Automatic Date Stainless Steel / Ocean Grey / Rubber",
+                Name: "Polaris Automatic Date Stainless Steel / Ocean Grey / Rubber",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q9068650 (aka: 9068650)",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -810,7 +871,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Polaris Date Q9068650 debuted in 2024 as part of the brand�s sport-oriented Polaris collection, which takes inspiration from the 1968 Memovox Polaris. This model combines vintage cues with contemporary construction and materials. The stainless steel case measures 42 mm in diameter and 13.92 mm in height, with a water resistance rating of 20 bar. The ocean-grey dial is finished with a mix of textures�sunray-brushed at the center, grained on the index track, and opaline on the rehaut�with a lacquered gradient effect created through a multi-layer process. Luminous Arabic nume"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Polaris Automatic Date Stainless Steel / Black / Rubber",
+                Name: "Polaris Automatic Date Stainless Steel / Black / Rubber",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q906867J (aka: 906867J)",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -823,7 +885,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Polaris Date Q906867J debuted in 2023 as part of the Maison�s contemporary sports watch collection. Inspired by the 1968 Memovox Polaris, this model combines vintage design cues with modern technical performance. The stainless steel case measures 42mm in diameter and 13.92mm in height, offering 200 meters of water resistance. The dial features a triple-textured black finish: a sunray-brushed center, grained hour track, and opaline inner bezel. Vanilla-toned Super-LumiNova coats the hands, applied indexes, and triangle marker, giving a subtle nod to aged tritium. Power come"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Polaris Automatic Stainless Steel / Blue / Rubber",
+                Name: "Polaris Automatic Stainless Steel / Blue / Rubber",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q906868J (aka: 906868J)",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -836,7 +899,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Polaris Date Q906868J debuted in 2023 as a variant of the stainless steel Polaris Date, differentiated by a blue rubber strap in a �Clous de Paris� pattern to match the gradient blue lacquer dial. The watch retains the sport-luxury design language and layout first seen on models like the Q9068650. The 42 mm case features taut lines and a mix of brushed and polished surfaces, with a thickness of 13.92 mm and water resistance up to 200 meters. The multi-textured dial�sunray-brushed at the center, grained at the hour track, and opaline on the inner bezel�displays luminous num"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Polaris Perpetual Calendar Pink Gold / Blue",
+                Name: "Polaris Perpetual Calendar Pink Gold / Blue",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q9082681 (aka: 9082681)",
                 CaseSize: 42,
                 CaseShape: CaseShapeEnum.Round,
@@ -849,7 +913,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Jaeger-LeCoultre Polaris Perpetual Calendar Q9082681 debuted in 2024. This version features a 42 mm case in pink gold, with a thickness of 11.97 mm and water resistance up to 10 bar. The blue lacquered dial displays a full perpetual calendar, with day, date, and month subdials, as well as a dual moon phase display for both hemispheres. The Southern Hemisphere moon phase is presented in a retrograde format. The Q9082681 is powered by the automatic 868/AA, visible through the sapphire crystal case back. This movement comprises 351 components and offers a power reserve of 70 hours. A rotating"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Reverso Tribute Chronograph Stainless Steel / Blue",
+                Name: "Polaris Reverso Tribute Chronograph Stainless Steel / Blue",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "389848J (aka: Q389848J)",
                 CaseSize: 30,
                 CaseShape: CaseShapeEnum.Rectangular,
@@ -862,7 +927,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Reverso Tribute Chronograph 389848J (aka: Q389848J) debuted in 2023. This watch has a Stainless Steel case which houses caliber 860. This hand-wound movement displays the time on one side, and the time + chronograph (with retrograde minute counter) on the other side."),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Reverso Classic Medium Duetto Stainless Steel / Silver",
+                Name: "Polaris Reverso Classic Medium Duetto Stainless Steel / Silver",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q2588422 (aka: 2588422)",
                 CaseSize: 24,
                 CaseShape: CaseShapeEnum.Rectangular,
@@ -875,7 +941,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Reverso Classic Duetto Q2588422 debuted in 2024. It features a stainless steel case measuring 40.1 x 24.4 mm, with the signature reversible construction that allows the wearer to alternate between two dials. On the front, a silvered dial with Arabic numerals and blued hands offers a classic appearance. The reverse side displays a contrasting black dial. This manually wound watch is powered by a movement developed and assembled entirely in-house. It is fitted with a blue leather strap and offers a diamond-set frame integrated into the reverse dial. As with all Jaeger-LeCoul"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Reverso Tribute Tourbillon Stainless Steel / Grey",
+                Name: "Polaris Reverso Tribute Tourbillon Stainless Steel / Grey",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q392845J",
                 CaseSize: 27,
                 CaseShape: CaseShapeEnum.Rectangular,
@@ -888,7 +955,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Reverso Tribute Duoface Tourbillon Q392845J debuted in 2024. This watch has a Stainless Steel case of 45.5 x 27.4 mm. The front dial is grey, whilst the one on the reverse is silver."),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Reverso Tribute Enamel Xu Beihong � The Standing Horse",
+                Name: "Polaris Reverso Tribute Enamel Xu Beihong The Standing Horse",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q39334B1",
                 CaseSize: 27,
                 CaseShape: CaseShapeEnum.Rectangular,
@@ -901,7 +969,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Jaeger-LeCoultre Reverso Tribute Enamel Q39334B1 debuted in 2025 as a limited edition of 10 pieces. Its case is 18k white gold, 45.6 x 27.4mm, and 9.73mm thick. It features sapphire crystals and water resistance to 3 bar. The dial features a herringbone guilloch� pattern of 120 lines, finished with translucent orange grand feu enamel in a tone named Crimson Dawn Orange. The caseback is decorated with a grand feu enamel miniature reproduction of Xu Beihong�s Standing Horse (1939). Power comes from the hand-wound caliber 822, running at 21,600 vph with a 42-hour reserve. It provides hours an"),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Reverso Tribute Saam Comes to Alburz",
+                Name: "Polaris Reverso Tribute Saam Comes to Alburz",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q39334S3 (aka: 39334S3)",
                 CaseSize: 27,
                 CaseShape: CaseShapeEnum.Rectangular,
@@ -914,7 +983,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Jaeger-LeCoultre Reverso Tribute Saam Comes to Alburz Q39334S3 debuted in 2025 as a boutique-exclusive limited edition. It features a hand-painted enamel miniature on the reverse, illustrating a scene from the Shahnameh, the Persian Book of Kings by Ferdowsi. The image portrays a royal search for a lost son, soon to be rescued by a mythical bird, rendered with vivid colors and 24k gold leaf on a 2 cm� surface. The process required 100 hours of enameling and multiple kiln firings. The case is crafted from 18k white gold, measuring 45.6 by 27.4 mm with a thickness of 9.73 mm. The front dial "),
             new SeedWatch(
-                Name: "Jaeger-LeCoultre Reverso Tribute Duoface Small Seconds Pink Gold / Blue",
+                Name: "Polaris Reverso Tribute Duoface Small Seconds Pink Gold / Blue",
+                Brand: "Jaeger-LeCoultre",
                 ModelNumber: "Q3982590 (aka: 3982590)",
                 CaseSize: 28,
                 CaseShape: CaseShapeEnum.Rectangular,
@@ -927,7 +997,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Jaeger-LeCoultre Reverso Tribute Duoface Small Seconds Q3982590 debuted in 2025. This watch features a pink gold case measuring 47.0 � 28.3 mm with a thickness of 9.6 mm. The front dial is finished in sunray-brushed blue lacquer, while the reverse side displays a silvered grey dial with applied indexes and a 24-hour indicator. This model is powered by the hand-wound caliber 854A/2, which drives both time displays: hours, minutes, and small seconds on the recto; and a second time zone with day/night indication on the verso. The movement offers a 42-hour power reserve."),
             new SeedWatch(
-                Name: "Omega Seamaster Aqua Terra 150M Master Co-Axial 30 Stainless Steel / Black / Bracelet",
+                Name: "Seamaster Aqua Terra 150M Master Co-Axial 30 Stainless Steel / Black / Bracelet",
+                Brand: "Omega",
                 ModelNumber: "220.10.30.20.01.001",
                 CaseSize: 30,
                 CaseShape: CaseShapeEnum.Round,
@@ -940,7 +1011,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The OMEGA Seamaster Aqua Terra 220.10.30.20.01.001 debuted in 2025 as a refined 30mm addition to the Aqua Terra collection. This model features a symmetrical stainless steel case with polished surfaces and a screw-down case back bearing OMEGA�s signature wave-edged design. The Black dial is varnished and lacquered, with a circular date window at 6 o�clock. Eleven applied boat hull-shaped hour markers and faceted hands�all in 18K white gold�are filled with white Super-LumiNova that emits a blue glow in low light. The redesigned minute hand tapers to a fine point, adding to the overall precision"),
             new SeedWatch(
-                Name: "Omega Seamaster Aqua Terra 150M Master Co-Axial 30 Stainless Steel / Silver / Bracelet",
+                Name: "Seamaster Aqua Terra 150M Master Co-Axial 30 Stainless Steel / Silver / Bracelet",
+                Brand: "Omega",
                 ModelNumber: "220.10.30.20.02.001",
                 CaseSize: 30,
                 CaseShape: CaseShapeEnum.Round,
@@ -953,7 +1025,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The OMEGA Seamaster Aqua Terra 220.10.30.20.02.001 debuted in 2025 as a 30mm addition to the Aqua Terra collection with a Silver dial. This model features a symmetrical stainless steel case with polished surfaces and a screw-in case back bearing OMEGA�s signature wave-edged design. The Silver dial has a crystal finish and includes a circular date window at 6 o�clock. Eleven boat hull-shaped hour markers and faceted hands�all executed in 18K Sedna� Gold�are filled with white Super-LumiNova that emits a blue glow. The redesigned minute hand tapers to a fine point, complementing the watch�s slim "),
             new SeedWatch(
-                Name: "Omega Seamaster Aqua Terra 150M Master Co-Axial 30 Stainless Steel / Blue / Bracelet",
+                Name: "Seamaster Aqua Terra 150M Master Co-Axial 30 Stainless Steel / Blue / Bracelet",
+                Brand: "Omega",
                 ModelNumber: "220.10.30.20.03.001",
                 CaseSize: 30,
                 CaseShape: CaseShapeEnum.Round,
@@ -966,7 +1039,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The OMEGA Seamaster Aqua Terra 220.10.30.20.03.001 debuted in 2025 as a 30mm addition to the Aqua Terra collection with a Blue dial. This model features a symmetrical stainless steel case with polished surfaces and a screw-in case back bearing OMEGA�s signature wave-edged design. The Blue dial is sun-brushed, PVD-treated, and lacquered, with a circular date window at 6 o�clock. Eleven applied boat hull-shaped hour markers and faceted hands�all in 18K white gold�are filled with white Super-LumiNova that emits a blue glow. The redesigned minute hand tapers to a delicate point, contributing to th"),
             new SeedWatch(
-                Name: "Omega Seamaster Aqua Terra 150M Master Co-Axial 30 Stainless Steel - Diamond / Grey - Diamond / Bracelet",
+                Name: "Seamaster Aqua Terra 150M Master Co-Axial 30 Stainless Steel - Diamond / Grey - Diamond / Bracelet",
+                Brand: "Omega",
                 ModelNumber: "220.15.30.20.56.001",
                 CaseSize: 30,
                 CaseShape: CaseShapeEnum.Round,
@@ -979,7 +1053,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The OMEGA Seamaster Aqua Terra 220.15.30.20.56.001 debuted in 2025 as a 30mm addition to the Aqua Terra collection with a Grey dial. This model features a symmetrical stainless steel case with polished surfaces and a screw-in case back bearing OMEGA�s signature wave-edged design. The Grey dial is sun-brushed, PVD-treated, and lacquered, with a circular date window at 6 o�clock. It is set with eleven diamond hour markers and paired with faceted hands crafted from 18K white gold. The hands are filled with white Super-LumiNova that emits a blue glow, and the redesigned minute hand tapers to a ref"),
             new SeedWatch(
-                Name: "Omega Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / Silver - Diamond",
+                Name: "Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / Silver - Diamond",
+                Brand: "Omega",
                 ModelNumber: "131.53.29.20.52.001",
                 CaseSize: 29,
                 CaseShape: CaseShapeEnum.Round,
@@ -992,7 +1067,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.YellowGold,
                 Description: "The Omega Constellation reference 131.53.29.20.52.001 debuted in 2021. This watch has a Yellow Gold case of 29.00mm, housing the self-winding caliber 8701. The dial is Silver."),
             new SeedWatch(
-                Name: "Omega Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / Aventurine",
+                Name: "Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / Aventurine",
+                Brand: "Omega",
                 ModelNumber: "131.53.29.20.53.001",
                 CaseSize: 29,
                 CaseShape: CaseShapeEnum.Round,
@@ -1005,7 +1081,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.YellowGold,
                 Description: "The Omega Constellation reference 131.53.29.20.53.001 debuted in 2021. This watch has a Yellow Gold case of 29.00mm, housing the self-winding caliber 8701. The dial is Blue aventurine."),
             new SeedWatch(
-                Name: "Omega Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / MOP",
+                Name: "Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / MOP",
+                Brand: "Omega",
                 ModelNumber: "131.53.29.20.55.001",
                 CaseSize: 29,
                 CaseShape: CaseShapeEnum.Round,
@@ -1018,7 +1095,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.YellowGold,
                 Description: "The Omega Constellation reference 131.53.29.20.55.001 debuted in 2021. This watch has a Yellow Gold case of 29.00mm, housing the self-winding caliber 8701. The dial is White mother-of-pearl."),
             new SeedWatch(
-                Name: "Omega Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / Champagne - Diamond",
+                Name: "Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / Champagne - Diamond",
+                Brand: "Omega",
                 ModelNumber: "131.53.29.20.58.001",
                 CaseSize: 29,
                 CaseShape: CaseShapeEnum.Round,
@@ -1031,7 +1109,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.YellowGold,
                 Description: "The Omega Constellation reference 131.53.29.20.58.001 debuted in 2021. This watch has a Yellow Gold case of 29.00mm, housing the self-winding caliber 8701. The dial is Champagne."),
             new SeedWatch(
-                Name: "Omega Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / Diamond / Silver - Diamond",
+                Name: "Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / Diamond / Silver - Diamond",
+                Brand: "Omega",
                 ModelNumber: "131.58.29.20.52.001",
                 CaseSize: 29,
                 CaseShape: CaseShapeEnum.Round,
@@ -1044,7 +1123,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.YellowGold,
                 Description: "The Omega Constellation reference 131.58.29.20.52.001 debuted in 2021. This watch has a Yellow Gold case of 29.00mm, housing the self-winding caliber 8701. The dial is Silver."),
             new SeedWatch(
-                Name: "Omega Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / Diamond / MOP",
+                Name: "Constellation Manhattan 29 Co-Axial Master Chronometer Yellow Gold / Diamond / MOP",
+                Brand: "Omega",
                 ModelNumber: "131.58.29.20.55.001",
                 CaseSize: 29,
                 CaseShape: CaseShapeEnum.Round,
@@ -1057,7 +1137,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.YellowGold,
                 Description: "The Omega Constellation reference 131.58.29.20.55.001 debuted in 2021. This watch has a Yellow Gold case of 29.00mm, housing the self-winding caliber 8701. The dial is White mother-of-pearl."),
             new SeedWatch(
-                Name: "Omega Speedmaster Date 38 Stainless Steel - Diamond / Green / Bracelet",
+                Name: "Speedmaster Date 38 Stainless Steel - Diamond / Green / Bracelet",
+                Brand: "Omega",
                 ModelNumber: "324.18.38.50.60.001 (aka: 32418385060001)",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1070,7 +1151,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Omega Speedmaster 38 324.18.38.50.60.001 debuted in 2024. This Speedmaster has a stainless steel case with diamond-set bezel (and crown), paired with a Green dial. It is powered by caliber 3330, a self-widning movement with chronograph and date."),
             new SeedWatch(
-                Name: "Omega Speedmaster Date 38 Stainless Steel - Diamond / Brown",
+                Name: "Speedmaster Date 38 Stainless Steel - Diamond / Brown",
+                Brand: "Omega",
                 ModelNumber: "324.18.38.50.63.001 (aka: 32418385063001)",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1083,7 +1165,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Omega Speedmaster 38 324.18.38.50.63.001 debuted in 2024. This Speedmaster has a stainless steel case with diamond-set bezel (and crown), paired with a Brown dial. It is powered by caliber 3330, a self-widning movement with chronograph and date."),
             new SeedWatch(
-                Name: "Oris Artelier S 38 NZZ",
+                Name: "Artelier S 38 NZZ",
+                Brand: "Oris",
                 ModelNumber: "01 733 7762 4004-Set",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1096,7 +1179,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Oris Artelier S 01 733 7762 4004-Set debuted in 2025 as a limited edition of 20 pieces for the Neuen Z�rcher Zeitung (NZZ) . This watch has a Stainless Steel case and a Black dial; power comes from the self-winding caliber Oris 733 ND (No-Date)."),
             new SeedWatch(
-                Name: "Oris Artelier S 38 Stainless Steel / Black",
+                Name: "Artelier S 38 Stainless Steel / Black",
+                Brand: "Oris",
                 ModelNumber: "01 733 7762 4054-07 5 20 69FC",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1109,7 +1193,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Oris Artelier S 01 733 7762 4054-07 5 20 69FC debuted in 2023 as part of the inaugural collection of the new Artelier S series. This watch has a Stainless Steel case and a Black dial; power comes from the self-winding caliber Oris 733 ND (No-Date)."),
             new SeedWatch(
-                Name: "Oris Artelier S 38 Stainless Steel / Green",
+                Name: "Artelier S 38 Stainless Steel / Green",
+                Brand: "Oris",
                 ModelNumber: "01 733 7762 4057-07 5 20 70FC",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1122,7 +1207,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Oris Artelier S 01 733 7762 4057-07 5 20 70FC debuted in 2023 as part of the inaugural collection of the new Artelier S series. This watch has a Stainless Steel case and a Green dial; power comes from the self-winding caliber Oris 733 ND (No-Date)."),
             new SeedWatch(
-                Name: "Oris Big Crown Pointer Date 38 Calibre 473 Stainless Steel / Blue",
+                Name: "Big Crown Pointer Date 38 Calibre 473 Stainless Steel / Blue",
+                Brand: "Oris",
                 ModelNumber: "01 473 7786 4065-07 5 19 22FC",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1135,7 +1221,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Oris Big Crown Calibre 743 (reference 01 473 7786 4065-07 5 19 22FC) debuted in 2023. This watch is powered by caliber Oris 473, which is the brand's 10th in-house movement in as many years. This movement must be wound by hand, sports the signature 'pointer' date indication, and has a power reserve of 120 hours - as witnessed by the indicator visible via the see-through case back."),
             new SeedWatch(
-                Name: "Oris Big Crown Pointer Date 38 Calibre 473 Stainless Steel / Blue / Bracelet",
+                Name: "Big Crown Pointer Date 38 Calibre 473 Stainless Steel / Blue / Bracelet",
+                Brand: "Oris",
                 ModelNumber: "01 473 7786 4065-07 8 19 06",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1148,7 +1235,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Oris Big Crown Calibre 743 (reference 01 473 7786 4065-07 8 19 06) debuted in 2025. This watch is powered by caliber Oris 473, which is the brand's 10th in-house movement in as many years. This movement must be wound by hand, sports the signature 'pointer' date indication, and has a power reserve of 120 hours - as witnessed by the indicator visible via the see-through case back."),
             new SeedWatch(
-                Name: "Oris Divers Sixty-Five 39 Stainless Steel / Brown / Bracelet",
+                Name: "Divers Sixty-Five 39 Stainless Steel / Brown / Bracelet",
+                Brand: "Oris",
                 ModelNumber: "01 733 7795 4051-Set",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -1161,7 +1249,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Oris Divers Sixty-Five 01 733 7795 4051-Set debuted in 2024. This Divers 65 features a stainless steel case with ceramic bezel insert (diameter 39.00mm). The dial is Brown. This watch is powered by the self-winding caliber Oris 733."),
             new SeedWatch(
-                Name: "Oris Divers Sixty-Five 39 Stainless Steel / Black / Bracelet",
+                Name: "Divers Sixty-Five 39 Stainless Steel / Black / Bracelet",
+                Brand: "Oris",
                 ModelNumber: "01 733 7795 4054-Set",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -1174,7 +1263,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Oris Divers Sixty-Five 01 733 7795 4054-Set debuted in 2024. This Divers 65 features a stainless steel case with ceramic bezel insert (diameter 39.00mm). The dial is Black. This watch is powered by the self-winding caliber Oris 733."),
             new SeedWatch(
-                Name: "Oris Divers Sixty-Five 40 Chronograph Stainless Steel / Silver - Green / Strap",
+                Name: "Divers Sixty-Five 40 Chronograph Stainless Steel / Silver - Green / Strap",
+                Brand: "Oris",
                 ModelNumber: "01 771 7791 4051-07 6 20 01",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -1187,7 +1277,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Oris Divers Sixty-Five Chronograph 01 771 7791 4051-07 6 20 01 debuted in 2025 as a vintage-inspired diver�s chronograph with modern specifications. The stainless steel case measures 40.00mm in diameter and features a green aluminium bezel insert, domed sapphire crystal, and screw-in pushers and crown for 100 meters of water resistance. The dial has a sunray silver-grey finish with contrasting dark green subdials and matching bezel, evoking a retro palette tied to nature and adventure. Inside ticks the automatic Oris Calibre 771, which drives central hours, minutes, chronograph seconds, a "),
             new SeedWatch(
-                Name: "Oris Divers Sixty-Five 40 Chronograph Stainless Steel / Silver - Green / Bracelet",
+                Name: "Divers Sixty-Five 40 Chronograph Stainless Steel / Silver - Green / Bracelet",
+                Brand: "Oris",
                 ModelNumber: "01 771 7791 4051-07 8 20 18",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -1200,7 +1291,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Oris Divers Sixty-Five Chronograph 01 771 7791 4051-07 8 20 18 debuted in 2025 as a stylish update to the brand�s neo-vintage dive chronograph. The watch features a 40.00mm stainless steel case with a unidirectional rotating bezel fitted with a green aluminium insert. The domed sapphire crystal and screw-in crown and pushers contribute to its 100-meter water resistance. The sunray silver-grey dial is contrasted by dark green subdials and bezel accents, referencing both ocean depths and the forested surroundings of Oris� H�lstein home. It is powered by the self-winding Oris Calibre 771, whi"),
             new SeedWatch(
-                Name: "Oris Divers Sixty-Five 40 Chronograph Stainless Steel / Black",
+                Name: "Divers Sixty-Five 40 Chronograph Stainless Steel / Black",
+                Brand: "Oris",
                 ModelNumber: "01 771 7791 4054-07 6 20 01",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -1213,7 +1305,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Oris Divers Sixty-Five 01 771 7791 4054-07 6 20 01 debuted in 2023 as a smaller take on the original Sixty-Five chronograph. The case measures 40.00mm across, and in this version the dial is Black."),
             new SeedWatch(
-                Name: "Panerai Luminor Marina Quaranta Steel / Blue",
+                Name: "Luminor Marina Quaranta Steel / Blue",
+                Brand: "Panerai",
                 ModelNumber: "PAM01270",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1226,7 +1319,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Panerai Luminor Marina Quaranta reference PAM01270 made its debut in 2021. This Luminor has a Stainless Steel case of 40.00mm, which houses the self-winding caliber P.900. The dial is Blue."),
             new SeedWatch(
-                Name: "Panerai Luminor Marina Quaranta Steel / White",
+                Name: "Luminor Marina Quaranta Steel / White",
+                Brand: "Panerai",
                 ModelNumber: "PAM01271 (aka: PAM 1271)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1239,7 +1333,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Panerai Luminor Marina Quaranta reference PAM01271 made its debut in 2021. This Luminor has a Stainless Steel case of 40.00mm, which houses the self-winding caliber P.900. The dial is White."),
             new SeedWatch(
-                Name: "Panerai Luminor Marina Quaranta Steel / Black",
+                Name: "Luminor Marina Quaranta Steel / Black",
+                Brand: "Panerai",
                 ModelNumber: "PAM01272",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1252,7 +1347,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Panerai Luminor Marina Quaranta reference PAM01272 made its debut in 2021. This Luminor has a Stainless Steel case of 40.00mm, which houses the self-winding caliber P.900. The dial is Black."),
             new SeedWatch(
-                Name: "Panerai Luminor Marina Quaranta Verde Militare",
+                Name: "Luminor Marina Quaranta Verde Militare",
+                Brand: "Panerai",
                 ModelNumber: "PAM01304 (aka: PAM 1304)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1265,7 +1361,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Panerai Luminor Marina Quaranta reference PAM01304 made its debut in 2022. This Luminor has a Stainless Steel case of 40.00mm, which houses the self-winding caliber P.900. The dial is Green. This watch is exclusively available through Panerai's eCommerce channels."),
             new SeedWatch(
-                Name: "Panerai Luminor Marina Quaranta Steel / Blue",
+                Name: "Luminor Marina Quaranta Steel / Blue",
+                Brand: "Panerai",
                 ModelNumber: "PAM01370 (aka: PAM 1370)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1278,7 +1375,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Panerai Luminor Marina Quaranta reference PAM01370 made its debut in 2023. This Luminor has a Stainless Steel case of 40.00mm, which houses the self-winding caliber P.900. The dial is Blue."),
             new SeedWatch(
-                Name: "Panerai Luminor Marina Quaranta Steel / Black",
+                Name: "Luminor Marina Quaranta Steel / Black",
+                Brand: "Panerai",
                 ModelNumber: "PAM01372 (aka: PAM 1372)",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1291,7 +1389,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Panerai Luminor Marina Quaranta reference PAM01372 made its debut in 2021. This Luminor has a Stainless Steel case of 40.00mm, which houses the self-winding caliber P.900. The dial is Black."),
             new SeedWatch(
-                Name: "Panerai Luminor 1950 3 Days GMT Automatic Acciaio 44mm",
+                Name: "Luminor 1950 3 Days GMT Automatic Acciaio 44mm",
+                Brand: "Panerai",
                 ModelNumber: "PAM00320 (aka: PAM320, PAM 320)",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1304,7 +1403,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Luminor 1950 3 Days GMT Automatic Acciaio PAM 320 first debuted in 2009. It has a stainless steel case in Luminor 1950 design measuring 44mm. It is powered by caliber P.9001."),
             new SeedWatch(
-                Name: "Panerai Luminor Dieci Giorni GMT Stainless Steel / Blue",
+                Name: "Luminor Dieci Giorni GMT Stainless Steel / Blue",
+                Brand: "Panerai",
                 ModelNumber: "PAM01482",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1317,7 +1417,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Panerai Luminor Dieci Giorni GMT Ceramica PAM01482 debuted in 2024 as a boutique exclusive. This Luminor features a stainless steel case paired with a Blue dial. It is powered by caliber P.2003."),
             new SeedWatch(
-                Name: "Panerai Luminor Marina Titanio Light Blue / Bracelet",
+                Name: "Luminor Marina Titanio Light Blue / Bracelet",
+                Brand: "Panerai",
                 ModelNumber: "PAM03323 (aka: PAM 3323)",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1330,7 +1431,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Titanium,
                 Description: "The Panerai Luminor Marino Titanio PAM03323 debuted in 2025. This Luminor has a Titanium case paired with a Blue dial. It is powered by caliber P.980, a self-winding movement with small seconds and date."),
             new SeedWatch(
-                Name: "Panerai Luminor Marina Titanio Green",
+                Name: "Luminor Marina Titanio Green",
+                Brand: "Panerai",
                 ModelNumber: "PAM03325 (aka: PAM 3325)",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1343,7 +1445,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Titanium,
                 Description: "The Panerai Luminor Marino Titanio PAM03325 debuted in 2025. This Luminor has a Titanium case paired with a Green dial. It is powered by caliber P.980, a self-winding movement with small seconds and date."),
             new SeedWatch(
-                Name: "Panerai Luminor Due 42 Automatic Luna Rosa",
+                Name: "Luminor Due 42 Automatic Luna Rosa",
+                Brand: "Panerai",
                 ModelNumber: "PAM01381 (aka: PAM 1381)",
                 CaseSize: 42,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1356,7 +1459,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Panerai Luminor Due 42 PAM01381 debuted in 2023 as a tribute to the brand's partnership with Luna Rossa."),
             new SeedWatch(
-                Name: "Panerai Radiomir Annual Calendar Platinumtech Experience",
+                Name: "Radiomir Annual Calendar Platinumtech Experience",
+                Brand: "Panerai",
                 ModelNumber: "PAM 1432 (aka: PAM01432)",
                 CaseSize: 45,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1369,7 +1473,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "The Panerai Radiomir Annual Calendar / Calendario Annuale PAM 1432 (aka: PAM01432) debuted in 2023 as the brand's first annual calendar courtesy of its caliber P.9010/AC. This Radiomir has a case of 45.00mm in Platinum, and a Red dial with gradient finish."),
             new SeedWatch(
-                Name: "Panerai Radiomir Annual Calendar Platinumtech",
+                Name: "Radiomir Annual Calendar Platinumtech",
+                Brand: "Panerai",
                 ModelNumber: "PAM01364",
                 CaseSize: 45,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1382,7 +1487,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "The Panerai Radiomir Annual Calendar / Calendario Annuale PAM01364 debuted in 2024 pairs a Radiomir-style case with an annual calendar courtesy of its caliber P.9010/AC. This Radiomir has a case of 45.00mm in Platinum, and a Green dial with gradient finish. As an 'Experience' piece, it is sold with a one-of-a-kind journey to discover and immerse in the eternal beauty of Rome."),
             new SeedWatch(
-                Name: "Panerai Radiomir Annual Calendar Platinumtech Experience",
+                Name: "Radiomir Annual Calendar Platinumtech Experience",
+                Brand: "Panerai",
                 ModelNumber: "PAM01432",
                 CaseSize: 45,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1395,7 +1501,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "The Panerai Radiomir Annual Calendar / Calendario Annuale PAM01432 debuted in 2024 pairs a Radiomir-style case with an annual calendar courtesy of its caliber P.9010/AC. This Radiomir has a case of 45.00mm in Platinum, and a Red dial with gradient finish. As an 'Experience' piece, it is sold with a one-of-a-kind journey to discover and immerse in the eternal beauty of Rome."),
             new SeedWatch(
-                Name: "Panerai Radiomir Perpetual Calendar GMT Goldtech",
+                Name: "Radiomir Perpetual Calendar GMT Goldtech",
+                Brand: "Panerai",
                 ModelNumber: "PAM01453",
                 CaseSize: 45,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1408,7 +1515,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "The Panerai Radiomir Annual Calendar / Calendario Annuale PAM01453 debuted in 2024 pairs a Radiomir-style case with a perpetual calendar courtesy of its caliber P.4100. This Radiomir has a case of 45.00mm in Platinum, and a White dial."),
             new SeedWatch(
-                Name: "Patek Philippe Calatrava 5298",
+                Name: "Calatrava 5298",
+                Brand: "Patek Philippe",
                 ModelNumber: "5298P-001",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1421,7 +1529,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "Building on the design of the classic reference 5296 Calatrava, the ref. 5298 features a case with an impressive bezel set with 38 baguette diamonds (~3.37 ct.). In addition, its buckle is set with 6 baguette diamonds (~0.30 ct.). Version 5298P-001 debuted in 2011 and features a brown dial."),
             new SeedWatch(
-                Name: "Patek Philippe Calatrava 5298",
+                Name: "Calatrava 5298",
+                Brand: "Patek Philippe",
                 ModelNumber: "5298P-012",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1434,7 +1543,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "Building on the design of the classic reference 5296 Calatrava, the ref. 5298 features a case with an impressive bezel set with 38 baguette diamonds (~3.37 ct.). In addition, its buckle is set with 6 baguette diamonds (~0.30 ct.). Version 5298P-012 debuted in 2013 and features a deep black dial. Version 5298P-010 has one notable difference; the date wheel is white."),
             new SeedWatch(
-                Name: "Patek Philippe World Time 5230 Platinum / Blue",
+                Name: "World Time 5230 Platinum / Blue",
+                Brand: "Patek Philippe",
                 ModelNumber: "5230P-001",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1447,7 +1557,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "The Patek Philippe World Time reference 5230P-001 debuted in 2022. This watch has a Platinum case of 38.50mm, which houses the self-winding caliber 240 HU. The dial is Blue and displays a hand-guilloched circular pattern."),
             new SeedWatch(
-                Name: "Patek Philippe Calatrava Annual Calendar Travel Time White Gold / Charcoal",
+                Name: "Calatrava Annual Calendar Travel Time White Gold / Charcoal",
+                Brand: "Patek Philippe",
                 ModelNumber: "5326G-001",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -1460,7 +1571,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Patek Philippe Calatrava Annual Calendar Travel Time reference 5326G-001 debuted in 2022. This Calatrava features a White Gold case of 41.00mm, which houses the self-winding caliber 215 PS FUS 24H - the first Patek movement to combine the Annual Calendar and Travel Time displays. The dial is Green. This watch is delivered with two straps."),
             new SeedWatch(
-                Name: "Patek Philippe Perpetual Calendar Chronograph 5271 Platinum - Sapphire / Blue",
+                Name: "Perpetual Calendar Chronograph 5271 Platinum - Sapphire / Blue",
+                Brand: "Patek Philippe",
                 ModelNumber: "5271/11P-010",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -1473,7 +1585,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "The Patek Philippe Perpetual Calendar Chronograph 5271/11P-010 made its debut in 2022. This watch is set with a total of 80 baguette-cut sapphires (5.16 cts) across its case and folding clasp. The dial is Blue."),
             new SeedWatch(
-                Name: "Patek Philippe Perpetual Calendar Chronograph 5271 Platinum - Ruby / Red",
+                Name: "Perpetual Calendar Chronograph 5271 Platinum - Ruby / Red",
+                Brand: "Patek Philippe",
                 ModelNumber: "5271/12P-010",
                 CaseSize: 41,
                 CaseShape: CaseShapeEnum.Round,
@@ -1486,7 +1599,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "The Patek Philippe Perpetual Calendar Chronograph 5271/12P-010 made its debut in 2022. This watch is set with a total of 80 baguette-cut rubies (5.25 cts) across its case and folding clasp. The dial is Red."),
             new SeedWatch(
-                Name: "Patek Philippe Perpetual Calendar Split-Seconds Chronograph 5373 Left-Hander Platinum / Grey",
+                Name: "Perpetual Calendar Split-Seconds Chronograph 5373 Left-Hander Platinum / Grey",
+                Brand: "Patek Philippe",
                 ModelNumber: "5373P-001",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1499,7 +1613,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Platinum,
                 Description: "The Patek Philippe Perpetual Calendar Split-Seconds Monomusher Chronograph 5373P-001 made its debut in 2022. This watch has a Platinum case which holds the hand-wound caliber CHR 27-525 PS Q, rotated 180 degrees for a left-hander configuration."),
             new SeedWatch(
-                Name: "Patek Philippe Perpetual Calendar 6159 White Gold / Silver",
+                Name: "Perpetual Calendar 6159 White Gold / Silver",
+                Brand: "Patek Philippe",
                 ModelNumber: "6159G-001",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -1512,7 +1627,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Patek Philippe Perpetual Calendar 6159G-001 debuted in 2025. This watch has a white gold case with hobnail bezel (39.50mm), which houses caliber 26-330 S QR - a self-winding movement with perpetual calendar and central seconds. The dial is made of grey metallized sapphire crystal."),
             new SeedWatch(
-                Name: "Patek Philippe Nautilus 7010 Rose Gold / Purple",
+                Name: "Nautilus 7010 Rose Gold / Purple",
+                Brand: "Patek Philippe",
                 ModelNumber: "7010/1R-013",
                 CaseSize: 32,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1525,7 +1641,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Patek Philippe Nautilus 7010/1R-013 debuted in 2025. This ladies� reference is housed in an 18k rose gold case of 32 mm diameter, with the signature Nautilus porthole construction. The case and integrated bracelet combine polished and satin-brushed finishing, and water resistance is rated at 60 meters. The bezel is set with 46 brilliant-cut diamonds totaling approximately 0.8 carats. The dial is lacquered purple with a stamped wave pattern. Applied Arabic numerals and ogival hour markers are rendered in rose gold with white luminescent coating. The alpha-style hands are also rose gold with"),
             new SeedWatch(
-                Name: "Patek Philippe Nautilus 7118 Stainless Steel - Diamond / Blue",
+                Name: "Nautilus 7118 Stainless Steel - Diamond / Blue",
+                Brand: "Patek Philippe",
                 ModelNumber: "7118/1200A-001",
                 CaseSize: 35,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1538,7 +1655,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Patek Philippe Nautilus 7118/1200A-001 debuted in 2020. This reference features a stainless steel case of 35.2 mm in diameter and 8.62 mm in thickness. The bezel is set with 56 brilliant-cut diamonds totaling approximately 0.71 ct. The case is fitted with sapphire crystals front and back and is water resistant to 60 meters. The integrated stainless steel bracelet has alternating polished and satin finishes and is secured with a patented fold-over clasp including a lockable adjustment system. The dial is blue opaline with an embossed �wave� pattern. Applied hour markers and Arabic numerals "),
             new SeedWatch(
-                Name: "Patek Philippe Nautilus 7118 Stainless Steel - Diamond / Gray",
+                Name: "Nautilus 7118 Stainless Steel - Diamond / Gray",
+                Brand: "Patek Philippe",
                 ModelNumber: "7118/1200A-011",
                 CaseSize: 35,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1551,7 +1669,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Patek Philippe Nautilus 7118/1200A-011 debuted in 2020. This reference features a stainless steel case with a diameter of 35.2 mm and a thickness of 8.62 mm. The bezel is set with 56 brilliant-cut diamonds totaling approximately 0.71 ct. Sapphire crystals are fitted front and back, and water resistance is 60 meters. The integrated stainless steel bracelet is secured with a patented fold-over clasp featuring a lockable adjustment system. The dial is gray opaline with a black-gradient rim and embossed �wave� motif. Applied Arabic numerals and hour markers in white gold are coated with white "),
             new SeedWatch(
-                Name: "Patek Philippe Nautilus 7118 Rose Gold / Silver",
+                Name: "Nautilus 7118 Rose Gold / Silver",
+                Brand: "Patek Philippe",
                 ModelNumber: "7118/1R-001",
                 CaseSize: 35,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1564,7 +1683,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Patek Philippe Nautilus 7118/1R-001 debuted in 2022. This ladies� model is housed in an 18k rose gold case measuring 35.2 mm in diameter and 8.62 mm in thickness. Both front and back are fitted with sapphire crystals, and water resistance is rated at 60 meters. The case is paired with an integrated rose gold bracelet, combining satin-brushed and polished surfaces, secured by a fold-over clasp with adjustment system. The dial is silvery opaline with a stamped wave pattern. Applied numerals and hour markers are in rose gold with white luminescent coating, complemented by rose gold alpha-styl"),
             new SeedWatch(
-                Name: "Patek Philippe Nautilus 7118 Rose Gold / Brown",
+                Name: "Nautilus 7118 Rose Gold / Brown",
+                Brand: "Patek Philippe",
                 ModelNumber: "7118/1R-010",
                 CaseSize: 35,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1577,7 +1697,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Patek Philippe Nautilus 7118/1R-010 debuted in 2022. This ladies� model is housed in an 18k rose gold case measuring 35.2 mm in diameter and 8.62 mm in thickness. Sapphire crystals are fitted to both front and back, and water resistance is specified at 60 meters. The case integrates with an 18k rose gold bracelet, alternating polished and satin-brushed surfaces, secured by a patented fold-over clasp with adjustment system. The dial is golden brown opaline with a stamped wave pattern. Applied numerals and hour markers are executed in rose gold with white luminescent coating, paired with alp"),
             new SeedWatch(
-                Name: "Patek Philippe Twenty-4 Perpetual Calendar Rose Gold / Silver",
+                Name: "Twenty-4 Perpetual Calendar Rose Gold / Silver",
+                Brand: "Patek Philippe",
                 ModelNumber: "7340/1R-001",
                 CaseSize: 36,
                 CaseShape: CaseShapeEnum.Round,
@@ -1590,7 +1711,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Patek Philippe Twenty-4 7340/1R-001 debuted in 2025 as the very first complication in the Twenty~4 collection and the first non-gemset round Twenty~4. It features a Rose Gold case paired with a Silver dial with 'shantung' satin finish. This watch is powered by caliber 240 Q, a self-winding movement with perpetual calendar."),
             new SeedWatch(
-                Name: "Patek Philippe Twenty-4 Perpetual Calendar Rose Gold / Green",
+                Name: "Twenty-4 Perpetual Calendar Rose Gold / Green",
+                Brand: "Patek Philippe",
                 ModelNumber: "7340/1R-010",
                 CaseSize: 36,
                 CaseShape: CaseShapeEnum.Round,
@@ -1603,7 +1725,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.RoseGold,
                 Description: "The Patek Philippe Twenty-4 7340/1R-010 debuted in 2025 as the very first complication in the Twenty~4 collection and the first non-gemset round Twenty~4. It features a Rose Gold case paired with a Green dial. This watch is powered by caliber 240 Q, a self-winding movement with perpetual calendar."),
             new SeedWatch(
-                Name: "Rolex Day-Date 40 Yellow Gold / Onyx",
+                Name: "Day-Date 40 Yellow Gold / Onyx",
+                Brand: "Rolex",
                 ModelNumber: "228238-0059",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -1616,7 +1739,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.YellowGold,
                 Description: "The Rolex Day-Date 40 228238-0059 debuted in 2016. This Day-Date has a Yellow Gold case and a Black onyx dial with baguette-cut diamond indexes."),
             new SeedWatch(
-                Name: "Rolex Day-Date 40 White Gold - Diamond / MOP - Baguette",
+                Name: "Day-Date 40 White Gold - Diamond / MOP - Baguette",
+                Brand: "Rolex",
                 ModelNumber: "228349RBR-0046",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -1629,7 +1753,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "Introduced at BaselWorld 2015, the Day-Date 40 leads in a new era in the history of this Rolex icon. Its case is bigger than the classic DD yet not as large as the Day-Date II. It is powered by the highly innovative caliber 3255. The present example (reference 228349RBR-0046) has a white gold case and bracelet; the dial is mother-of-pearl and features baguette-cut diamond hour markers. This configuration debuted in 2018."),
             new SeedWatch(
-                Name: "Rolex Lady-Datejust 28 White Gold - Diamond / President / Pink Opal",
+                Name: "Lady-Datejust 28 White Gold - Diamond / President / Pink Opal",
+                Brand: "Rolex",
                 ModelNumber: "279139RBR-0002",
                 CaseSize: 28,
                 CaseShape: CaseShapeEnum.Round,
@@ -1642,7 +1767,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Rolex Lady-Datejust 279139RBR-0002 debuted in 2022. This Lady Datejust has a White Gold case with diamond-set bezel. Inside ticks the self-winding caliber 2236."),
             new SeedWatch(
-                Name: "Rolex Lady-Datejust 28 White Gold - Diamond / President / Pink - Diamond",
+                Name: "Lady-Datejust 28 White Gold - Diamond / President / Pink - Diamond",
+                Brand: "Rolex",
                 ModelNumber: "279139RBR-0005",
                 CaseSize: 28,
                 CaseShape: CaseShapeEnum.Round,
@@ -1655,7 +1781,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Rolex Lady-Datejust 279139RBR-0005 debuted in 2022. This Lady Datejust has a White Gold case with diamond-set bezel. Inside ticks the self-winding caliber 2236."),
             new SeedWatch(
-                Name: "Rolex Lady-Datejust 28 White Gold - Diamond / President / Silver - Roman",
+                Name: "Lady-Datejust 28 White Gold - Diamond / President / Silver - Roman",
+                Brand: "Rolex",
                 ModelNumber: "279139RBR-0007",
                 CaseSize: 28,
                 CaseShape: CaseShapeEnum.Round,
@@ -1668,7 +1795,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Rolex Lady-Datejust 279139RBR-0007 debuted in 2022. This Lady Datejust has a White Gold case with diamond-set bezel. Inside ticks the self-winding caliber 2236."),
             new SeedWatch(
-                Name: "Rolex Lady-Datejust 28 White Gold - Diamond / President / MOP",
+                Name: "Lady-Datejust 28 White Gold - Diamond / President / MOP",
+                Brand: "Rolex",
                 ModelNumber: "279139RBR-0008",
                 CaseSize: 28,
                 CaseShape: CaseShapeEnum.Round,
@@ -1681,7 +1809,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Rolex Lady-Datejust 279139RBR-0008 debuted in 2022. This Lady Datejust has a White Gold case with diamond-set bezel. Inside ticks the self-winding caliber 2236."),
             new SeedWatch(
-                Name: "Rolex Lady-Datejust 28 White Gold - Diamond / President / Grey - Roman",
+                Name: "Lady-Datejust 28 White Gold - Diamond / President / Grey - Roman",
+                Brand: "Rolex",
                 ModelNumber: "279139RBR-0010",
                 CaseSize: 28,
                 CaseShape: CaseShapeEnum.Round,
@@ -1694,7 +1823,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Rolex Lady-Datejust 279139RBR-0010 debuted in 2022. This Lady Datejust has a White Gold case with diamond-set bezel. Inside ticks the self-winding caliber 2236."),
             new SeedWatch(
-                Name: "Rolex Lady-Datejust 28 White Gold - Diamond / President / Grey - Diamond",
+                Name: "Lady-Datejust 28 White Gold - Diamond / President / Grey - Diamond",
+                Brand: "Rolex",
                 ModelNumber: "279139RBR-0011",
                 CaseSize: 28,
                 CaseShape: CaseShapeEnum.Round,
@@ -1707,7 +1837,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.WhiteGold,
                 Description: "The Rolex Lady-Datejust 279139RBR-0011 debuted in 2022. This Lady Datejust has a White Gold case with diamond-set bezel. Inside ticks the self-winding caliber 2236."),
             new SeedWatch(
-                Name: "TAG Heuer Aquaracer Professional 200 Titanium / Black",
+                Name: "Aquaracer Professional 200 Titanium / Black",
+                Brand: "TAG Heuer",
                 ModelNumber: "WBP1180.FN8027",
                 CaseSize: 40,
                 CaseShape: CaseShapeEnum.Round,
@@ -1720,7 +1851,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Titanium,
                 Description: "The TAG Heuer Aquaracer Professional 200 Solargraph WBP1180.FN8027 debuted in 2023. It features a 40 mm case in sandblasted grade 2 titanium, paired with a matching fixed bezel and screw-down crown. The anthracite sunray-brushed dial is accented by polar blue highlights. This model is powered by a solar-powered quartz movement, which converts both natural and artificial light into energy. Time is displayed via central hours, minutes, and seconds. It is fitted with a grey textile strap and is rated water resistant to 200 meters."),
             new SeedWatch(
-                Name: "TAG Heuer Carrera Chronograph Glass Box Stainless Steel / Black",
+                Name: "Carrera Chronograph Glass Box Stainless Steel / Black",
+                Brand: "TAG Heuer",
                 ModelNumber: "CBS2210.FC6534",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -1733,7 +1865,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The TAG Heuer Carrera Chronograph 'Glass Box' CBS2210.FC6534 debuted in 2023. This Carrera has a Stainless Steel case of 39.00mm, which is crowned by a distinct 'Glass Box' style sapphire crystal. This watch is powered by caliber TH20-00, an evolution of the earlier caliber Heuer 02."),
             new SeedWatch(
-                Name: "TAG Heuer Carrera Chronograph Dato Glass Box Stainless Steel / Green / Bracelet",
+                Name: "Carrera Chronograph Dato Glass Box Stainless Steel / Green / Bracelet",
+                Brand: "TAG Heuer",
                 ModelNumber: "CBS2211.BA0048",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -1746,7 +1879,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The TAG Heuer Carrera Chronograph 'Glass Box' CBS2211.BA0048 debuted in 2025. This Carrera has a Stainless Steel case of 39mm, which is crowned by a distinct 'Glass Box' style sapphire crystal. This watch is powered by caliber TH20-07, an evolution of the earlier caliber Heuer 02 - in 'DATO' layout with date at 9:00 and a minute counter at 3:00."),
             new SeedWatch(
-                Name: "TAG Heuer Carrera Chronograph Dato Glass Box Stainless Steel / Green",
+                Name: "Carrera Chronograph Dato Glass Box Stainless Steel / Green",
+                Brand: "TAG Heuer",
                 ModelNumber: "CBS2211.FC6545",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -1759,7 +1893,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The TAG Heuer Carrera Chronograph 'Glass Box' CBS2211.FC6545 debuted in 2024. This Carrera has a Stainless Steel case of 39mm, which is crowned by a distinct 'Glass Box' style sapphire crystal. This watch is powered by caliber TH20-07, an evolution of the earlier caliber Heuer 02 - in 'DATO' layout with date at 9:00 and a minute counter at 3:00."),
             new SeedWatch(
-                Name: "TAG Heuer Carrera Chronograph Glass Box Stainless Steel / Blue - Diamond",
+                Name: "Carrera Chronograph Glass Box Stainless Steel / Blue - Diamond",
+                Brand: "TAG Heuer",
                 ModelNumber: "CBS2214.FC6567",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -1772,7 +1907,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The TAG Heuer Carrera Chronograph 'Glass Box' CBS2214.FC6567 debuted in 2025. This Carrera has a Stainless Steel case of 39mm, which is crowned by a distinct 'Glass Box' style sapphire crystal. This watch is powered by caliber TH20-00, an evolution of the earlier caliber Heuer 02. The Blue dial is set with diamonds both on the outer flange as well as on the hour markers."),
             new SeedWatch(
-                Name: "TAG Heuer Carrera Chronograph Glass Box Stainless Steel / Panda / Bracelet",
+                Name: "Carrera Chronograph Glass Box Stainless Steel / Panda / Bracelet",
+                Brand: "TAG Heuer",
                 ModelNumber: "CBS2216.BA0048",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -1785,7 +1921,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The TAG Heuer Carrera Chronograph 'Glass Box' CBS2216.BA0048 debuted in 2025. This Carrera has a Stainless Steel case of 39mm, which is crowned by a distinct 'Glass Box' style sapphire crystal. This watch is powered by caliber TH20-00, an evolution of the earlier caliber Heuer 02."),
             new SeedWatch(
-                Name: "TAG Heuer Carrera Chronograph Glass Box Expo 2025 Osaka",
+                Name: "Carrera Chronograph Glass Box Expo 2025 Osaka",
+                Brand: "TAG Heuer",
                 ModelNumber: "CBS221C.FC6619 (aka: 2025????????)",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,
@@ -1798,7 +1935,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The TAG Heuer Carrera Chronograph CBS221C.FC6619 debuted in 2025. Created to commemorate the Expo 2025 Osaka, the TAG Heuer Carrera Chronograph Expo 2025 Osaka Limited Edition is a Japan-exclusive timepiece limited to 125 pieces. The watch features a 39 mm stainless steel case paired with a white opaline dial accented in red, blue, and grey�colors drawn from the official EXPO 2025 Design System. The applied markers and hands are rhodium-plated, and a date window is positioned at 6 o'clock. The watch is powered by TAG Heuer�s in-house calibre TH20-00, a self-winding chronograph movement with co"),
             new SeedWatch(
-                Name: "TAG Heuer Formula 1 Kith 35 Stainless Steel / Beige",
+                Name: "Formula 1 Kith 35 Stainless Steel / Beige",
+                Brand: "TAG Heuer",
                 ModelNumber: "WA121F.BA0023",
                 CaseSize: 35,
                 CaseShape: CaseShapeEnum.Round,
@@ -1811,7 +1949,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The TAG Heuer Formula 1 Kith WA121F.BA0023 debuted in 2024 as a limited edition of 1350 pieces in collaboration with Kith. Based on the original 1986 Formula 1 model, this watch features a stainless steel case with black plated bezel, and an eggshell dial."),
             new SeedWatch(
-                Name: "TAG Heuer Monaco Calibre Heuer 02 Titanium DLC / Grey",
+                Name: "Monaco Calibre Heuer 02 Titanium DLC / Grey",
+                Brand: "TAG Heuer",
                 ModelNumber: "CBL2181.FC6515",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Square,
@@ -1824,7 +1963,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Titanium,
                 Description: "The TAG Heuer Monaco Night Driver CBL2181.FC6515 debuted in 2023 as a limited edition of 600 pieces. This Monaco has a DLC-coated titanium case and a grey dial with luminescent outer dial and sub dials."),
             new SeedWatch(
-                Name: "Tissot Heritage 1938 Small Second Stainless Steel / Black / Milanese",
+                Name: "Heritage 1938 Small Second Stainless Steel / Black / Milanese",
+                Brand: "Tissot",
                 ModelNumber: "T142.428.11.082.00",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1837,7 +1977,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Tissot Heritage 1938 T142.428.11.082.00 debuted in 2023. This watch has a stainless steel case of 39.00mm and a Black dial with Arabic numerals. This watch is powered by caliber 2895-2."),
             new SeedWatch(
-                Name: "Tissot Heritage 1938 Stainless Steel / White",
+                Name: "Heritage 1938 Stainless Steel / White",
+                Brand: "Tissot",
                 ModelNumber: "T142.464.16.032.00",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1850,7 +1991,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Tissot Heritage 1938 T142.464.16.032.00 debuted in 2024. This watch has a stainless steel case of 39.00mm and a White dial with Arabic numerals. This watch is powered by caliber 2824-2 No Date."),
             new SeedWatch(
-                Name: "Tissot Heritage 1938 Stainless Steel / Black",
+                Name: "Heritage 1938 Stainless Steel / Black",
+                Brand: "Tissot",
                 ModelNumber: "T142.464.16.062.00",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1863,7 +2005,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Tissot Heritage 1938 T142.464.16.062.00 debuted in 2023. This watch has a stainless steel case of 39.00mm and a Beige dial with Arabic numerals. This watch is powered by caliber 2824-2 No Date."),
             new SeedWatch(
-                Name: "Tissot Heritage 1938 Stainless Steel / Beige",
+                Name: "Heritage 1938 Stainless Steel / Beige",
+                Brand: "Tissot",
                 ModelNumber: "T142.464.16.332.00 (aka: t1424641633200)",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Cushion,
@@ -1876,7 +2019,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Tissot Heritage 1938 T142.464.16.332.00 debuted in 2023. This watch has a stainless steel case of 39.00mm and a Beige dial with Arabic numerals. This watch is powered by caliber 2824-2 No Date."),
             new SeedWatch(
-                Name: "Tissot T-Race Chronograph 38 PVD / Black / Rubber",
+                Name: "T-Race Chronograph 38 PVD / Black / Rubber",
+                Brand: "Tissot",
                 ModelNumber: "T141.817.37.051.00",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1889,7 +2033,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Tissot T-Race Quartz Chronograph 38mm T141.817.37.051.00 debuted in 2025. The T-Race collection is informed by motorsport, with case lines and details echoing the dynamism of racing machines and the atmosphere of the sport. This reference introduces a 38mm case size, offering a smaller, unisex alternative within the T-Race line. The round 316L stainless steel case is coated in black PVD and measures 11.46mm thick. It is fitted with a scratch-resistant sapphire crystal with anti-reflective treatment. The dial is black with applied indexes and Super-LumiNova hands. Water resistance is 100 me"),
             new SeedWatch(
-                Name: "Tissot T-Race Chronograph 38 Carnation Gold / Nude",
+                Name: "T-Race Chronograph 38 Carnation Gold / Nude",
+                Brand: "Tissot",
                 ModelNumber: "T141.817.37.501.00",
                 CaseSize: 38,
                 CaseShape: CaseShapeEnum.Round,
@@ -1902,7 +2047,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Tissot T-Race Quartz Chronograph 38mm T141.817.37.501.00 debuted in 2025. The T-Race collection is shaped by motorsport, with a case architecture and detailing that recall the energy of competition and the open road. This reference introduces the 38mm unisex case in stainless steel with gold PVD coating, measuring 11.46mm thick. It is fitted with a scratch-resistant sapphire crystal with anti-reflective treatment. The dial is nude in tone, complemented by applied indexes and Super-LumiNova hands. Water resistance is specified at 100 meters. The watch is powered by a Swiss quartz caliber G1"),
             new SeedWatch(
-                Name: "Zenith Defy Zero G Sapphire",
+                Name: "Defy Zero G Sapphire",
+                Brand: "Zenith",
                 ModelNumber: "04.9000.8812/00.R920",
                 CaseSize: 44,
                 CaseShape: CaseShapeEnum.Round,
@@ -1915,7 +2061,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Titanium,
                 Description: "The Zenith Defy Zero G Sapphire (reference 04.9000.8812/00.R920) made its debut in 2018. This Defy has a case made of sapphire crystal, offering full view of the open-worked caliber El Primero 8812 SK. The dial is handcrafted in a mosaic of meteorite, aventurine glass and grand feu enamel on a gold base"),
             new SeedWatch(
-                Name: "Zenith Defy Chronograph USM Golden Yellow",
+                Name: "Defy Chronograph USM Golden Yellow",
+                Brand: "Zenith",
                 ModelNumber: "03.A780.400-1/65.M3642",
                 CaseSize: 37,
                 CaseShape: CaseShapeEnum.Round,
@@ -1928,7 +2075,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Zenith Defy Chronograph USM 03.A780.400-1/65.M3642 debuted in 2025 as a limited edition of 60 pieces. Its 37mm stainless steel case features the angular form and fourteen-sided bezel introduced on the original 1969 Defy, here paired with a ladder bracelet in the same material. The Golden Yellow dial is highlighted by square markers with horizontal grooves and three silver counters with circular azur� finishing, reinforcing the architectural inspiration drawn from USM Haller modular furniture. At its core is the El Primero 400 automatic caliber, a column-wheel chronograph running at 36,000 "),
             new SeedWatch(
-                Name: "Zenith Defy Chronograph USM Pure Orange",
+                Name: "Defy Chronograph USM Pure Orange",
+                Brand: "Zenith",
                 ModelNumber: "03.A780.400-3/56.M3642",
                 CaseSize: 37,
                 CaseShape: CaseShapeEnum.Round,
@@ -1941,7 +2089,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Zenith Defy Chronograph USM 03.A780.400-3/56.M3642 debuted in 2025 as one of four colour variants developed with USM Modular Furniture, produced in an edition of 60 pieces. Its 37mm stainless steel case remains faithful to the original 1969 Defy with its angular octagonal form and fourteen-sided bezel, now adapted to house the El Primero chronograph. A stainless steel ladder bracelet is fitted to the case. The Pure Orange dial is paired with square grooved indexes, faceted hands, and three silver chronograph registers with concentric finishing. The chronograph seconds hand is tipped with a"),
             new SeedWatch(
-                Name: "Zenith Defy Chronograph USM Gentian Blue",
+                Name: "Defy Chronograph USM Gentian Blue",
+                Brand: "Zenith",
                 ModelNumber: "03.A780.400/19.M3642",
                 CaseSize: 37,
                 CaseShape: CaseShapeEnum.Round,
@@ -1954,7 +2103,8 @@ public static class WatchSeedData
                 Bracelet: BraceletTypeEnum.Steel,
                 Description: "The Zenith Defy Chronograph USM 03.A780.400/19.M3642 debuted in 2025 as part of a capsule collaboration with USM Modular Furniture, each version limited to 60 pieces. The watch is housed in a 37mm stainless steel case with sharply defined octagonal lines and a fourteen-sided bezel, recalling the 1969 Defy design. Pump pushers emphasize its chronograph identity, while the stainless steel �ladder� bracelet by Gay Fr�res completes the vintage profile. The dial is finished in Gentian Blue, accented with rhodium-plated grooved square hour markers and three silver-toned sub-dials with concentric fin"),
             new SeedWatch(
-                Name: "Zenith G.F.J. Calibre 135",
+                Name: "Defy G.F.J. Calibre 135",
+                Brand: "Zenith",
                 ModelNumber: "40.1865.0135/51.C200",
                 CaseSize: 39,
                 CaseShape: CaseShapeEnum.Round,

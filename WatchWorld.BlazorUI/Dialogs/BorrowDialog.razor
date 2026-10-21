@@ -1,0 +1,138 @@
+﻿@using System.Globalization
+@using Radzen
+@using Radzen.Blazor
+@using WatchWorld.BlazorUI.ResponseDTO
+@using WatchWorld.BlazorUI.ResponseDTO.ListingResponseDto
+@using WatchWorld.BlazorUI.Services
+
+<div class="ww-dialog">
+    @{
+        var watch = Listing.BorrowableWatch.SpecificWatch;
+    }
+
+    <div class="ww-borrow-dialog__image">
+        <img src="@(Listing.BorrowableWatch.Picture.Count > 0 ? Listing.BorrowableWatch.Picture[0].Url : "/images/seed/OnTheWay.png")" alt="@watch.Name" />
+    </div>
+
+    <h3 class="ww-borrow-dialog__title">@Brands.FullName(watch)</h3>
+    <p class="ww-borrow-dialog__model">@watch.ModelNumber</p>
+
+    <div class="ww-detail__facts ww-borrow-dialog__facts">
+        <div><span>Slidgrad</span> <strong>@EnumDisplayConverter.WearGrade(Listing.BorrowableWatch.WearGrade)</strong></div>
+        <div><span>Alder</span> <strong>@Listing.BorrowableWatch.Age år</strong></div>
+        <div><span>Estimeret værdi</span> <strong>@Listing.BorrowableWatch.EstimatedValue.ToString("C0", DanishCulture)</strong></div>
+        <div><span>Pris per dag</span> <strong>@Listing.PricePerDay.ToString("C0", DanishCulture)</strong></div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Listing.BorrowableWatch.Note))
+    {
+        <p class="ww-borrow-dialog__note">@Listing.BorrowableWatch.Note</p>
+    }
+
+    @if (CurrentUser.User is null)
+    {
+        <p class="ww-empty">Log ind for at sende en låneforespørgsel.</p>
+    }
+    else if (CurrentUser.User.Id == Listing.BorrowableWatch.UserId)
+    {
+        <p class="ww-empty">Dette er din egen annonce.</p>
+    }
+    else
+    {
+        <div class="ww-dialog__row">
+            <div class="ww-dialog__field">
+                <label for="borrow-from">Fra</label>
+                <input id="borrow-from" type="date" @bind="fromDate" />
+            </div>
+            <div class="ww-dialog__field">
+                <label for="borrow-to">Til</label>
+                <input id="borrow-to" type="date" @bind="toDate" />
+            </div>
+        </div>
+
+        @if (errorMessage is not null)
+        {
+            <div class="ww-dialog__notice ww-dialog__notice--error">@errorMessage</div>
+        }
+
+        <div class="ww-dialog__actions">
+            <RadzenButton Text="Annuller" ButtonStyle="ButtonStyle.Base" Variant="Variant.Text"
+                          Click="@(() => DialogService.Close(null))" Disabled="@isSubmitting" />
+            <RadzenButton Text="@(isSubmitting ? "Sender..." : "Send forespørgsel")" ButtonStyle="ButtonStyle.Primary"
+                          class="ww-btn-gold" Click="@Submit" Disabled="@isSubmitting" />
+        </div>
+    }
+</div>
+
+
+
+@code {
+    private static readonly CultureInfo DanishCulture = CultureInfo.GetCultureInfo("da-DK");
+
+    [Inject] private DialogService DialogService { get; set; } = default!;
+    [Inject] private WatchWorldApiClient ApiClient { get; set; } = default!;
+    [Inject] private CurrentUserState CurrentUser { get; set; } = default!;
+    [Inject] private BrandCatalogHelper Brands { get; set; } = default!;
+
+    [Parameter] public ListingDto Listing { get; set; } = new();
+
+    private DateTime? fromDate = DateTime.Today.AddDays(1);
+    private DateTime? toDate = DateTime.Today.AddDays(4);
+    private bool isSubmitting;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync() => await Brands.EnsureLoadedAsync();
+
+    private async Task Submit()
+    {
+        errorMessage = null;
+
+        if (CurrentUser.User is null) return;
+
+        if (fromDate is null || toDate is null)
+        {
+            errorMessage = "Vælg venligst både start- og slutdato.";
+            return;
+        }
+
+        if (toDate <= fromDate)
+        {
+            errorMessage = "Slutdatoen skal være efter startdatoen.";
+            return;
+        }
+
+        if (fromDate < DateTime.Today)
+        {
+            errorMessage = "Startdatoen kan ikke være i fortiden.";
+            return;
+        }
+
+        isSubmitting = true;
+
+        var request = new CreateBorrowRequestDto
+        {
+            BorrowedByUserId = CurrentUser.User.Id,
+            BorrowedFromUserId = Listing.BorrowableWatch.UserId,
+            BorrowTimeSlot = new TimeSlotDto
+            {
+                From = new DateTimeOffset(fromDate.Value),
+                To = new DateTimeOffset(toDate.Value)
+            },
+            Status = 0 // BorrowStatus.Active
+        };
+
+        var (success, error) = await ApiClient.CreateBorrowAsync(request, CancellationToken.None);
+
+        isSubmitting = false;
+
+        if (!success)
+        {
+            errorMessage = error ?? "Kunne ikke sende forespørgslen. Prøv igen.";
+            return;
+        }
+
+        DialogService.Close(true);
+    
+    }
+
+}

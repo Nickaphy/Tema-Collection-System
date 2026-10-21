@@ -1,0 +1,29 @@
+﻿<div class="ww-facet-group">
+    <h3>@Title</h3>
+    @if (Options.Count == 0)
+    {
+        <p class="ww-facet-empty">Ingen data</p>
+    }
+    else
+    {
+        @foreach (var option in Options)
+        {
+            <label class="@("ww-facet-option" + (Selected.Contains(option.Value) ? " checked" : ""))">
+                <input type="checkbox" checked="@Selected.Contains(option.Value)"
+                       @onchange="@(() => OnToggle.InvokeAsync(option.Value))" />
+                <span>@option.Value</span>
+                <span class="ww-facet-count">@option.Count</span>
+            </label>
+        }
+    }
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public List<FacetOption> Options { get; set; } = new();
+    [Parameter] public HashSet<string> Selected { get; set; } = new();
+    [Parameter] public EventCallback<string> OnToggle { get; set; }
+
+    public record FacetOption(string Value, int Count);
+
+}

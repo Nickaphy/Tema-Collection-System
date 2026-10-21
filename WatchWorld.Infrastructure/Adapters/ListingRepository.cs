@@ -36,7 +36,7 @@ namespace WatchWorld.Infrastructure.Adapters
             var listing = await _context.Listings.FindAsync(new object[] { id }, ct);
             if (listing == null)
             {
-                return Result.Fail<Listing>("Listing not found.");
+                return Result.Fail("Listing not found.");
             }
             return Result.Ok(listing);
         }
@@ -46,7 +46,7 @@ namespace WatchWorld.Infrastructure.Adapters
             var result = await _context.Listings.AddAsync(listing, ct);
             if (result == null)
             {
-                return Result.Fail<Listing>("Failed to create listing.");
+                return Result.Fail("Failed to create listing.");
             }
 
             await _context.SaveChangesAsync(ct);

@@ -12,8 +12,8 @@ using WatchWorld.Infrastructure.Database;
 namespace WatchWorld.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260925093436_Initial")]
-    partial class Initial
+    [Migration("20261004221254_UpdateModels")]
+    partial class UpdateModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,61 @@ namespace WatchWorld.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Borrows");
+                });
+
+            modelBuilder.Entity("WatchWorld.Domain.Entities.Brand", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BrandDescriptionNote")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryOfOrigin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FounderDescriptionNote")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FounderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FoundingYear")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LogoUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OriginDescriptionNote")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParentGroup")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WatchStyleDescriptionNote")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WebsiteUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("WatchWorld.Domain.Entities.HighResImage", b =>
@@ -92,6 +147,9 @@ namespace WatchWorld.Infrastructure.Migrations
                     b.Property<string>("Note")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("WatchesId")
                         .HasColumnType("uniqueidentifier");
@@ -214,6 +272,9 @@ namespace WatchWorld.Infrastructure.Migrations
                     b.PrimitiveCollection<string>("BraceletTypeEnum")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("BrandId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CaseMaterialEnum")
                         .HasColumnType("int");

@@ -25,6 +25,16 @@ public class IndividualWatchService : IIndividualWatchUseCase
         return Result.Ok(watches.Value);
     }
 
+    public async Task<Result<IEnumerable<IndividualWatch>>> GetIndividualWatchesByUserIdAsync(Guid userId, CancellationToken ct = default)
+    {
+        var watches = await _individualWatchRepository.GetIndividualWatchesByUserIdAsync(userId, ct);
+        if (watches.IsFailed)
+        {
+            return Result.Fail("Der er sket en fejl ved hentning af ure for brugeren.");
+        }
+        return Result.Ok(watches.Value);
+    }
+
     public async Task<Result<IndividualWatch>> CreateIndividualWatchAsync(CreateIndividualWatchCommand command, CancellationToken ct = default)
     {
         await _Lock.WaitAsync();
@@ -36,6 +46,7 @@ public class IndividualWatchService : IIndividualWatchUseCase
 
                 var watch = IndividualWatch.Create(
                     specificWatch: existingWatch.Value,
+                    userId: command.userId,
                     wearGrade: command.wearGrade,
                     age: command.age,
                     note: command.note,
