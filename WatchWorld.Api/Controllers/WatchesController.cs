@@ -56,6 +56,8 @@ public class WatchesController : ControllerBase
             braceletTypeEnum: request.braceletTypeEnum,
             description: request.description,
             images: request.images
+            .Select(i => new CreateImageCommandItem(i.Url, i.Width, i.Height))
+            .ToList()
         );
 
         var result = await _watchUseCase.CreateWatchAsync(command, ct);
@@ -93,6 +95,8 @@ public class WatchesController : ControllerBase
             braceletTypeEnum: request.braceletTypeEnum,
             description: request.description,
             images: request.images
+            .Select(i => new CreateImageCommandItem(i.Url, i.Width, i.Height))
+            .ToList()
         );
         var watch = await _watchUseCase.UpdateWatchAsync(command, ct);
         return Ok(watch);

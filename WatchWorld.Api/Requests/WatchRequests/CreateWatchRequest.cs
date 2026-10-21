@@ -17,9 +17,11 @@ namespace WatchWorld.Api.Requests.WatchRequests
     DateOnly releaseYear,
     List<BraceletTypeEnum> braceletTypeEnum,
     string description,
-    List<HighResImage> images
+    List<CreateImageRequest> images
     )
     {
 
     }
+
+    public record CreateImageRequest(string Url, int Width, int Height);
 }   

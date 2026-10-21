@@ -11,6 +11,7 @@ if `!mother then local`. It runs on a 3 second timeout.
     ```
     SA_PASSWORD=YourPersonalPasswordForYourLocalDatabase123%
     MOTHER_SA_PASSWORD=VikingBoner123%
+    JWT_SECRET= SÆT ET INDIVIDUELT PASSWORD HER PÅ MINIMUM 32 CHARACTERS
     ```
 3. `docker compose up --build -d` - Spins up your local SQL-server + API, disowns the terminal.
 
