@@ -15,7 +15,9 @@
     {
         <div class="ww-dialog__field">
             <label for="addwatch-model">Urmodel</label>
-            <select id="addwatch-model" @bind="selectedWatchId">
+            <select id="addwatch-model"
+                    value="@selectedWatchId"
+                    @onchange="e => selectedWatchId = Guid.TryParse(e.Value?.ToString(), out var g) ? g : Guid.Empty">
                 @foreach (var watch in catalog)
                 {
                     <option value="@watch.Id">@Brands.FullName(watch) - @watch.ModelNumber</option>
@@ -26,7 +28,7 @@
         <div class="ww-dialog__row">
             <div class="ww-dialog__field">
                 <label for="addwatch-weargrade">Slidgrad</label>
-                <select id="addwatch-weargrade" @bind="wearGrade">
+                <select id="addwatch-weargrade" @bind="wearGradeNumber">
                     <option value="0">Som nyt</option>
                     <option value="1">Minimal slitage</option>
                     <option value="2">Brugt</option>
@@ -79,7 +81,6 @@
     private List<WatchDto> catalog = new();
     private Guid selectedWatchId;
     private int wearGradeNumber = 0;
-    private JsonElement wearGrade;
     private int age;
     private decimal estimatedValue;
     private string note = string.Empty;
@@ -123,7 +124,7 @@
         {
             UserId = CurrentUser.User.Id,
             SpecificWatchId = selectedWatchId,
-            WearGrade = wearGrade,
+            WearGrade = JsonSerializer.SerializeToElement(wearGradeNumber),
             Age = age,
             Note = note,
             EstimatedValue = estimatedValue,
@@ -147,31 +148,4 @@
 
         DialogService.Close(true);
     }
-
-
-    private void OnWearGradeChanged(JsonElement wearGrade)
-    {
-		var wearGradeString = wearGrade.GetString();
-        switch (wearGradeString)
-        {
-            case "Som nyt":
-                wearGradeNumber = 0;
-                break;
-            case "Minimal slitage":
-				wearGradeNumber = 1;
-                break;
-			case "Brugt":
-				wearGradeNumber = 2;
-				break;
-			case "Velbrugt":    
-                wearGradeNumber = 3;
-				break;
-			case "Hårdt brugt":
-				wearGradeNumber = 4;
-				break;
-			default:
-				wearGradeNumber = 0;
-				break;
-        }
-	}
 }

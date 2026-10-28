@@ -43,6 +43,9 @@ public class IndividualWatchService : IIndividualWatchUseCase
             var existingWatch = await _watchRepository.GetWatchByIdAsync(command.specificWatchId, ct);
             try
             {
+                var images = command.picture
+                    .Select(p => HighResImage.Create(p.Url, p.Width, p.Height))
+                    .ToList();
 
                 var watch = IndividualWatch.Create(
                     specificWatch: existingWatch.Value,
@@ -51,7 +54,7 @@ public class IndividualWatchService : IIndividualWatchUseCase
                     age: command.age,
                     note: command.note,
                     estimatedValue: command.estimatedValue,
-                    picture: command.picture
+                    images
 
                 );
                 await _individualWatchRepository.CreateIndividualWatchAsync(watch, ct);
@@ -91,6 +94,10 @@ public class IndividualWatchService : IIndividualWatchUseCase
                 return Result.Fail("Kan ikke opdatere uret fordi uret findes ikke");
             try
             {
+                var images = command.picture
+                    .Select(p => HighResImage.Create(p.Url, p.Width, p.Height))
+                    .ToList();
+
                 var watch = IndividualWatch.Update(
                     existingWatch: existingIndividualWatch.Value,
                     specificWatch: existingWatch.Value,
@@ -98,7 +105,7 @@ public class IndividualWatchService : IIndividualWatchUseCase
                     age: command.age,
                     note: command.note,
                     estimatedValue: command.estimatedValue,
-                    picture: command.picture
+                    images
 
                 );
                 await _individualWatchRepository.UpdateIndividualWatchAsync(watch, ct);

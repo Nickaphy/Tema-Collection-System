@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 using WatchWorld.BlazorUI.ResponseDTO;
 using WatchWorld.BlazorUI.ResponseDTO.BrandResponseDto;
 using WatchWorld.BlazorUI.ResponseDTO.IndividualWatchResponseDto;
@@ -82,8 +83,16 @@ namespace WatchWorld.BlazorUI
             return (false, string.IsNullOrWhiteSpace(body) ? $"Fejl ({(int)response.StatusCode})" : body);
         }
 
-        public async Task<List<IndividualWatchDto>> GetIndividualWatchesByUserAsync(Guid userId, CancellationToken ct) =>
-            await _http.GetFromJsonAsync<List<IndividualWatchDto>>($"api/IndividualWatch/by-user/{userId}", ct) ?? new();
+        public async Task<List<IndividualWatchDto>> GetIndividualWatchesByUserAsync(Guid userId, CancellationToken ct)
+        {
+            var response = await _http.GetAsync($"api/individualwatch/user/{userId}", ct);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return new();
+
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<List<IndividualWatchDto>>(cancellationToken: ct) ?? new();
+        }
 
         public async Task<(bool Success, string? Error)> CreateIndividualWatchAsync(CreateIndividualWatchRequestDto request, CancellationToken ct)
         {
