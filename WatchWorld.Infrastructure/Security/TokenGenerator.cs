@@ -1,5 +1,6 @@
 ﻿using WatchWorld.Application.Ports.OutBound.Services;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -10,7 +11,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 {
     private readonly JwtSettings _settings;
 
-    public JwtTokenGenerator(JwtSettings settings) => _settings = settings;
+    public JwtTokenGenerator(IOptions<JwtSettings> options) => _settings = options.Value;
 
     public string GenerateToken(Guid userId, string email, bool isAdmin)
     {
@@ -28,7 +29,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             issuer: _settings.Issuer,
             audience: _settings.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(8),
+            expires: DateTime.UtcNow.AddMinutes(_settings.ExpiryMinutes),
             signingCredentials: creds
         );
 

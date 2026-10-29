@@ -87,7 +87,7 @@
     {
         if (CurrentUser.User is null) return;
         DialogService.Close(null);
-        Navigation.NavigateTo($"/bruger/{CurrentUser.User.Id}");
+        Navigation.NavigateTo($"/user/{CurrentUser.User.Id}");
     }
 
     private async Task Submit()

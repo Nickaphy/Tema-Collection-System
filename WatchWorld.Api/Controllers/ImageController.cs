@@ -30,7 +30,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<HighResImage>> Create([FromBody] CreateImageRequest request, CancellationToken ct)
         {
             var command = new CreateImageCommand(
@@ -46,7 +46,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "User,Admin")] // Commented out because Auth hasn't been enabled yet
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> Delete(Guid id, CancellationToken ct)
         {
             await _imageUseCase.DeleteImageAsync(id, ct);

@@ -64,8 +64,8 @@ namespace WatchWorld.BlazorUI.Layout
                 "Log ind",
                 options: new DialogOptions { Width = "620px", ShowClose = true });
 
-            if (result is UserDto user)
-                CurrentUser.SetUser(user);
+            if (result is LogInResponseDto login)
+                CurrentUser.LogIn(login, login.Token);
         }
 
         private async Task OpenRegisterDialog()

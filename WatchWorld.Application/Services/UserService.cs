@@ -3,6 +3,8 @@ using FluentResults;
 using WatchWorld.Application.Commands.UserCommands;
 using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Application.Ports.OutBound;
+using WatchWorld.Application.Ports.OutBound.Services;
+using WatchWorld.Application.Results;
 using WatchWorld.Domain.Entities;
 using WatchWorld.Domain.Service;
 
@@ -11,11 +13,13 @@ namespace WatchWorld.Application.Services;
 public class UserService : IUserUseCase
 {
     private readonly IUserRepository _userRepository;
+    private readonly IJwtTokenGenerator _tokenGenerator;
     private static readonly SemaphoreSlim _Lock = new(1, 1);
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IJwtTokenGenerator tokenGenerator)
     {
         _userRepository = userRepository;
+        _tokenGenerator = tokenGenerator;
     }
 
     public async Task<Result<IEnumerable<User>>> GetAllUsersAsync(CancellationToken ct = default)
@@ -42,7 +46,7 @@ public class UserService : IUserUseCase
         }
     }
 
-    public async Task<Result<User>> LogInAsync(LogInCommand command, CancellationToken ct = default)
+    public async Task<Result<LogInResult>> LogInAsync(LogInCommand command, CancellationToken ct = default)
     {
         try
         {
@@ -50,16 +54,29 @@ public class UserService : IUserUseCase
                 return Result.Fail("Forkert adgangskode");
 
             var name = $"{command.firstName} {command.lastName}";
-            
-            // Validate the password against the policy before attempting to log in to prevent injections
-            var validator = new PasswordValidatorService();
-            validator.ValidateAndThrow(command.password, command.email, name);
+
             var user = await _userRepository.GetUserByLoginCredentialsAsync(command.email, name, command.password, ct);
             if (user.IsFailed)
             {
-                return Result.Fail("Denne bruger er ikke oprettet endnu, hvis du allerede er oprettet -- kontakt support");
+                return Result.Fail("Forkert brugernavn eller password. Kontakt support, hvis du har brug for hjælp.");
             }
-            return Result.Ok(user.Value);
+
+            // Hvis brugeren er ægte og får logget ind, printer vi dem her deres token/keycard.
+            var loggedInUser = user.Value;
+            var token = _tokenGenerator.GenerateToken(loggedInUser.Id, loggedInUser.Email, loggedInUser.IsAdmin);
+
+            return Result.Ok(new LogInResult(
+                id: loggedInUser.Id,
+                firstName: loggedInUser.FirstName,
+                lastName: loggedInUser.LastName,
+                phoneNumber: loggedInUser.PhoneNumber,
+                email: loggedInUser.Email,
+                address: loggedInUser.Address,
+                city: loggedInUser.City,
+                note: loggedInUser.Note,
+                isAdmin: loggedInUser.IsAdmin,
+                token: token
+            ));
         }
         catch (DomainException ex)
         {

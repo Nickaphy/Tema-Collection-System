@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.BorrowRequests;
+using WatchWorld.Api.Extensions;
 using WatchWorld.Application.Commands.BorrowCommands;
 using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Domain.Entities;
@@ -19,7 +20,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<IEnumerable<Borrow>>> Get(CancellationToken ct)
         {
             var result = await _borrowUseCase.GetAllBorrowAsync(ct);
@@ -29,7 +30,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> GetById(Guid id, CancellationToken ct)
         {
             var borrow = await _borrowUseCase.GetBorrowByIdAsync(id, ct);
@@ -37,11 +38,11 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> Create([FromBody] CreateBorrowRequest request, CancellationToken ct)
         {
             var command = new CreateBorrowCommand(
-                borrowedByUserId: request.borrowedByUserId,
+                borrowedByUserId: User.GetUserId(),
                 borrowedFromUserId: request.borrowedFromUserId,
                 borrowTimeSlot: request.borrowTimeSlot,
                 status: request.status
@@ -55,7 +56,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> Delete(Guid id, CancellationToken ct)
         {
             await _borrowUseCase.DeleteBorrowAsync(new DeleteBorrowCommand(id), ct);
@@ -63,7 +64,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPut("{id}/timeslot")]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> UpdateTimeSlot(
         Guid id,
         [FromBody] UpdateBorrowTimeSlotRequest request,
@@ -78,7 +79,7 @@ namespace WatchWorld.Api.Controllers
         }
 
         [HttpPut("{id}/status")]
-        //[Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Borrow>> UpdateStatus(Guid id, [FromBody] UpdateBorrowStatusRequest request, CancellationToken ct)
         {
             var command = new UpdateBorrowStatusCommand(
