@@ -4,6 +4,7 @@ using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Application.Ports.OutBound;
 using WatchWorld.Domain.Entities;
 using WatchWorld.Domain.Service;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WatchWorld.Application.Services;
 
@@ -38,8 +39,11 @@ public class WatchesService : IWatchesUseCase
         {
             try
             {
+                var images = command.images
+                            .Select(i => HighResImage.Create(i.Url, i.Width, i.Height))
+                            .ToList();
 
-            var watch = Watches.Create(
+                var watch = Watches.Create(
                 name: command.name,
                 brandId: command.brandId,
                 modelNumber: command.modelNumber,
@@ -53,7 +57,7 @@ public class WatchesService : IWatchesUseCase
                 releaseYear: command.releaseYear,
                 braceletTypeEnum: command.braceletTypeEnum,
                 description: command.description,
-                images: command.images
+                images
             );
                 await _watchRepository.CreateWatchAsync(watch, ct);
                 return Result.Ok(watch);
@@ -91,6 +95,9 @@ public class WatchesService : IWatchesUseCase
                 return Result.Fail("Kan ikke opdatere et ur som ikke eksistere i databasen");
             try
             {
+                var images = command.images
+                            .Select(i => HighResImage.Create(i.Url, i.Width, i.Height))
+                            .ToList();
 
                 var watch = Watches.Update(
                     name: command.name,
@@ -106,7 +113,7 @@ public class WatchesService : IWatchesUseCase
                     releaseYear: command.releaseYear,
                     braceletTypeEnum: command.braceletTypeEnum,
                     description: command.description,
-                    images: command.images
+                    images
                 );
                 await _watchRepository.UpdateWatchAsync(watch, ct);
                 return Result.Ok(watch);

@@ -1,4 +1,4 @@
-﻿using WatchWorld.Domain.Entities;
+﻿using WatchWorld.Application.Commands.WatchesCommands;
 using WatchWorld.Domain.Enums;
 
 namespace WatchWorld.Application.Commands.IndividualWatchCommands
@@ -10,9 +10,10 @@ namespace WatchWorld.Application.Commands.IndividualWatchCommands
     int age,
     string note,
     decimal estimatedValue,
-    List<HighResImage> picture
+    List<CreateImageCommandItem> picture
     )
     {
 
     }
+
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using WatchWorld.Api.Requests.IndividualWatchRequests;
 using WatchWorld.Application.Commands.IndividualWatchCommands;
+using WatchWorld.Application.Commands.WatchesCommands;
 using WatchWorld.Application.Ports.InBound;
 using WatchWorld.Domain.Entities;
 
@@ -30,20 +31,27 @@ namespace WatchWorld.Api.Controllers
             return Ok(individualWatches.Value);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         [AllowAnonymous]
         public async Task<ActionResult<IndividualWatch>> GetById(Guid id, CancellationToken ct)
         {
-            var individualWatch = await _individualWatchUseCase.GetIndividualWatchByIdAsync(id, ct);
-            return Ok(individualWatch);
+            var result = await _individualWatchUseCase.GetIndividualWatchByIdAsync(id, ct);
+            if (result.IsFailed)
+                return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+
+            return Ok(result.Value);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("user/{userId:guid}")]
         [AllowAnonymous]
-        public async Task<ActionResult<IndividualWatch>> GetByUserId(Guid id, CancellationToken ct)
+        public async Task<ActionResult<IEnumerable<IndividualWatch>>> GetByUserId(Guid userId, CancellationToken ct)
         {
-            var individualWatch = await _individualWatchUseCase.GetIndividualWatchesByUserIdAsync(id, ct);
-            return Ok(individualWatch);
+            var result = await _individualWatchUseCase.GetIndividualWatchesByUserIdAsync(userId, ct);
+            if (result.IsFailed)
+                return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
+
+            return Ok(result.Value);
         }
 
         [HttpPost]
@@ -58,13 +66,14 @@ namespace WatchWorld.Api.Controllers
                 note: request.note,
                 estimatedValue: request.estimatedValue,
                 picture: request.picture
+                .Select(i => new CreateImageCommandItem(i.Url, i.Width, i.Height))
+                .ToList()
             );
             var result = await _individualWatchUseCase.CreateIndividualWatchAsync(command, ct);
             if (result.IsFailed)
                 return Problem(string.Join("; ", result.Errors.Select(e => e.Message)));
 
-            return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
-            
+            return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value); 
         }
 
         [HttpPut("{id}")]
@@ -82,6 +91,8 @@ namespace WatchWorld.Api.Controllers
                 note: request.note,
                 estimatedValue: request.estimatedValue,
                 picture: request.picture
+                .Select(i => new CreateImageCommandItem(i.Url, i.Width, i.Height))
+                .ToList()
             );
             var individualWatch = await _individualWatchUseCase.UpdateIndividualWatchAsync(command, ct);
             return Ok(individualWatch);
